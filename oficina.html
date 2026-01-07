@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oficina AutoSmart | Especializada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .hero-mechanic {
+            background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?q=80&w=1974&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+        }
+        .service-card {
+            background: #151515; border: 1px solid #333; padding: 30px; border-radius: 8px; transition: 0.3s;
+        }
+        .service-card:hover { border-color: var(--continental-orange); transform: translateY(-5px); }
+        .service-card i { color: var(--continental-orange); font-size: 2.5rem; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">AUTO<span>SMART</span></div>
+            <ul class="nav-links">
+                <li><a href="index.html">Voltar para Loja</a></li>
+                <li><a href="#agendar" class="btn-primary" style="background: var(--continental-orange); color: black;">Agendar Serviço</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero hero-mechanic">
+        <div class="hero-content">
+            <span class="tag-oficina" style="background: white; color: black;">Oficina Premium</span>
+            <h1>Cuidado de especialista<br>para sua máquina.</h1>
+            <p>Diagnóstico computadorizado AutoSmart, mecânica geral e peças originais.</p>
+            <button onclick="openAiModal('mechanic')" class="btn-primary" style="background: var(--continental-orange); color: black; border: none;">
+                <i class="fas fa-tools"></i> Diagnóstico com IA (Grátis)
+            </button>
+        </div>
+    </header>
+
+    <section style="padding: 80px 5%;">
+        <h2 style="text-align: center; margin-bottom: 50px;">Serviços AutoSmart</h2>
+        <div class="grid-container">
+            <div class="service-card">
+                <i class="fas fa-oil-can"></i>
+                <h3>Troca de Óleo</h3>
+                <p>Lubrificantes sintéticos de alta performance.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-cogs"></i>
+                <h3>Motor e Câmbio</h3>
+                <p>Revisão completa e retífica com garantia.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-microchip"></i>
+                <h3>Elétrica e Injeção</h3>
+                <p>Scanner AutoSmart de última geração.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-snowflake"></i>
+                <h3>Ar Condicionado</h3>
+                <p>Higienização e recarga de gás.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div>
+                <span class="footer-logo">AUTO<span>SMART</span></span>
+                <p>Inovação automotiva e inteligência artificial.</p>
+            </div>
+            <div>
+                <h4>Parceiros</h4>
+                <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+                    <img src="img/continental.png" alt="Continental" style="height: 30px; filter: grayscale(100%); background: white; padding: 4px; border-radius: 4px;">
+                    <small style="color: #ffa500;">Oficina Oficial</small>
+                </div>
+            </div>
+            <div>
+                <h4>Acesso Rápido</h4>
+                <ul>
+                    <li><a href="oficina.html">Agendar Oficina</a></li>
+                    <li><a href="admin.html">Painel Admin</a></li>
+                </ul>
+            </div>
+        </div>
+        <div style="text-align: center; border-top: 1px solid #222; padding-top: 20px; font-size: 0.8rem; color: #666;">
+            &copy; 2024 AutoSmart Technology Automotiva.
+        </div>
+    </footer>
+
+    <div id="ai-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="ai-title"><i class="fas fa-tools"></i> Mecânico Virtual</h3>
+                <div style="display: flex; gap: 10px;">
+                    <button id="open-schedule-btn" class="btn-primary" style="padding: 5px 10px; font-size: 0.8rem; background: var(--continental-orange); color: black;">Agendar</button>
+                    <button id="close-ai" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">&times;</button>
+                </div>
+            </div>
+            <div class="chat-box" id="chat-display"></div>
+            <div class="input-area">
+                <input type="text" id="user-input" placeholder="Descreva o problema..." autocomplete="off">
+                <button id="send-btn" style="background: var(--continental-orange); color: black;"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="schedule-modal" class="modal">
+        <div class="modal-content" style="height: auto; padding: 20px;">
+            <div class="modal-header" style="background: transparent; border: none; padding: 0 0 20px 0;">
+                <h3>Agendar Serviço</h3>
+                <button id="close-schedule" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">&times;</button>
+            </div>
+            
+            <input type="hidden" id="service-type" value="Oficina">
+
+            <label style="display:block; margin-bottom:5px;">Qual o Carro/Modelo?</label>
+            <input type="text" id="car-model-input" placeholder="Ex: Corolla 2020" style="width:100%; padding:10px; margin-bottom:15px; background:#222; border:1px solid #444; color:white; border-radius:5px;">
+
+            <label style="display:block; margin-bottom:5px;">Data Preferida:</label>
+            <input type="date" id="date-input" style="width:100%; padding:10px; margin-bottom:15px; background:#222; border:1px solid #444; color:white; border-radius:5px;">
+            
+            <label style="display:block; margin-bottom:5px;">Hora:</label>
+            <input type="time" id="time-input" style="width:100%; padding:10px; margin-bottom:15px; background:#222; border:1px solid #444; color:white; border-radius:5px;">
+            
+            <label style="display:block; margin-bottom:5px;">Seu WhatsApp:</label>
+            <input type="tel" id="phone-input" style="width:100%; padding:10px; margin-bottom:15px; background:#222; border:1px solid #444; color:white; border-radius:5px;">
+
+            <label style="display:block; margin-bottom:5px;">E-mail:</label>
+            <input type="email" id="email-input" style="width:100%; padding:10px; margin-bottom:20px; background:#222; border:1px solid #444; color:white; border-radius:5px;">
+            
+            <button id="confirm-schedule-btn" class="btn-primary full-width" style="background: var(--continental-orange); color: black;">Agendar Revisão</button>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>

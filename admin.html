@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | AutoSmart Tech</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="background: #0a0a0a;">
+
+    <div id="login-section" style="height: 100vh; display: flex; align-items: center; justify-content: center;">
+        <div style="background: #1a1a1a; padding: 40px; border-radius: 10px; border: 1px solid #333; width: 100%; max-width: 400px; text-align: center;">
+            <h2 style="margin-bottom: 20px; color: var(--accent-color);">AutoSmart Admin</h2>
+            <form id="login-form" style="display: flex; flex-direction: column; gap: 15px;">
+                <input type="email" id="admin-email" placeholder="Email" required style="padding: 12px; background: #0a0a0a; border: 1px solid #333; color: white; border-radius: 5px;">
+                <input type="password" id="admin-password" placeholder="Senha" required style="padding: 12px; background: #0a0a0a; border: 1px solid #333; color: white; border-radius: 5px;">
+                <button type="submit" class="btn-primary">Entrar no Sistema</button>
+            </form>
+            <p id="login-error" style="color: #ff4444; margin-top: 15px; display: none;"></p>
+            <a href="index.html" style="display: block; margin-top: 20px; font-size: 0.9rem; color: #666;">Voltar ao Site</a>
+        </div>
+    </div>
+
+    <div id="dashboard-section" class="admin-layout" style="display: none;">
+        <aside class="sidebar">
+            <h2>AUTOSMART<span>ADMIN</span></h2>
+            <ul style="display: flex; flex-direction: column; gap: 15px;">
+                <li style="color: var(--accent-color); font-weight: bold;"><i class="fas fa-calendar-check"></i> Agendamentos</li>
+                <li style="color: #666;"><i class="fas fa-car"></i> Estoque (Em breve)</li>
+                <li style="color: #666;"><i class="fas fa-users"></i> Clientes (Em breve)</li>
+            </ul>
+            <button id="logout-btn" class="btn-secondary" style="margin-top: auto;">Sair</button>
+        </aside>
+
+        <main class="admin-content">
+            <header style="display: flex; justify-content: space-between; margin-bottom: 40px;">
+                <h1>Visão Geral</h1>
+                <div style="background: #1a1a1a; padding: 5px 15px; border-radius: 20px; display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 10px; height: 10px; background: #00c851; border-radius: 50%;"></div>
+                    Sistema Online
+                </div>
+            </header>
+
+            <div class="stat-card">
+                <p style="color: #aaa;">Total Agendamentos</p>
+                <div class="stat-number" id="total-count">0</div>
+            </div>
+
+            <div class="table-container">
+                <table id="appointments-table">
+                    <thead>
+                        <tr>
+                            <th>Data/Hora</th>
+                            <th>Tipo/Modelo</th>
+                            <th>Contato</th>
+                            <th>Status</th>
+                            <th>Resumo IA</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-list">
+                        </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="admin.js"></script>
+</body>
+</html>

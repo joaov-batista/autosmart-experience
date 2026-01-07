@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoSmart Technology | Loja & Oficina</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <div class="logo">AUTOSMART<span>TECH</span></div>
+            <ul class="nav-links">
+                <li><a href="index.html">Comprar Carro</a></li>
+                <li><a href="oficina.html" style="color: var(--continental-orange);">Oficina Especializada</a></li>
+                <li><a href="servicos.html">Sistema AutoSmart</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+            <a href="admin.html" class="btn-secondary" style="padding: 5px 15px; font-size: 0.8rem;">
+                <i class="fas fa-lock"></i> Admin
+            </a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <span class="tag-oficina"><i class="fas fa-check-circle"></i> Garantia AutoSmart</span>
+            <h1>Tecnologia que move<br>o seu sonho.</h1>
+            <p style="margin-bottom: 30px; color: #ccc;">Carros premium e a oficina mais tecnológica da Bahia.</p>
+            
+            <button onclick="openAiModal('sales')" class="btn-primary">
+                <i class="fas fa-comment-dots"></i> Falar com o Beto (Consultor)
+            </button>
+        </div>
+    </header>
+
+    <section class="quick-search">
+        <h2>O que você procura na AutoSmart?</h2>
+        <div class="search-grid">
+            <div class="search-card" onclick="window.location.href='#modelos'">
+                <i class="fas fa-car"></i>
+                <h3>Zero KM</h3>
+                <p>Tecnologia de ponta</p>
+            </div>
+            <div class="search-card" onclick="window.location.href='#modelos'">
+                <i class="fas fa-history"></i>
+                <h3>Seminovos</h3>
+                <p>Certificados com garantia</p>
+            </div>
+            <div class="search-card" onclick="openAiModal('sales', 'Me ajude a escolher um carro')">
+                <i class="fas fa-search-dollar"></i>
+                <h3>Consultoria IA</h3>
+                <p>Encontramos o carro ideal</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="modelos" class="catalog-section">
+        <h2 style="margin-bottom: 10px;">Estoque AutoSmart</h2>
+        <p style="color: #aaa; margin-bottom: 40px;">Veículos inspecionados pela nossa tecnologia exclusiva.</p>
+        
+        <div class="grid-container">
+            
+            <div class="car-card" data-nome="Jeep Commander" data-preco="R$ 240.000" data-img="img/commander.png" data-keywords="commander,jeep,7 lugares" data-desc="O gigante de 7 lugares. Luxo, teto panorâmico e motor Turbo Diesel.">
+                <div class="price-badge">R$ 240k</div>
+                <div class="img-placeholder" style="background-image: url('img/commander.png')"></div>
+                <div class="card-info"><h3>Jeep Commander</h3><p>7 Lugares Premium</p></div>
+            </div>
+
+            <div class="car-card" data-nome="Jeep Compass" data-preco="R$ 195.000" data-img="img/compass.png" data-keywords="compass,jeep" data-desc="O líder da categoria. Tecnológico, seguro e com design impecável.">
+                <div class="price-badge">R$ 195k</div>
+                <div class="img-placeholder" style="background-image: url('img/compass.png')"></div>
+                <div class="card-info"><h3>Jeep Compass</h3><p>SUV Médio</p></div>
+            </div>
+
+            <div class="car-card" data-nome="Toyota SW4" data-preco="R$ 380.000" data-img="img/sw4.png" data-keywords="sw4,toyota" data-desc="Tanque de guerra de luxo. Não quebra, sobe parede e leva a família toda.">
+                <div class="price-badge">R$ 380k</div>
+                <div class="img-placeholder" style="background-image: url('img/sw4.png')"></div>
+                <div class="card-info"><h3>Toyota SW4</h3><p>Diesel 4x4</p></div>
+            </div>
+
+            <div class="car-card" data-nome="Chevrolet Spin" data-preco="R$ 125.000" data-img="img/spin.png" data-keywords="spin,chevrolet" data-desc="O melhor custo-benefício para 7 pessoas. Econômica e espaçosa.">
+                <div class="price-badge">R$ 125k</div>
+                <div class="img-placeholder" style="background-image: url('img/spin.png')"></div>
+                <div class="card-info"><h3>Chevrolet Spin</h3><p>Familiar Acessível</p></div>
+            </div>
+
+             <div class="car-card" data-nome="Kia Carnival" data-preco="R$ 650.000" data-img="img/carnival.png" data-keywords="carnival,kia" data-desc="Uma nave espacial. Portas automáticas, poltronas VIP e espaço de sobra.">
+                <div class="price-badge">R$ 650k</div>
+                <div class="img-placeholder" style="background-image: url('img/carnival.png')"></div>
+                <div class="card-info"><h3>Kia Carnival</h3><p>Minivan VIP</p></div>
+            </div>
+
+            <div class="car-card" data-nome="BYD Tan EV" data-preco="R$ 530.000" data-img="img/byd-tan.png" data-keywords="byd,tan,eletrico" data-desc="100% Elétrico, 7 lugares e acelera como esportivo. O futuro chegou.">
+                <div class="price-badge">R$ 530k</div>
+                <div class="img-placeholder" style="background-image: url('img/byd-tan.png')"></div>
+                <div class="card-info"><h3>BYD Tan EV</h3><p>Elétrico 7 Lugares</p></div>
+            </div>
+
+            <div class="car-card" data-nome="BMW X6 M" data-preco="R$ 820.000" data-img="img/bmw.png" data-keywords="bmw,x6" data-desc="SUV Coupé com motor V8. Presença imponente e ronco inesquecível.">
+                <div class="price-badge">R$ 820k</div>
+                <div class="img-placeholder" style="background-image: url('img/bmw.png')"></div>
+                <div class="card-info"><h3>BMW X6 M</h3><p>Esportivo de Elite</p></div>
+            </div>
+
+            <div class="car-card" data-nome="Porsche 911" data-preco="R$ 950.000" data-img="img/porsche.png" data-keywords="porsche,911" data-desc="A lenda. Dispensa apresentações. Performance pura para quem sabe pilotar.">
+                <div class="price-badge">R$ 950k</div>
+                <div class="img-placeholder" style="background-image: url('img/porsche.png')"></div>
+                <div class="card-info"><h3>Porsche 911</h3><p>Ícone</p></div>
+            </div>
+
+            <div class="car-card" data-nome="Audi RS e-tron" data-preco="R$ 1.100.000" data-img="img/audi.png" data-keywords="audi,rs,e-tron" data-desc="O carro do Homem de Ferro. Elétrico, ultra-rápido e design futurista.">
+                <div class="price-badge">R$ 1.1M</div>
+                <div class="img-placeholder" style="background-image: url('img/audi.png')"></div>
+                <div class="card-info"><h3>Audi RS e-tron</h3><p>Superesportivo Elétrico</p></div>
+            </div>
+
+            <div class="car-card" data-nome="Mercedes GLE" data-preco="R$ 710.000" data-img="img/mercedes.png" data-keywords="mercedes,gle" data-desc="Luxo, tecnologia MBUX e conforto de primeira classe.">
+                <div class="price-badge">R$ 710k</div>
+                <div class="img-placeholder" style="background-image: url('img/mercedes.png')"></div>
+                <div class="card-info"><h3>Mercedes GLE</h3><p>SUV de Luxo</p></div>
+            </div>
+
+            <div class="car-card" data-nome="Land Rover Defender" data-preco="R$ 700.000" data-img="img/defender.png" data-keywords="defender,land rover" data-desc="O ícone 4x4 reinventado. Luxo na cidade, monstro na lama.">
+                <div class="price-badge">R$ 700k</div>
+                <div class="img-placeholder" style="background-image: url('img/defender.png')"></div>
+                <div class="card-info"><h3>Land Rover Defender</h3><p>Off-Road Premium</p></div>
+            </div>
+
+            <div class="car-card" data-nome="Ford Ranger Raptor" data-preco="R$ 460.000" data-img="img/ranger.png" data-keywords="ranger,ford,raptor" data-desc="Suspensão de competição, motor V6 e pronta para pular dunas.">
+                <div class="price-badge">R$ 460k</div>
+                <div class="img-placeholder" style="background-image: url('img/ranger.png')"></div>
+                <div class="card-info"><h3>Ranger Raptor</h3><p>Picape Performance</p></div>
+            </div>
+
+            <div class="car-card" data-nome="Fiat Toro Ultra" data-preco="R$ 170.000" data-img="img/toro.png" data-keywords="toro,fiat" data-desc="Caçamba fechada, Diesel 4x4. A picape urbana perfeita.">
+                <div class="price-badge">R$ 170k</div>
+                <div class="img-placeholder" style="background-image: url('img/toro.png')"></div>
+                <div class="card-info"><h3>Fiat Toro Ultra</h3><p>Diesel Urbana</p></div>
+            </div>
+
+            <div class="car-card" data-nome="Toyota Corolla" data-preco="R$ 190.000" data-img="img/corolla.png" data-keywords="corolla,toyota" data-desc="Híbrido, econômico e não desvaloriza. A compra racional.">
+                <div class="price-badge">R$ 190k</div>
+                <div class="img-placeholder" style="background-image: url('img/corolla.png')"></div>
+                <div class="card-info"><h3>Toyota Corolla</h3><p>Sedan Híbrido</p></div>
+            </div>
+
+            <div class="car-card" data-nome="Honda Civic Type R" data-preco="R$ 430.000" data-img="img/civic.png" data-keywords="civic,honda,type r" data-desc="Câmbio manual, tração dianteira e recordista de Nürburgring.">
+                <div class="price-badge">R$ 430k</div>
+                <div class="img-placeholder" style="background-image: url('img/civic.png')"></div>
+                <div class="card-info"><h3>Civic Type R</h3><p>Esportivo Puro</p></div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="contato" class="contact-section">
+        <h2>Visite a AutoSmart Technology</h2>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <i class="fab fa-whatsapp"></i>
+                <h3>Vendas</h3>
+                <p>71 99147-8061</p>
+                <a href="https://wa.me/5571991478061" class="btn-secondary" style="margin-top: 10px;">Chamar no Zap</a>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>Localização</h3>
+                <p>Senai Lauro de Freitas<br>(Perto da Unime)</p>
+            </div>
+             <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <h3>Email</h3>
+                <p style="font-size: 0.8rem;">autosmarttechnolyautomativa@gmail.com</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div>
+                <span class="footer-logo">AUTOSMART<span>TECH</span></span>
+                <p>Inovação automotiva e inteligência artificial.</p>
+            </div>
+            <div>
+                <h4>Parceiros</h4>
+                <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+                    <img src="img/continental.png" alt="Continental" style="height: 30px; filter: grayscale(100%); background: white; padding: 4px; border-radius: 4px;">
+                    <small style="color: #ffa500;">Oficina Oficial</small>
+                </div>
+            </div>
+            <div>
+                <h4>Acesso Rápido</h4>
+                <ul>
+                    <li><a href="oficina.html">Agendar Oficina</a></li>
+                    <li><a href="admin.html">Painel Admin</a></li>
+                </ul>
+            </div>
+        </div>
+        <div style="text-align: center; border-top: 1px solid #222; padding-top: 20px; font-size: 0.8rem; color: #666;">
+            &copy; 2024 AutoSmart Technology Automotiva.
+        </div>
+    </footer>
+
+    <div id="ai-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="ai-title"><i class="fas fa-robot"></i> Consultor AutoSmart</h3>
+                <div style="display: flex; gap: 10px; align-items: center;">
+    <button id="open-schedule-btn" class="btn-primary" style="padding: 5px 10px; font-size: 0.8rem;">Agendar</button>
+    
+    <button id="audio-btn" style="background:none; border:none; color:#666; font-size:1.2rem; cursor:pointer; width:30px;" title="Ativar/Desativar Voz">
+        <i class="fas fa-volume-mute"></i>
+    </button>
+
+    <button id="close-ai" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">&times;</button>
+</div>
+            </div>
+            <div class="chat-box" id="chat-display"></div>
+            <div class="input-area">
+    <button id="mic-btn" style="background: #333; margin-right: 5px;"><i class="fas fa-microphone"></i></button>
+    
+    <input type="text" id="user-input" placeholder="Digite ou fale..." autocomplete="off">
+    <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+</div>
+        </div>
+    </div>
+
+    <div id="schedule-modal" class="modal">
+        <div class="modal-content" style="height: auto; padding: 20px;">
+            <div class="modal-header" style="background: transparent; border: none; padding: 0 0 20px 0;">
+                <h3 id="schedule-title">Agendar Visita</h3>
+                <button id="close-schedule" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">&times;</button>
+            </div>
+            <input type="hidden" id="service-type" value="Venda">
+            
+            <label style="display:block; margin-bottom:5px;">Data:</label>
+            <input type="date" id="date-input" style="width:100%; padding:10px; margin-bottom:15px; background:#222; border:1px solid #444; color:white; border-radius:5px;">
+            
+            <label style="display:block; margin-bottom:5px;">Hora:</label>
+            <input type="time" id="time-input" style="width:100%; padding:10px; margin-bottom:15px; background:#222; border:1px solid #444; color:white; border-radius:5px;">
+            
+            <label style="display:block; margin-bottom:5px;">Seu WhatsApp:</label>
+            <input type="tel" id="phone-input" placeholder="71 99999-9999" style="width:100%; padding:10px; margin-bottom:15px; background:#222; border:1px solid #444; color:white; border-radius:5px;">
+
+            <label style="display:block; margin-bottom:5px;">E-mail (Lembrete):</label>
+            <input type="email" id="email-input" style="width:100%; padding:10px; margin-bottom:20px; background:#222; border:1px solid #444; color:white; border-radius:5px;">
+            
+            <button id="confirm-schedule-btn" class="btn-primary full-width">Confirmar</button>
+        </div>
+    </div>
+
+    <div id="car-details-modal" class="modal">
+        <div class="modal-content car-details-content">
+            <div class="modal-header">
+                <h3 id="modal-car-title">Nome do Carro</h3>
+                <button id="close-car-details" class="close-btn">&times;</button>
+            </div>
+            <div class="car-details-body">
+                <img id="modal-car-img" src="" alt="Foto do Carro">
+                <h2 id="modal-car-price" class="price-tag">R$ 0,00</h2>
+                <p id="modal-car-desc">Descrição do veículo...</p>
+                
+                <button class="btn-primary full-width" onclick="openChatWithInterest()">
+                    <i class="fas fa-question-circle"></i> Tirar Dúvidas sobre este Modelo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
