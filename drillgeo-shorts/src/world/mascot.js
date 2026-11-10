@@ -426,8 +426,8 @@
   }
 
   // ---------- staging: where the mascot is and what it does ----------
-  const PRESENTER = { x: 222, y: 1334, u: 82 };
-  const FULL = { x: 540, y: 820, u: 132 };
+  const PRESENTER = { x: 205, y: 1232, u: 74 };
+  const FULL = { x: 540, y: 690, u: 104 };
 
   function lineAt(T) {
     for (const sc of DG.TL.scenes) for (const k in sc.lines) {
@@ -477,11 +477,11 @@
     const fk = st.fullK == null ? (st.mode === 'full' ? 1 : 0) : st.fullK;
     const pos = { x: lerp(PRESENTER.x, FULL.x, fk), y: lerp(PRESENTER.y, FULL.y, fk), u: lerp(PRESENTER.u, FULL.u, fk) };
     const enter = st.enter == null ? 1 : st.enter;
-    pos.y += (1 - E.outBack(clamp(enter))) * 520;
+    pos.y += (1 - E.outBack(clamp(enter))) * 700;
     const g = gestureAt(T, sc);
     const talking = mouthAt(T);
     const look = g.gesture.startsWith('point') ? [0.8, -0.6] : st.look || [0.15, 0];
-    draw(ctx, { ...pos, t: T, mouth: talking, gesture: g.gesture, prev: g.prev, gk: g.gk, look, full: fk > 0.5, alpha: st.alpha, brow: st.brow });
+    (DG.MASCOT_BODY ? DG.MASCOT_BODY.draw : draw)(ctx, { ...pos, t: T, mouth: talking, gesture: g.gesture, prev: g.prev, gk: g.gk, look, full: fk > 0.5, alpha: st.alpha, brow: st.brow });
   }
 
   DG.MASCOT = { draw, overlay, G, mouthAt, lineAt, PRESENTER, FULL };

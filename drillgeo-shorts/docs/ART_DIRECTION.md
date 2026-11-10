@@ -51,12 +51,13 @@ Rótulo padrão: texto 34–40 px, ponto âmbar de 8 px, linha de chamada fina (
 
 ## Mascote "Geo" (v2)
 
-Funcionário da DrillGeo de frente para a câmera, em estilo anime simpático (cabeça grande e olhos expressivos).
-- **EPI:** capacete branco com a hélice da marca, óculos de proteção levantados, uniforme marinho com faixas refletivas e detalhe âmbar, luvas amarelas e botas.
-- **Peito:** patch "DrillGeo".
-- **Animação:** boca sincronizada com a narração (envelope da voz por quadro, `tools/mouth.py`), piscadas, respiração e gestos com transição suave (acenar, apontar, explicar com as mãos, joinha, contar nos dedos).
-- **Posição:** apresentador no canto inferior esquerdo (cabeça em y≈1330; o corpo pode ficar sob a interface do Shorts). Na abertura aparece grande, de corpo inteiro, e encolhe quando a câmera mergulha. As legendas viram a "fala" à direita dele.
-- **Layout:** o conteúdo técnico foi afastado do canto do mascote (rótulos, inset, rack de caixas, caixas da cena 8).
+Técnico de campo da DrillGeo, adulto, em estilo de ilustração semi-realista, levemente em três-quartos (virado para o conteúdo). A 1ª versão, em estilo infantil com cabeça e olhos enormes, foi descartada por parecer boba.
+- **Proporções:** ~6,5 cabeças, ombros largos e cintura afinando.
+- **Rosto:** olhos amendoados e calmos, sobrancelhas grossas, barba por fazer, mandíbula definida e sorriso discreto.
+- **EPI:** óculos de segurança transparentes no rosto, capacete branco com a hélice, uniforme marinho com faixas refletivas e detalhe âmbar, patch "DrillGeo" no peito, luvas de vaqueta com dedos e botas.
+- **Animação:** sincronismo labial contido (boca abre pouco), piscadas, respiração e gestos naturais (acenar, apontar, explicar com as mãos, joinha, contar nos dedos), com transição suave entre poses. Braços desenhados como traço contínuo, sem "juntas de boneco".
+- **Posição:** apresentador no canto inferior esquerdo (cabeça em y≈1230). Na abertura aparece de corpo inteiro e encolhe quando a câmera mergulha. As legendas ficam à direita dele.
+- **Código:** `src/world/mascot_body.js` (desenho) e `src/world/mascot.js` (encenação, lip-sync e gestos por cena).
 
 ## Personagens
 
