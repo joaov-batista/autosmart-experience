@@ -14,7 +14,7 @@
   DG.CLOSE = { BIT_DEPTH, K, FACE_Y, ADV };
 
   function column() {
-    return GEO.cached('column', () => GEO.renderRegion(-22.5, 22.5, -2, 225, 24, { veinX: 1.5 }));
+    return GEO.cached('column', () => GEO.renderRegion(-22.5, 22.5, -2, 225, 24, { veinX: 1.5, df: 2.5 }));
   }
   // detail rock around the bit (metres), shared by S03/S04/S05
   function rockClose() {

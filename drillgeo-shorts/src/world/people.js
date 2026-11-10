@@ -122,8 +122,30 @@
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
+    if (o.detail) {
+      // eye, brow, ear, hair under the helmet, mouth (anime-sober)
+      ctx.fillStyle = '#1A1412';
+      ctx.beginPath();
+      ctx.ellipse(0.07, -0.012, 0.011, 0.016, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#2A1E18';
+      ctx.lineWidth = 0.008;
+      ctx.beginPath();
+      ctx.moveTo(0.045, -0.05);
+      ctx.quadraticCurveTo(0.075, -0.06, 0.1, -0.048);
+      ctx.moveTo(0.075, 0.07);
+      ctx.lineTo(0.098, 0.066);
+      ctx.stroke();
+      ctx.fillStyle = '#2B201A';
+      ctx.beginPath();
+      ctx.moveTo(-0.1, -0.06);
+      ctx.quadraticCurveTo(-0.11, 0.02, -0.07, 0.05);
+      ctx.lineTo(-0.05, -0.06);
+      ctx.closePath();
+      ctx.fill();
+    }
     // glasses
-    ctx.fillStyle = 'rgba(40,60,80,0.85)';
+    ctx.fillStyle = o.detail ? 'rgba(170,210,240,0.35)' : 'rgba(40,60,80,0.85)';
     ctx.beginPath();
     DG.rr(ctx, 0.035, -0.035, 0.09, 0.045, 0.012);
     ctx.fill();

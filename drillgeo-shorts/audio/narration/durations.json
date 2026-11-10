@@ -1,0 +1,10 @@
+{
+ "N01": {
+  "dur": 4.48,
+  "file": "audio/narration/clips/N01.wav"
+ },
+ "N04": {
+  "dur": 8.52,
+  "file": "audio/narration/clips/N04.wav"
+ }
+}

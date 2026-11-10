@@ -168,6 +168,9 @@
       ctx.lineTo(x0 + k + h, y0);
       ctx.stroke();
     }
+    ctx.strokeStyle = 'rgba(225,232,240,0.7)';
+    ctx.lineWidth = 0.6;
+    ctx.strokeRect(x0, y0, w, h);
     ctx.restore();
   }
   /* o: { top (mm), rot, coreTop, tex, texS, texD0, faceDepth, itTop (inner tube top), itLift (mm the inner tube is raised),
@@ -260,6 +263,9 @@
       ctx.lineTo(x0 + k + h, y0);
       ctx.stroke();
     }
+    ctx.strokeStyle = 'rgba(225,232,240,0.7)';
+    ctx.lineWidth = 0.6;
+    ctx.strokeRect(x0, y0, w, h);
     ctx.restore();
   }
 

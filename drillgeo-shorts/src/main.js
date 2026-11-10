@@ -82,7 +82,7 @@
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.globalAlpha = 1;
     DG.vignette(ctx, S.vignette == null ? 0.55 : S.vignette);
-    DG.grain(ctx, fi, 0.045);
+    DG.grain(ctx, fi, 0.025);
     if (DG.SHOW_SAFE) drawSafe(ctx);
   };
 
