@@ -205,7 +205,9 @@
     const r = ridges()[i];
     const w = r.W * z,
       h = r.Hh * z;
-    ctx.drawImage(r.cv, -210 * z + ox + (1 - z) * 540, y - h, w, h);
+    let x = -210 * z + ox + (1 - z) * 540;
+    x = ((x % w) + w) % w - w;
+    for (; x < DG.W; x += w - 1) ctx.drawImage(r.cv, x, y - h, w, h);
   }
 
   // ---------- trees (cerrado umbrella canopies) ----------
@@ -387,7 +389,6 @@
         const yy = yh + strip * Math.pow(d, 1.4);
         tree(ctx, ((i * 173 + 90) % 1150) - 40, yy, z * (0.5 + 1.3 * d), t, i + 10);
       }
-      grass(ctx, yh + strip * 0.55, t, { n: 140, h: 26 * z, w: 2.5, seed: 9 });
     }
   }
 

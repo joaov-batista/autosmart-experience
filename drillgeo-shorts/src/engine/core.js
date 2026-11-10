@@ -49,6 +49,20 @@
   // pulse that rises over [a,a+r], holds, falls over [b-r,b]
   const pulse = (t, a, b, r = 0.3) => Math.min(smooth(a, a + r, t), 1 - smooth(b - r, b, t));
 
+  /* angle of something accelerating from 0 to `speed` (units/s) over `ramp`
+     seconds starting at t0 (smoothstep), then constant; optional stop ramp */
+  function rampAngle(t, t0, ramp, speed, t1 = Infinity, ramp1 = 1) {
+    const I = (x) => (x <= 0 ? 0 : x >= 1 ? 0.5 + (x - 1) : x * x * x - (x * x * x * x) / 2);
+    let a = speed * ramp * I((t - t0) / ramp);
+    if (t > t1) {
+      // decelerate: subtract the integral of (1 - smoothstep) beyond t1
+      const x = Math.min(1, (t - t1) / ramp1);
+      const full = speed * ramp * I((t1 - t0) / ramp) + speed * ramp1 * (x - (x * x * x - (x * x * x * x) / 2));
+      a = full;
+    }
+    return a;
+  }
+
   // ---------- deterministic random ----------
   function hash(n) {
     // integer hash → [0,1)
@@ -193,7 +207,7 @@
   }
 
   Object.assign(DG, {
-    clamp, lerp, inv, remap, smooth, seg, fract, TAU, E, ep, pulse,
+    clamp, lerp, inv, remap, smooth, seg, fract, TAU, E, ep, pulse, rampAngle,
     hash, hash2, hash3, rng, noise1, noise2, fbm1, fbm2, cell2,
     hexRgb, rgba, mix, mixRgb, rgbStr, C, canvas,
   });

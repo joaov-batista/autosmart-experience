@@ -21,7 +21,7 @@
   }
 
   function wide() {
-    return GEO.cached('wide', () => GEO.renderRegion(X0, X1, -1, Y1, S_FINAL));
+    return GEO.cached('wide', () => GEO.renderRegion(X0, X1, -1, Y1, S_FINAL, { veinX: 2.4 }));
   }
 
   function drawSection(ctx, Ys, s, reveal, t, glowA) {
@@ -35,6 +35,10 @@
     dg.addColorStop(1, '#07090D');
     ctx.fillStyle = dg;
     ctx.fillRect(0, Ys, DG.W, DG.H - Ys + 10);
+    ctx.save();
+    ctx.globalAlpha = 0.13;
+    ctx.drawImage(R.cv, sx, sy, w, h);
+    ctx.restore();
     if (reveal > 0) {
       ctx.save();
       ctx.beginPath();
@@ -80,7 +84,7 @@
     }
     for (let i = 0; i < 34; i++) {
       const x = lerp(X0 + 4, X1 - 4, hash(i * 19 + 3));
-      const y = GEO.veinCenter(x) + (hash(i * 5) - 0.5) * GEO.veinHalf(x) * 1.4;
+      const y = GEO.veinCenter(x) + (hash(i * 5) - 0.5) * GEO.veinHalf(x) * 3.2;
       const tw = Math.max(0, Math.sin(t * 4 + i * 2.1));
       glow(ctx, 540 + x * s, Ys + y * s, 10 + 14 * tw, '#FFE6A0', a * tw * 0.9);
     }
@@ -105,10 +109,12 @@
     const sh = Math.exp(-6 * Math.max(0, t - T.s0)) * (t > T.s0 ? 1 : 0);
     ctx.translate(Math.sin(t * 61) * 7 * sh, Math.cos(t * 47) * 6 * sh);
     LAND.landscape(ctx, t, { yh, z, strip: Math.max(0, Ys - yh) });
+    // foreground framing tree (left), standing on the front edge of the terrain
+    LAND.tree(ctx, 70 - 40 * p, Ys - lerp(150, 2, p), lerp(3.4, 0.9, p), t, 77, '#141C1E', '#C08A56');
     drawSection(ctx, Ys, s, reveal, t, glowA);
     // grass fringe riding on the cut edge (big foreground blades at first)
-    const gh = lerp(260, 34, p);
-    LAND.grass(ctx, Ys + 6, t, { n: Math.round(lerp(150, 330, p)), h: gh, w: lerp(9, 3, p), seed: 3 });
+    const gh = lerp(330, 34, p);
+    LAND.grass(ctx, Ys + 6, t, { n: Math.round(lerp(240, 330, p)), h: gh, w: lerp(10, 3, p), seed: 3 });
     LAND.grass(ctx, Ys + 10, t + 0.7, { n: Math.round(lerp(90, 200, p)), h: gh * 0.7, w: lerp(7, 2.5, p), seed: 8, c1: '#2E3A1E', c2: '#1F2716' });
     LAND.motes(ctx, t, 46, 1 - p, [0, yh - 120, DG.W, 900]);
     ctx.restore();

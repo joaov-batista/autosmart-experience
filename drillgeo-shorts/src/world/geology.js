@@ -43,16 +43,16 @@
   const FRACTURES = [];
   (function () {
     const r = rng(777);
-    for (let i = 0; i < 46; i++) {
-      const cx = (r() * 2 - 1) * 46;
+    for (let i = 0; i < 40; i++) {
+      const setA = r() < 0.75;
+      const cx = (r() * 2 - 1) * 50;
       const cy = lerp(FZONE.top, FZONE.bottom, r()) + 0.1 * cx;
-      const ang = (r() * 2 - 1) * 0.75 + (r() < 0.5 ? 0.35 : -0.25);
-      const len = 3 + r() * 11;
-      FRACTURES.push({ cx, cy, ang, len, seed: i, w: 0.1 + r() * 0.14 });
+      const ang = (setA ? 0.5 : -1.05) + (r() - 0.5) * 0.18;
+      const len = 5 + r() * 14;
+      FRACTURES.push({ cx, cy, ang, len, seed: i, w: 0.16 + r() * 0.2 });
     }
-    // a few isolated fractures in amphibolite near the vein and in gneiss
-    [[-6, 117.3, 0.5, 6], [8, 121.2, -0.4, 7], [-14, 47, 0.3, 8], [12, 135, 0.2, 9], [-20, 150, -0.5, 7], [18, 185, 0.4, 8]].forEach(
-      ([cx, cy, ang, len], k) => FRACTURES.push({ cx, cy, ang, len, seed: 100 + k, w: 0.12 })
+    [[-6, 117.3, 0.5, 7], [8, 121.2, -0.4, 8], [-14, 47, 0.45, 10], [26, 52, 0.5, 9], [12, 135, 0.3, 10], [-20, 150, -0.7, 9], [18, 185, 0.5, 11], [-30, 196, 0.45, 12], [-38, 40, -0.9, 8]].forEach(
+      ([cx, cy, ang, len], k) => FRACTURES.push({ cx, cy, ang, len, seed: 100 + k, w: 0.2 })
     );
   })();
   // fracture depths along the hole (for core breaks), illustrative
@@ -105,34 +105,46 @@
   function colSap(x, y, u, v) {
     const m = fbm2(u * 0.35, v * 0.35, 4, 7);
     let c = m > 0 ? mixRgb(P.sap, P.sapL, m * 1.2) : mixRgb(P.sap, P.sapD, -m * 1.3);
-    const s = Math.sin((v + 0.3 * u) * 3.0 + 2.2 * fbm2(u * 0.3, v * 0.3, 2, 8));
-    c = mixRgb(c, P.sapL, 0.1 * Math.max(0, s));
+    const ph = (v + 0.25 * u) * 1.5 + 2.4 * fbm2(u * 0.08, v * 0.08, 3, 8);
+    const s1 = Math.sin(ph) + 0.4 * Math.sin(ph * 2.6);
+    c = mixRgb(c, s1 > 0.7 ? P.sapL : P.sapD, 0.18 * smooth(0.4, 1.1, Math.abs(s1)));
+    const ir = fbm2(u * 0.6, v * 0.6, 3, 10);
+    if (ir > 0.42) c = mixRgb(c, [128, 44, 22], 0.5 * smooth(0.42, 0.6, ir));
+    const vl = Math.abs(Math.sin((v - 0.6 * u) * 0.7 + 1.5 * fbm2(u * 0.1, v * 0.1, 2, 6)));
+    if (vl < 0.035) c = mixRgb(c, P.kaolin, 0.6);
     const cl = cell2(u * 1.2, v * 1.2, 9);
-    if (cl.d1 < 0.09 + 0.05 * cl.id) c = mixRgb(c, P.kaolin, 0.7);
+    if (cl.d1 < 0.08 + 0.05 * cl.id) c = mixRgb(c, P.kaolin, 0.6);
     return c;
   }
   function colGneiss(x, y, u, v) {
-    const ph = (v + 0.22 * u) * 1.6 + 1.9 * fbm2(u * 0.12, v * 0.12, 3, 13);
-    const b = Math.sin(ph) + 0.45 * Math.sin(ph * 2.7 + 1.3);
+    // phase grows monotonically with depth (no folds): bands undulate, pinch and swell
+    const warp = 2.2 * fbm1(u * 0.022, 3, 13) + 0.18 * fbm2(u * 0.12, v * 0.12, 2, 15);
+    const ph = (v + 0.18 * u) * 1.45 + warp;
+    const b = Math.sin(ph) + 0.45 * Math.sin(ph * 2.7 + 1.3) + 0.12 * fbm2(u * 0.8, v * 1.6, 2, 12);
+    const thrL = 0.8 + 0.18 * fbm2(u * 0.06, v * 0.2, 2, 11);
     let c;
-    if (b > 0.62) c = mixRgb(P.gnM, P.gnL, smooth(0.62, 0.9, b));
-    else if (b < -0.5) c = mixRgb(P.gnM, P.gnD, smooth(-0.5, -0.85, b));
-    else c = P.gnM;
-    const f = fbm2(u * 4, v * 4, 2, 14) * 0.09;
-    return [c[0] * (1 + f), c[1] * (1 + f), c[2] * (1 + f)];
+    if (b > thrL) c = mixRgb(P.gnM, P.gnL, smooth(thrL, thrL + 0.3, b));
+    else if (b < -0.55) c = mixRgb(P.gnM, P.gnD, smooth(-0.55, -0.95, b));
+    else c = mixRgb(P.gnM, P.gnD, 0.15 * smooth(0.2, -0.55, b));
+    const tone = 1 + 0.1 * fbm2(u * 0.04, v * 0.04, 2, 19);
+    const f = (1 + fbm2(u * 4, v * 4, 2, 14) * 0.07) * tone;
+    return [c[0] * f, c[1] * f, c[2] * f];
   }
   function colAmph(x, y, u, v) {
     const ph = (v - 0.35 * u) * 2.4 + 1.3 * fbm2(u * 0.2, v * 0.2, 3, 17);
     const b = Math.sin(ph);
     let c = b > 0.55 ? mixRgb(P.anM, P.anL, smooth(0.55, 1, b) * 0.6) : b < -0.6 ? mixRgb(P.anM, P.anD, 0.6) : P.anM;
-    const cl = cell2(u * 5, v * 5, 19);
-    if (cl.id < 0.16) c = mixRgb(c, P.hbl, 0.75);
-    else if (cl.id > 0.93) c = mixRgb(c, P.anL, 0.5);
+    const cf = DET >= 8 ? 13 : 1.5;
+    const cl = cell2(u * cf, (v - 0.35 * u) * cf * 1.6, 19);
+    const kk = DET >= 8 ? 0.38 : 0.75;
+    if (cl.id < 0.22) c = mixRgb(c, P.hbl, kk);
+    else if (cl.id > 0.9) c = mixRgb(c, P.anL, kk * 0.7);
     const f = fbm2(u * 3, v * 3, 2, 18) * 0.08;
     return [c[0] * (1 + f), c[1] * (1 + f), c[2] * (1 + f)];
   }
   function colGranite(x, y, u, v) {
-    const cl = cell2(u * 3, v * 3, 23);
+    const cf = DET >= 8 ? 3 : 0.9;
+    const cl = cell2(u * cf, v * cf, 23);
     let c;
     if (cl.id < 0.36) c = P.kfs;
     else if (cl.id < 0.62) c = P.qtz;
@@ -140,7 +152,7 @@
     else c = P.bio;
     const edge = smooth(0.0, 0.12, cl.d2 - cl.d1);
     c = mixRgb(mixRgb(c, P.bio, 0.35), c, edge);
-    const f = fbm2(u * 0.4, v * 0.4, 3, 24) * 0.1;
+    const f = fbm2(u * 0.12, v * 0.12, 3, 24) * 0.12;
     return mixRgb([c[0] * (1 + f), c[1] * (1 + f), c[2] * (1 + f)], P.grBase, 0.25);
   }
   const UNIT_COL = [colSoil, colSap, colGneiss, colAmph, colGranite];
@@ -155,7 +167,9 @@
 
   /* Colour at world (x,y). df = detail factor (pattern scale), ex = x exaggeration
      for geometric features (used by core strips so veins look oblique). */
-  function colorAt(x, y, df = 1, ex = 1, tops = null) {
+  let DET = 1;
+  function colorAt(x, y, df = 1, ex = 1, tops = null, vx = 1) {
+    DET = df;
     const xf = x * ex;
     const t = tops || topsAt(xf);
     let ui = 0;
@@ -167,10 +181,11 @@
     if (ui === 2) c = mixRgb(colSap(x, y, u, v), c, smooth(0, 2.5, y - t[2]));
     // alteration halo + vein
     const vc = veinCenter(xf),
-      vh = veinHalf(xf);
+      vh = veinHalf(xf) * vx;
     const d = y - vc;
     const ad = Math.abs(d);
-    if (ad < vh + VEIN.halo) c = mixRgb(c, P.alt, 0.55 * smooth(vh + VEIN.halo, vh, ad));
+    const halo = VEIN.halo * vx;
+    if (ad < vh + halo) c = mixRgb(c, P.alt, 0.55 * smooth(vh + halo, vh, ad));
     if (ad < vh) c = veinCol(u, v, d, vh);
     // contacts: dark line with lit upper edge
     for (let i = 1; i < t.length; i++) {
@@ -204,7 +219,7 @@
           D[k + 3] = 0;
           continue;
         }
-        let c = colorAt(x, y, df, 1, tops);
+        let c = colorAt(x, y, df, 1, tops, o.veinX || 1);
         const dk = deepK * smooth(15, 230, y);
         c = mixRgb(c, P.deep, dk);
         const n = 1 + 0.04 * noise2(px * 0.7, py * 0.7, 99);
@@ -245,12 +260,12 @@
     for (const f of FRACTURES) {
       if (f.cx + f.len < x0 || f.cx - f.len > x1 || f.cy + f.len < y0 || f.cy - f.len > y1) continue;
       fracturePath(g, f);
-      g.strokeStyle = 'rgba(138,75,42,0.38)';
-      g.lineWidth = f.w * 3.2;
+      g.strokeStyle = 'rgba(120,62,34,0.30)';
+      g.lineWidth = Math.max(f.w * 4, 4 / s);
       g.stroke();
       fracturePath(g, f);
-      g.strokeStyle = 'rgba(16,18,24,0.92)';
-      g.lineWidth = Math.max(f.w, 1.4 / s);
+      g.strokeStyle = 'rgba(10,11,15,0.95)';
+      g.lineWidth = Math.max(f.w, 2.2 / s);
       g.stroke();
     }
   }
@@ -260,7 +275,7 @@
     // roots
     g.strokeStyle = 'rgba(40,26,16,0.75)';
     g.lineCap = 'round';
-    for (let i = 0; i < 140; i++) {
+    for (let i = 0; i < 90; i++) {
       const x = lerp(-80, 80, r());
       if (x < x0 - 2 || x > x1 + 2) {
         r(); r(); r();
@@ -268,8 +283,8 @@
       }
       let px = x,
         py = surface(x) + 0.05;
-      const len = 0.6 + r() * 1.8;
-      g.lineWidth = Math.max(0.05, 1.2 / s) * (0.6 + r());
+      const len = 0.4 + r() * 1.2;
+      g.lineWidth = Math.max(0.025, 1.2 / s) * (0.5 + r());
       g.beginPath();
       g.moveTo(px, py);
       for (let k = 0; k < 5; k++) {
