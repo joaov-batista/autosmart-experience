@@ -1,0 +1,6 @@
+tools/node_modules/
+renders/segments/
+renders/stills/
+build/
+*.tmp
+__pycache__/
