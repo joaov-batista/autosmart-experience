@@ -45,6 +45,9 @@
     // sky + distant landscape, horizon just above the pad
     LAND.landscape(ctx, t + 14, { yh: yG - 70, z: 0.95, strip: 70, rays: 0.6 });
     // ground section below the surface
+    const RC = DG.CLOSE.column();
+    const [cx0, cy0] = W2S(c, RC.x0, RC.y0);
+    ctx.drawImage(RC.cv, cx0, cy0, RC.cv.width * (c.s / RC.s), RC.cv.height * (c.s / RC.s));
     const R = ground(S);
     const [gx, gy] = W2S(c, R.x0, R.y0);
     ctx.drawImage(R.cv, gx, gy, R.cv.width * (c.s / R.s), R.cv.height * (c.s / R.s));
@@ -141,6 +144,7 @@
 
   DG.SCENES.s02 = {
     init(S) {
+      DG.CLOSE.column();
       ground(S);
     },
     draw(ctx, t, S) {

@@ -9,8 +9,8 @@
 | 3. Piloto | ✅ concluído | `renders/drillgeo_pilot_s01.mp4` (0–12,5 s, narração N01 real, trilha e SFX). |
 | 4. Mecanismos | ✅ concluída | S03 corte da coroa (vista lateral + face), S04 fluido (raio-X + circuito completo), S05 testemunho + wireline. |
 | 5. Geologia | ✅ concluída | S06 camadas/profundidade, S07 caixa, S08 análise + ligações caixa ↔ camada, S09 final. |
-| 6. Pós-produção | 🟡 em andamento | Trilha e 49 tipos de SFX sintetizados; mix com ducking e loudness. **Narração: 2 de 12 falas geradas** (N01, N04). |
-| 7. Renderização | ⏳ pendente | Aguardando as falas restantes para fechar o timeline. |
+| 6. Pós-produção | 🟡 quase concluída | Trilha e 49 tipos de SFX sintetizados; mix com ducking e loudness (−14 LUFS / −1,5 dBTP); legendas SRT + ASS. **Narração: 2 de 12 falas geradas** (N01, N04) — ElevenLabs gratuito recusou as demais ("busy"). |
+| 7. Renderização | ✅ filme completo | `renders/drillgeo_shorts.mp4` (limpo) e `renders/drillgeo_shorts_legendado.mp4` (legenda queimada) — 9 cenas, ~2:11. Re-render automático quando as falas chegarem. |
 
 ## Narração (ElevenLabs)
 
@@ -18,6 +18,16 @@
 - A cota gratuita compartilhada aceita **uma geração por turno**: as tentativas paralelas falharam com "Free generations are busy" (sem cobrança).
 - Estratégia: as 10 falas restantes vão numa **única take**, separadas por `[long pause]`. `tools/narration.py combined` corta nas 9 pausas mais longas e confere a taxa de caracteres por segundo de cada trecho.
 - Sem a narração, o timeline usa durações estimadas (`DG.NARR[*].est`), e o filme continua renderizável.
+
+## Para fechar a narração
+
+```bash
+# 1. gerar a take combinada (texto em docs/SCRIPT.md, falas N02,N03,N05–N12 separadas por [long pause])
+python3 tools/narration.py combined audio/narration/take_resto.mp3 N02,N03,N05,N06,N07,N08,N09,N10,N11,N12
+node tools/render.js timeline && python3 tools/captions.py && python3 audio/mix.py
+node tools/render.js video --out build/video_master_noaudio.mp4 --crf 18 --preset medium
+# 2. mux / versões: ver tools/finish.sh
+```
 
 ## Rede
 
