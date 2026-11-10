@@ -174,10 +174,10 @@ def build(tl):
     # ---- S01 mystery → reveal ----
     s = sc['s01']
     s0 = cue('s01', 'impact_sub') or s['start'] + 6
-    S.put('pad', pad(CH['Dm'], s0 - s['start'] + 0.3, bright=700, seed=1, attack=2.5, release=1.5), s['start'], 0.8)
+    S.put('pad', pad(CH['Dm'], s0 - s['start'] + 0.3, bright=700, seed=1, attack=2.5, release=1.5), s['start'], 0.55)
     S.put('bass', sub(26, s['dur'], 1), s['start'], 0.6)
     for i, (m, tt) in enumerate([(69, 1.0), (65, 2.3), (64, 3.6), (62, 4.6)]):
-        S.put('bells', pan(bell(m, 2.6, i, 1.2), [-0.3, 0.2, -0.1, 0.3][i]), s['start'] + tt, 0.8)
+        S.put('bells', pan(bell(m, 2.6, i, 1.2), [-0.3, 0.2, -0.1, 0.3][i]), s['start'] + tt, 0.45)
     S.put('pad', pad(CH['Dm'] + [69], s['end'] - s0 if 'end' in s else s['start'] + s['dur'] - s0, bright=2600, seed=2, attack=0.2, release=1.0), s0, 0.75)
     g0 = cue('s01', 'interest_chime') or s0 + 2
     for i, m in enumerate([81, 76, 74, 81]):

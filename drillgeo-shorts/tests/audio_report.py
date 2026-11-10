@@ -1,21 +1,22 @@
-"""Audio QA: per-second loudness of each stem + scene boundaries, clipping check."""
-import json, os, sys
+"""Audio QA: level of voice vs. bed (music + sfx) while the narration speaks,
+per scene, plus master peak / clipping check."""
+import json, os
 import numpy as np
 from scipy.io import wavfile
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 tl = json.load(open(os.path.join(ROOT, 'build/timeline.json')))
-def rms_db(x, sr, win=0.5):
-    n = int(win * sr); k = len(x) // n
-    x = x[:k * n].reshape(k, n, -1)
-    return 20 * np.log10(np.sqrt(np.mean(x ** 2, axis=(1, 2))) + 1e-9)
-out = {}
-for name in ['stem_music', 'stem_sfx', 'stem_voice']:
-    sr, x = wavfile.read(os.path.join(ROOT, 'build', name + '.wav'))
-    out[name] = rms_db(x.astype(np.float64), sr)
-sr, m = wavfile.read(os.path.join(ROOT, 'audio/mix/drillgeo_master.wav'))
+def load(n):
+    sr, x = wavfile.read(os.path.join(ROOT, 'build', n + '.wav'))
+    return sr, x.astype(np.float64).mean(axis=1)
+sr, voice = load('stem_voice'); _, mus = load('stem_music'); _, fx = load('stem_sfx')
+rms = lambda x: 20 * np.log10(np.sqrt(np.mean(x ** 2)) + 1e-12)
+sr2, m = wavfile.read(os.path.join(ROOT, 'audio/mix/drillgeo_master.wav'))
 m = m.astype(np.float64) / (2 ** 31 if m.dtype == np.int32 else 1)
-print('master peak', 20 * np.log10(np.max(np.abs(m)) + 1e-12), 'dBFS; samples > -0.5 dBFS:', int(np.sum(np.abs(m) > 10 ** (-0.5 / 20))))
-for s in tl['scenes']:
-    a, b = int(s['start'] / 0.5), int((s['start'] + s['dur']) / 0.5)
-    row = '  '.join(f"{k[5:]}:{np.mean(v[a:b]):6.1f}" for k, v in out.items())
-    print(f"{s['id']} {s['start']:6.2f}-{s['start']+s['dur']:6.2f}  {row}")
+print(f"master peak {20*np.log10(np.max(np.abs(m))):.2f} dBFS, samples > -0.5 dBFS: {int(np.sum(np.abs(m) > 10 ** (-0.5 / 20)))}")
+worst = 99
+for l in tl['lines']:
+    a, b = int(l['start'] * sr), int((l['start'] + l['dur']) * sr)
+    v, bed = rms(voice[a:b]), rms(mus[a:b] + fx[a:b])
+    worst = min(worst, v - bed)
+    print(f"{l['id']} {l['start']:6.2f}s  voice {v:6.1f}  music {rms(mus[a:b]):6.1f}  sfx {rms(fx[a:b]):6.1f}  voice-bed {v - bed:+5.1f} dB")
+print(f"worst voice-over-bed margin: {worst:+.1f} dB (target ≥ +8)")

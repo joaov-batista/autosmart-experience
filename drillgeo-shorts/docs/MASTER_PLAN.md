@@ -17,8 +17,8 @@ O site institucional usa o mote **"Cada camada do subsolo conta uma história."*
 | Renderização | Página HTML com `renderFrame(t)` puro (sem estado acumulado) → Chromium headless via Playwright → JPEG por quadro → FFmpeg (H.264). 4 workers em paralelo, cada um com um trecho do filme. |
 | Determinismo | Toda animação é função do tempo `t`. Partículas são analíticas (posição calculada a partir do instante de emissão). Qualquer quadro pode ser renderizado isoladamente: isso permite stills de inspeção e renderização paralela. |
 | Fonte da verdade do tempo | `src/timeline.js`: duração das cenas, falas e cues sonoros. O pipeline de áudio lê o mesmo arquivo (exportado para `build/timeline.json`). |
-| Grade musical | 96 BPM (compasso de 2,5 s). As cenas são arredondadas para meio compasso (1,25 s), de modo que os cortes caem no tempo da trilha. |
-| Narração | ElevenLabs (`eleven_v4`, voz "Henrique – Clear and Knowledgeable"), **somente voz**. Uma fala por bloco do roteiro, posicionada pelo timeline. |
+| Grade musical | 96 BPM (compasso de 2,5 s). As cenas são arredondadas para batidas inteiras (0,625 s), de modo que os cortes caem no tempo da trilha. |
+| Narração | ElevenLabs (`eleven_v4`, voz "George", via API), **somente voz**. Uma fala por bloco do roteiro, posicionada pelo timeline e verificada por transcrição (ver `SCRIPT.md`). |
 | Trilha e SFX | Originais, sintetizados em Python (numpy/scipy) a partir do mesmo timeline: nada de bibliotecas de terceiros. |
 | Marca | Logomarca oficial (hélice) obtida do site institucional `drillgeo.com.br/assets/logo/Helice_uniforme-recortado.png`. Wordmark composto como no site: "Drill" (papel) + "Geo" (azul), Space Grotesk 700. Paleta da marca extraída do CSS do site. |
 | Equipamento | Sonda **genérica**, tecnicamente coerente, **não** apresentada como modelo da frota da empresa. |

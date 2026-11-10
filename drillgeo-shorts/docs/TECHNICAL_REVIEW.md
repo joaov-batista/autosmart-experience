@@ -63,6 +63,6 @@ A sondagem é mostrada como **atividade de investigação**, não de extração.
 
 ## 6. Pontos para validação da DrillGeo antes de publicar
 
-- Pronúncia da marca na narração ("DrillGeo").
+- Pronúncia da marca na narração ("DrillGeo") e se a voz padrão (George) atende, ou se preferem regravar com a voz brasileira nativa (requer conta paga do ElevenLabs).
 - Se a empresa prefere outro termo regional (ex.: "pescador" × "overshot", "taco" × "marcador de profundidade").
 - Uso da logomarca extraída do site (arquivo `assets/brand/drillgeo-helice.png`). Para entrega final, trocar pelo arquivo-mestre da marca, se houver.

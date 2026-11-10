@@ -13,14 +13,14 @@ import sfx  # noqa: E402
 import music  # noqa: E402
 
 GAIN = {  # dB per cue type (relative); voice sits on top
-    'amb_nature': -3, 'amb_site': -6, 'whoosh_down': -4, 'whip_up': -5, 'dive_whoosh': -6, 'rise_whoosh': -6,
+    'amb_nature': -9, 'amb_site': -6, 'whoosh_down': -8, 'whip_up': -5, 'dive_whoosh': -6, 'rise_whoosh': -6,
     'pull_back_whoosh': -7, 'push_in_whoosh': -7, 'return_whoosh': -7, 'impact_sub': -1, 'impact_arrive': -3,
-    'earth_rumble': -4, 'scan_shimmer': -8, 'interest_chime': -7, 'engine': -3, 'lever_clunk': -4, 'hydraulic_hiss': -9,
-    'rotation_start': -5, 'rotation_loop': -6, 'cutting': -5, 'arrive_thud': -5, 'reveal_soft': -9, 'diamond_glint': -8,
-    'xray_sweep': -8, 'fluid_flow': -4, 'pump': -6, 'core_slide': -6, 'motor_down': -5, 'winch_run': -5, 'latch_click': -3,
+    'earth_rumble': -7, 'scan_shimmer': -10, 'interest_chime': -7, 'engine': -3, 'lever_clunk': -4, 'hydraulic_hiss': -9,
+    'rotation_start': -5, 'rotation_loop': -8, 'cutting': -7, 'arrive_thud': -5, 'reveal_soft': -9, 'diamond_glint': -8,
+    'xray_sweep': -8, 'fluid_flow': -4, 'pump': -6, 'core_slide': -8, 'motor_down': -5, 'winch_run': -5, 'latch_click': -3,
     'metal_clank': -4, 'core_break': -2, 'winch_stop': -5, 'under_drone': -6, 'drill_distant': -8, 'layer_tick': -7,
     'core_slide_metal': -4, 'box_open': -3, 'core_place': -3, 'block_place': -4, 'marker_write': -6, 'cloth_move': -8,
-    'lens_swish': -8, 'feature_bell': -7, 'links_arp': -8, 'ui_tick': -12, 'ui_pop': -11, 'logo_spin': -6, 'logo_hit': -3,
+    'lens_swish': -8, 'feature_bell': -7, 'links_arp': -8, 'ui_tick': -12, 'ui_pop': -11, 'logo_spin': -8, 'logo_hit': -3,
 }
 
 
@@ -93,22 +93,22 @@ def main():
             y = fn(kw['dur'])
         add(fx, y, c['t'], db(GAIN.get(c['type'], -6)))
 
-    # ---- ducking: music −9 dB and sfx −4 dB under the voice ----
+    # ---- ducking: music −11 dB and sfx −12 dB under the voice (voice ≥ +8 dB over the bed) ----
     venv = smooth_env(np.abs(voice), 0.04, 0.45)
     on = np.clip(venv / db(-30), 0, 1)
-    duck_m = db(-9) + (1 - db(-9)) * (1 - on)
-    duck_f = db(-4) + (1 - db(-4)) * (1 - on)
+    duck_m = db(-11) + (1 - db(-11)) * (1 - on)
+    duck_f = db(-12) + (1 - db(-12)) * (1 - on)
     mus *= duck_m[:, None]
     fx *= duck_f[:, None]
 
-    mix = mus * db(-5) + fx * db(-2) + np.stack([voice, voice], 1) * db(0)
+    mix = mus * db(-5) + fx * db(-3) + np.stack([voice, voice], 1) * db(0)
     mix = shelf_high(mix, 8500, -2.5)
     mix = soft_clip(mix * 0.9, 1.1)
     mix = limiter(mix, -2.0)
     os.makedirs(os.path.join(ROOT, 'build'), exist_ok=True)
     raw = os.path.join(ROOT, 'build', 'mix_raw.wav')
     wavfile.write(raw, SR, mix.astype(np.float32))
-    for name, x in [('stem_music', mus * db(-5)), ('stem_sfx', fx * db(-2)), ('stem_voice', np.stack([voice, voice], 1))]:
+    for name, x in [('stem_music', mus * db(-5)), ('stem_sfx', fx * db(-3)), ('stem_voice', np.stack([voice, voice], 1))]:
         wavfile.write(os.path.join(ROOT, 'build', name + '.wav'), SR, x.astype(np.float32))
     # ---- loudness: two-pass loudnorm → -14 LUFS, -1.5 dBTP ----
     meas = lufs(raw)

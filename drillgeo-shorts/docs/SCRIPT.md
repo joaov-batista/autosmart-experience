@@ -1,6 +1,8 @@
 # Roteiro e narração
 
-Voz: ElevenLabs `eleven_v4`, voz **"Henrique – Clear and Knowledgeable"** (masculina, português do Brasil, dicção clara, ritmo didático). Tags de interpretação: `[curious]` nas perguntas de abertura e `[warmly]` na assinatura.
+Voz final: ElevenLabs `eleven_v4`, voz **"George – Warm, Captivating Storyteller"** (masculina, narrador caloroso), gerada pela API (`tools/elevenlabs_api.py`). Tags de interpretação: `[curious]` nas perguntas e na virada da cena 5, `[warmly]` na apresentação e na assinatura.
+
+> Por que mudou: a voz planejada ("Henrique – Clear and Knowledgeable", brasileira nativa) é uma voz da biblioteca. A cota gratuita compartilhada do conector recusou 10 das 12 falas ("busy"), e a chave de API usada depois é de conta gratuita, que **não pode usar vozes da biblioteca nem criar vozes pela API**. Escolhi entre as vozes padrão disponíveis por transcrição automática (ElevenLabs Scribe): todas as 12 falas foram reconhecidas como português, 11 com texto idêntico ao roteiro e a 12ª diferindo só na grafia da marca ("DrilGeo"). Relatório em `audio/narration/api/qa.json`. Para voltar à voz brasileira nativa, basta uma chave de conta paga: `python3 tools/elevenlabs_api.py 3ULAAai0IVN00DTWA6vF`.
 
 Cada fala é um arquivo separado (`audio/narration/Nxx.mp3`), posicionado pelo `src/timeline.js`. As cenas se ajustam à duração real de cada fala e são arredondadas para o tempo da música (1 batida = 0,625 s a 96 BPM).
 

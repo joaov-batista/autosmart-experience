@@ -2,11 +2,51 @@
 window.DG = window.DG || {};
 DG.NARR_META = {
  "N01": {
-  "dur": 4.48,
+  "dur": 4.64,
   "file": "audio/narration/clips/N01.wav"
  },
+ "N02": {
+  "dur": 3.1,
+  "file": "audio/narration/clips/N02.wav"
+ },
+ "N03": {
+  "dur": 9.32,
+  "file": "audio/narration/clips/N03.wav"
+ },
  "N04": {
-  "dur": 8.52,
+  "dur": 9.28,
   "file": "audio/narration/clips/N04.wav"
+ },
+ "N05": {
+  "dur": 10.7,
+  "file": "audio/narration/clips/N05.wav"
+ },
+ "N06": {
+  "dur": 13.56,
+  "file": "audio/narration/clips/N06.wav"
+ },
+ "N07": {
+  "dur": 8.18,
+  "file": "audio/narration/clips/N07.wav"
+ },
+ "N08": {
+  "dur": 10.88,
+  "file": "audio/narration/clips/N08.wav"
+ },
+ "N09": {
+  "dur": 9.38,
+  "file": "audio/narration/clips/N09.wav"
+ },
+ "N10": {
+  "dur": 10.66,
+  "file": "audio/narration/clips/N10.wav"
+ },
+ "N11": {
+  "dur": 10.46,
+  "file": "audio/narration/clips/N11.wav"
+ },
+ "N12": {
+  "dur": 5.26,
+  "file": "audio/narration/clips/N12.wav"
  }
 };

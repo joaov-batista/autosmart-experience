@@ -1,154 +1,154 @@
 1
-00:00:00,800 --> 00:00:04,493
+00:00:00,800 --> 00:00:04,627
 Você já parou para pensar no que
 existe centenas de metros abaixo
 
 2
-00:00:04,533 --> 00:00:05,240
+00:00:04,667 --> 00:00:05,400
 dos seus pés?
 
 3
-00:00:07,280 --> 00:00:10,840
+00:00:07,440 --> 00:00:10,500
 Como podemos descobrir o que
 está escondido lá embaixo?
 
 4
-00:00:13,200 --> 00:00:15,066
+00:00:13,200 --> 00:00:15,011
 É aqui que entra a sondagem.
 
 5
-00:00:15,106 --> 00:00:19,492
+00:00:15,051 --> 00:00:19,307
 Com equipamentos especializados,
 a DrillGeo investiga o subsolo e
 
 6
-00:00:19,532 --> 00:00:22,760
+00:00:19,347 --> 00:00:22,480
 recupera informações
 essenciais sobre as rochas.
 
 7
-00:00:25,350 --> 00:00:29,194
+00:00:25,350 --> 00:00:29,541
 Na sondagem rotativa diamantada,
 a máquina transmite rotação e
 
 8
-00:00:29,234 --> 00:00:31,512
+00:00:29,581 --> 00:00:32,065
 força de avanço
 através das hastes...
 
 9
-00:00:31,552 --> 00:00:33,830
+00:00:32,105 --> 00:00:34,590
 permitindo que a
 coroa corte a rocha.
 
 10
-00:00:35,600 --> 00:00:39,025
+00:00:36,225 --> 00:00:39,820
 Durante a perfuração, um
 fluido circula pelo sistema.
 
 11
-00:00:39,065 --> 00:00:43,079
+00:00:39,860 --> 00:00:44,073
 Ele ajuda a resfriar a coroa,
 remover os fragmentos de rocha e
 
 12
-00:00:43,119 --> 00:00:45,760
+00:00:44,113 --> 00:00:46,885
 manter condições
 adequadas para o avanço.
 
 13
-00:00:47,575 --> 00:00:50,405
+00:00:48,825 --> 00:00:51,647
 Mas o objetivo não é
 apenas abrir um furo.
 
 14
-00:00:50,445 --> 00:00:54,848
+00:00:51,687 --> 00:00:56,076
 É recuperar uma amostra da rocha,
 chamada testemunho de sondagem.
 
 15
-00:00:54,888 --> 00:00:58,401
+00:00:56,116 --> 00:00:59,619
 Esse cilindro preserva
 informações valiosas sobre as
 
 16
-00:00:58,441 --> 00:01:01,135
+00:00:59,659 --> 00:01:02,345
 características do
 material atravessado.
 
 17
-00:01:03,075 --> 00:01:07,000
+00:01:04,285 --> 00:01:08,403
 No sistema wireline, um cabo de
 aço traz o tubo interno com o
 
 18
-00:01:07,040 --> 00:01:10,835
+00:01:08,443 --> 00:01:12,425
 testemunho até a superfície,
 sem retirar as hastes do furo.
 
 19
-00:01:13,400 --> 00:01:16,856
+00:01:15,275 --> 00:01:19,001
 Cada profundidade pode revelar
 uma formação diferente.
 
 20
-00:01:16,896 --> 00:01:20,741
+00:01:19,041 --> 00:01:23,186
 Mudanças de cor, composição,
 textura e fraturamento ajudam a
 
 21
-00:01:20,781 --> 00:01:23,460
+00:01:23,226 --> 00:01:26,115
 contar a história
 geológica daquele local.
 
 22
-00:01:26,400 --> 00:01:30,014
+00:01:28,900 --> 00:01:32,585
 Na superfície, os testemunhos
 são organizados em caixas,
 
 23
-00:01:30,054 --> 00:01:34,320
+00:01:32,625 --> 00:01:36,976
 identificados por furo e profundidade,
 preservando a sequência das
 
 24
-00:01:34,360 --> 00:01:35,560
+00:01:37,016 --> 00:01:38,240
 rochas recuperadas.
 
 25
-00:01:37,575 --> 00:01:41,815
+00:01:40,075 --> 00:01:44,339
 Com essas amostras, os geólogos
 estudam as formações, identificam
 
 26
-00:01:41,855 --> 00:01:45,567
+00:01:44,379 --> 00:01:48,113
 estruturas e investigam
 possíveis mineralizações e outras
 
 27
-00:01:45,607 --> 00:01:48,135
+00:01:48,153 --> 00:01:50,695
 características
 importantes do terreno.
 
 28
-00:01:50,900 --> 00:01:55,060
+00:01:53,400 --> 00:01:57,544
 Em projetos de mineração e de
 investigação geológica, entender o
 
 29
-00:01:55,100 --> 00:01:59,194
+00:01:57,584 --> 00:02:01,663
 que existe abaixo da superfície
 é essencial para tomar decisões
 
 30
-00:01:59,234 --> 00:02:01,360
+00:02:01,703 --> 00:02:03,820
 com mais conhecimento e precisão.
 
 31
-00:02:03,000 --> 00:02:07,093
+00:02:05,460 --> 00:02:10,146
 DrillGeo. Geologia e sondagem
 revelando o que a superfície não
 
 32
-00:02:07,133 --> 00:02:07,560
+00:02:10,186 --> 00:02:10,680
 mostra.
