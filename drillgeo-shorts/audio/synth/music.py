@@ -184,6 +184,19 @@ def build(tl):
         S.put('bells', pan(bell(m, 2.2, 10 + i, 1.0), 0.4 - 0.25 * i), g0 + i * BEAT * 0.5, 0.45)
     S.put('fx', pan(riser(0.9, 3, 0.8), 0), s['start'] + s['dur'] - 0.9)
 
+    # ---- SB the cake & the straw: light and playful ----
+    s = sc['sb']
+    prog = ['F', 'C', 'Dm', 'Bb']
+    pat = [0, 2, 1, 3, 2, 1, 3, 2]
+    for b, t0, ch in chords_for(s, prog):
+        S.put('pad', pad(CH[ch], BAR, bright=1900, seed=210 + b, attack=0.3), t0, 0.35)
+        S.put('bass', pan(sub(ROOT[ch], BAR * 0.9, b), 0), t0, 0.45)
+        for k in range(8):
+            S.put('keys', pan(marimba(CH[ch][pat[k]] + 12, 0.6, 220 + b * 8 + k), 0.3 * np.cos(k * 1.3)), t0 + k * BEAT / 2, 0.6)
+        S.put('drums', pan(kick(0.55, 230 + b), 0), t0)
+        S.put('drums', pan(hat(0.5, seed=240 + b), 0.3), t0 + 2 * BEAT)
+    S.put('fx', pan(riser(0.9, 5, 0.7), 0), s['start'] + s['dur'] - 0.9)
+
     # ---- S02 industrial pulse ----
     s = sc['s02']
     st0 = cue('s02', 'rotation_start') or s['start'] + 7

@@ -166,7 +166,7 @@
     const drift = 30 * E.inOutSine(seg(t, T.open[0], T.pull[0]));
     // big box position → slot 3 of the 4-box rack
     const big = { x: 540 - (B.W * s0) / 2 + drift, y: 760 - (B.H * s0) / 2, s: s0 };
-    const slot = (i) => ({ x: 110, y: 330 + i * 250, s: 0.4 });
+    const slot = (i) => ({ x: 110, y: 360 + i * 222, s: 0.38 });
     const p = (a, b) => ({ x: lerp(a.x, b.x, pk), y: lerp(a.y, b.y, pk), s: lerp(a.s, b.s, pk) });
     const d0 = COREBOX.boxStart(N);
     const pcs = COREBOX.pieces(N).filter((q) => q.row === 2);
@@ -203,7 +203,7 @@
     }
     if (pk === 0) tools(ctx, 150, big.y + B.H * s0 + 70, 1);
     // texts
-    DG.title(ctx, 'CAIXA DE TESTEMUNHOS', 540, 236, ep(t, T.title, T.title + 0.8, 'linear'), 0, { size: 48 });
+    DG.text(ctx, 'na ordem, com a profundidade', 540, big.y - 60, { size: 34, weight: 500, align: 'center', color: C.paper, alpha: (1 - pk) * ep(t, T.label[0], T.label[1], 'linear') });
     DG.text(ctx, 'identificação e profundidades: valores ilustrativos', 540, big.y + B.H * s0 + 30, { size: 22, font: DG.FONT.body, weight: 600, tracking: 0, align: 'center', color: C.paperDim, alpha: (1 - pk) * ep(t, T.label[0], T.label[1], 'linear') });
     if (pk > 0) {
       BOXES.forEach((n, i) => {
@@ -211,8 +211,8 @@
         const b0 = COREBOX.boxStart(n);
         ctx.save();
         ctx.globalAlpha = pk;
-        DG.text(ctx, `CX ${String(n).padStart(2, '0')}`, 600, sl.y + 70, { size: 34, color: C.paper });
-        DG.text(ctx, `${COREBOX.fmt(b0)} – ${COREBOX.fmt(b0 + 5)} m`, 600, sl.y + 116, { size: 28, font: DG.FONT.mono, weight: 400, tracking: 0, color: C.paperDim });
+        DG.text(ctx, `CX ${String(n).padStart(2, '0')}`, 580, sl.y + 62, { size: 34, color: C.paper });
+        DG.text(ctx, `${COREBOX.fmt(b0)} – ${COREBOX.fmt(b0 + 5)} m`, 580, sl.y + 106, { size: 28, font: DG.FONT.mono, weight: 400, tracking: 0, color: C.paperDim });
         ctx.restore();
       });
     }

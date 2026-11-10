@@ -13,17 +13,18 @@ MODEL = sys.argv[2] if len(sys.argv) > 2 else 'eleven_v4'
 API = 'https://api.elevenlabs.io/v1'
 
 LINES = {
-    'N01': '[curious] Você já parou para pensar no que existe centenas de metros abaixo dos seus pés?',
-    'N02': '[curious] Como podemos descobrir o que está escondido lá embaixo?',
-    'N03': '[warmly] É aqui que entra a sondagem. Com equipamentos especializados, a DrillGeo investiga o subsolo e recupera informações essenciais sobre as rochas.',
-    'N04': 'Na sondagem rotativa diamantada, a máquina transmite rotação e força de avanço através das hastes… permitindo que a coroa corte a rocha.',
-    'N05': 'Durante a perfuração, um fluido circula pelo sistema. Ele ajuda a resfriar a coroa, remover os fragmentos de rocha e manter condições adequadas para o avanço.',
-    'N06': '[curious] Mas o objetivo não é apenas abrir um furo. É recuperar uma amostra da rocha, chamada testemunho de sondagem. [pause] [warmly] Esse cilindro preserva informações valiosas sobre as características do material atravessado.',
-    'N07': 'No sistema wireline, um cabo de aço traz o tubo interno com o testemunho até a superfície, sem retirar as hastes do furo.',
-    'N08': 'Cada profundidade pode revelar uma formação diferente. Mudanças de cor, composição, textura e fraturamento ajudam a contar a história geológica daquele local.',
-    'N09': 'Na superfície, os testemunhos são organizados em caixas, identificados por furo e profundidade, preservando a sequência das rochas recuperadas.',
-    'N10': 'Com essas amostras, os geólogos estudam as formações, identificam estruturas e investigam possíveis mineralizações e outras características importantes do terreno.',
-    'N11': 'Em projetos de mineração e de investigação geológica, entender o que existe abaixo da superfície é essencial para tomar decisões com mais conhecimento e precisão.',
+    'N01': '[warmly] Oi! Eu sou o Geo, da equipe da DrillGeo. Você já pensou no que existe debaixo dos seus pés? Vem comigo, que eu te mostro!',
+    'N02': '[curious] Lá embaixo tem camadas e mais camadas de rocha. Mas como a gente descobre o que tem lá… sem cavar um buraco gigante?',
+    'B01': '[warmly] Pensa num bolo de camadas. Se você enfia um canudo e puxa… sai uma amostrinha com todas as camadas dentro. A sondagem faz isso, só que na rocha!',
+    'N03': 'Essa é a sonda, a máquina que faz o furo. Ela gira uma coluna de tubos de aço, que a gente chama de hastes, e empurra tudo pra baixo.',
+    'N04': 'Na ponta fica a coroa: um anel cheio de diamantes. Ela gira e corta a rocha em forma de anel… igual a um cortador de biscoito.',
+    'N05': 'Enquanto ela corta, a gente manda água pelo meio dos tubos. A água esfria a coroa e leva o pó de rocha pra fora, igual à água na broca do dentista.',
+    'N06': '[curious] E o miolo? [warmly] O miolo fica inteirinho! Esse cilindro de rocha é o testemunho. Ele vai entrando num tubo, igual ao bolo dentro do canudo.',
+    'N07': 'Quando o tubo enche, a gente desce um cabo com uma peça que engata, o pescador, e puxa o tubo cheio lá do fundo. As hastes continuam no furo.',
+    'N08': 'Conforme o furo desce, ele atravessa camadas diferentes: terra, rocha mais mole, rocha dura, rachaduras… e às vezes um veio com minerais.',
+    'N09': 'Aqui em cima, as amostras vão pra uma caixa, na ordem certinha, com a profundidade anotada. É como um álbum de fotos do subsolo.',
+    'N10': 'Depois, o geólogo estuda cada pedaço com lupa. Às vezes aparece sinal de minério, às vezes não… e as duas respostas são informação valiosa.',
+    'N11': 'Resumindo: a coroa corta, o cilindro sobe, vai pra caixa, e o geólogo estuda. Assim dá pra decidir com mais segurança, antes de uma obra ou de uma mina.',
     'N12': '[warmly] DrillGeo. Geologia e sondagem revelando o que a superfície não mostra.',
 }
 

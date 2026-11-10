@@ -18,10 +18,10 @@
   const pos = (depth, row) => [B().endW + 6 + (depth - (COREBOX.boxStart(N) + row)) * 985, B().wall + row * (B().rowW + B().div) + B().rowW / 2];
   const FEAT = [
     ['TEXTURA', 120.62, 4],
-    ['FRATURA', 117.8, 1],
+    ['RACHADURA', 117.8, 1],
     ['VEIO', 118.85, 2],
     ['MINERAIS', 119.05, 2],
-    ['ALTERAÇÃO', 119.9, 3],
+    ['ROCHA ALTERADA', 119.9, 3],
   ];
 
   let bg = null;
@@ -213,13 +213,13 @@
       const bs = 0.24;
       const bw = COREBOX.BOX.W * bs,
         bh = COREBOX.BOX.H * bs;
-      const x = 70,
+      const x = 600,
         y = ym - bh / 2;
       const lp = E.outCubic(seg(t, T.links + 0.3 + i * 0.3, T.links + 1.0 + i * 0.3));
       const ap = E.outCubic(seg(t, T.links + i * 0.25, T.links + 0.6 + i * 0.25));
       ctx.save();
       ctx.globalAlpha = ap * (1 - fly * 0.9);
-      ctx.translate((1 - ap) * -60, 0);
+      ctx.translate((1 - ap) * 60, 0);
       DG.rr(ctx, x - 10, y - 10, bw + 20, bh + 54, 10);
       ctx.fillStyle = 'rgba(11,14,20,0.72)';
       ctx.fill();
@@ -234,8 +234,8 @@
       glow(ctx, 540, ym, 70, '#F2A93B', 0.7 * lp);
       ctx.restore();
       if (lp > 0) {
-        const ax = x + bw + 12;
-        DG.dashed(ctx, [[ax, ym], [lerp(ax, 528, lp), ym]], { color: C.amber, width: 4, alpha: 0.95 * (1 - fly), offset: -t * 40, dash: [12, 9] });
+        const ax = x - 12;
+        DG.dashed(ctx, [[ax, ym], [lerp(ax, 552, lp), ym]], { color: C.amber, width: 4, alpha: 0.95 * (1 - fly), offset: -t * 40, dash: [12, 9] });
       }
       // samples returning to where they came from
       if (fly > 0 && fly < 1) {

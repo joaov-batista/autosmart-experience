@@ -28,15 +28,15 @@
     return {
       A, B,
       full,
-      lblCore: A.start + A.dur * 0.5,
-      lblIT: A.start + A.dur * 0.22,
+      lblCore: A.start + A.dur * 0.42,
+      lblIT: A.start + A.dur * 0.64,
       xray: [A.start + A.dur * 0.62, A.start + A.dur * 0.95],
       stop: [full - 0.2, full + 1.1],
-      down: [B.start - 0.75, B.start + 2.0],
-      latch: [B.start + 2.0, B.start + 3.15],
-      brk: [B.start + 3.15, B.start + 4.2],
-      up: [B.start + 4.2, B.start + 7.2],
-      surf: [B.start + 7.2, S.dur],
+      down: [B.start - 0.6, B.start + 2.5],
+      latch: [B.start + 2.5, B.start + 4.6],
+      brk: [B.start + 4.6, B.start + 5.5],
+      up: [B.start + 5.5, B.start + 8.3],
+      surf: [B.start + 8.3, S.dur],
     };
   }
 
@@ -97,11 +97,13 @@
     ctx.restore();
     // rotation arrow on the outer tube (it turns); the inner tube does not
     const ra = (1 - smooth(T.stop[0], T.stop[1], t)) * ep(t, 0.6, 1.4, 'outCubic');
-    DG.rotArrow(ctx, 540, 300, BIT.G.otR * K5 + 34, 30, ra, rot * 0.15, { width: 7, alpha: ra });
+    DG.rotArrow(ctx, 540, 430, BIT.G.otR * K5 + 34, 30, ra, rot * 0.15, { width: 7, alpha: ra });
     // labels
-    DG.label(ctx, { x: 540 + BIT.G.itR * K5 - 4, y: 720, lx: 600, ly: 560, side: 'right', text: 'TUBO INTERNO', p: ep(t, T.lblIT, T.lblIT + 0.7, 'linear'), q: ep(t, T.lblIT + 3.2, T.lblIT + 3.7, 'linear'), size: 34 });
-    const cy = clamp(SY(Math.max(yTop + 120, ycam - 200)), 380, 1250);
-    DG.label(ctx, { x: 540 - BIT.G.Ri * K5 + 10, y: cy, lx: 80, ly: cy - 120, side: 'right', text: 'TESTEMUNHO', p: ep(t, T.lblCore, T.lblCore + 0.8, 'linear'), q: ep(t, T.stop[1] - 0.3, T.stop[1] + 0.2, 'linear'), size: 40 });
+    DG.label(ctx, { x: 540 + BIT.G.itR * K5 - 4, y: 720, lx: 600, ly: 560, side: 'right', text: 'TUBO', p: ep(t, T.lblIT, T.lblIT + 0.7, 'linear'), q: ep(t, T.stop[1] - 0.3, T.stop[1] + 0.2, 'linear'), size: 42 });
+    const cy = clamp(SY(Math.max(yTop + 120, ycam - 200)), 520, 1080);
+    DG.label(ctx, { x: 540 - BIT.G.Ri * K5 + 10, y: cy, lx: 80, ly: cy - 120, side: 'right', text: 'TESTEMUNHO', p: ep(t, T.lblCore, T.lblCore + 0.8, 'linear'), q: ep(t, T.stop[1] - 0.3, T.stop[1] + 0.2, 'linear'), size: 44 });
+    const pm = ep(t, T.lblCore + 0.4, T.lblCore + 1.0, 'linear') * (1 - ep(t, T.stop[1] - 0.3, T.stop[1] + 0.2, 'linear'));
+    if (pm > 0) DG.text(ctx, 'o miolo de rocha', 84, cy - 58, { size: 30, weight: 500, color: C.paper, alpha: pm });
     return { faceDepth };
   }
 
@@ -195,8 +197,8 @@
       const oo = { cableTo: d - 0.75, overshot: d };
       DG.motionBlur(ctx, 0, -v, (g) => longView(g, t, ycam, oo, 'bg'), 10);
       longView(ctx, t, ycam, oo, 'fg');
-      DG.label(ctx, { x: 552, y: 960 - 2.5 * SM - 20, lx: 620, ly: 760, side: 'right', text: 'WIRELINE', p: ep(t, T.B.start + 0.1, T.B.start + 0.8, 'linear'), q: ep(t, T.latch[0] - 0.3, T.latch[0], 'linear'), size: 40 });
-      DG.text(ctx, 'cabo de aço', 640, 836, { size: 28, weight: 500, color: C.paperDim, alpha: ep(t, T.B.start + 0.5, T.B.start + 1.1, 'linear') * (1 - ep(t, T.latch[0] - 0.3, T.latch[0], 'linear')) });
+      DG.label(ctx, { x: 552, y: 960 - 2.5 * SM - 20, lx: 620, ly: 760, side: 'right', text: 'CABO DE AÇO', p: ep(t, T.B.start + 0.1, T.B.start + 0.8, 'linear'), q: ep(t, T.latch[0] - 0.3, T.latch[0], 'linear'), size: 40 });
+      DG.text(ctx, '(wireline)', 640, 836, { size: 28, weight: 500, color: C.paperDim, alpha: ep(t, T.B.start + 0.5, T.B.start + 1.1, 'linear') * (1 - ep(t, T.latch[0] - 0.3, T.latch[0], 'linear')) });
       return;
     }
     const k = E.inOutCubic(seg(t, T.up[0], T.up[1]));
@@ -209,7 +211,7 @@
     longView(ctx, t, ycam, oo, 'fg');
     const pl = ep(t, T.up[0] + 0.3, T.up[0] + 1.0, 'linear'),
       ql = ep(t, T.up[1] - 0.4, T.up[1], 'linear');
-    DG.label(ctx, { x: 556, y: 960 + 1.5 * SM - 60, lx: 620, ly: 700, side: 'right', text: 'TUBO INTERNO', p: pl, q: ql, size: 38 });
+    DG.label(ctx, { x: 556, y: 960 + 1.5 * SM - 60, lx: 620, ly: 700, side: 'right', text: 'TUBO CHEIO', p: pl, q: ql, size: 42 });
     DG.label(ctx, { x: 512, y: 960 + 2.2 * SM, lx: 470, ly: 1150, side: 'left', text: 'HASTES FICAM NO FURO', p: ep(t, T.up[0] + 0.9, T.up[0] + 1.6, 'linear'), q: ql, size: 32 });
   }
 
@@ -317,6 +319,10 @@
   }
 
   DG.SCENES.s05 = {
+    step(t, S) {
+      const T = times(S);
+      return t >= T.down[0] ? [5, 'O PESCADOR'] : [4, 'O TESTEMUNHO'];
+    },
     init() {
       rock5();
       core5();

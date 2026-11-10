@@ -121,6 +121,14 @@
   }
 
   DG.SCENES.s01 = {
+    mascotStage(t, S) {
+      const T = times(S);
+      return { mode: 'presenter', fullK: 1 - E.inOutCubic(seg(t, T.d0 - 0.3, T.d0 + 1.1)), enter: seg(t, 0.0, 0.7) };
+    },
+    mascot(S) {
+      const T = times(S);
+      return [[0, 'wave'], [2.6, 'explain'], [T.L1.end - 2.2, 'point_down'], [T.d0 + 1.2, 'idle'], [T.L2.start, 'point_up'], [T.L2.start + 1.6, 'explain'], [T.L2.end + 0.2, 'idle']];
+    },
     init() {
       wide();
       LAND.ridges();

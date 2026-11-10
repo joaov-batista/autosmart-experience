@@ -10,12 +10,12 @@
   const END_DEPTH = 196;
 
   const TAGS = [
-    ['SOLO', 2.5],
-    ['ROCHA ALTERADA', 14],
-    ['ROCHA SÃ', 40],
-    ['FRATURAS', 71],
-    ['OUTRA LITOLOGIA', 104],
-    ['VEIO MINERAL', 119.1],
+    ['TERRA', 2.5],
+    ['ROCHA MAIS MOLE', 14],
+    ['ROCHA DURA', 40],
+    ['RACHADURAS', 71],
+    ['OUTRA ROCHA', 104],
+    ['VEIO COM MINERAIS', 119.1],
     ['GRANITO', 172],
   ];
 
@@ -95,7 +95,7 @@
       const y = Ys(d);
       const p = smooth(d - 3, d + 6, bit);
       const q = smooth(BIT_Y - 200, BIT_Y - 700, y) * 0 + (y < 230 ? smooth(230, 120, y) : 0);
-      if (p <= 0 || y < 120 || y > 1400) return;
+      if (p <= 0 || y < 380 || y > 1150) return;
       DG.label(ctx, { x: 556, y, lx: 640, ly: y, side: 'right', text: txt, p, q, size: 32, alpha: i === 5 ? 1 : 0.95 });
       if (i === 5) glow(ctx, 540, y, 70, '#F2A93B', 0.35 * p);
     });
@@ -137,14 +137,14 @@
     const p = ep(t, 0.4, 1.0, 'outCubic');
     ctx.save();
     ctx.globalAlpha = p;
-    DG.rr(ctx, 170, 1236, 380, 150, 12);
+    DG.rr(ctx, 560, 190, 370, 150, 12);
     ctx.fillStyle = 'rgba(11,14,20,0.72)';
     ctx.fill();
     ctx.strokeStyle = rgba(C.paper, 0.15);
     ctx.stroke();
-    DG.text(ctx, 'PROFUNDIDADE', 196, 1268, { size: 26, color: C.amber, shadow: false });
-    DG.text(ctx, `${Math.max(0, bit).toFixed(0)} m`, 196, 1322, { size: 56, font: DG.FONT.mono, weight: 600, tracking: 0, shadow: false });
-    DG.text(ctx, 'valores ilustrativos', 196, 1366, { size: 22, font: DG.FONT.body, weight: 600, tracking: 0, color: C.paperDim, shadow: false });
+    DG.text(ctx, 'PROFUNDIDADE', 586, 222, { size: 26, color: C.amber, shadow: false });
+    DG.text(ctx, `${Math.max(0, bit).toFixed(0)} m`, 586, 276, { size: 56, font: DG.FONT.mono, weight: 600, tracking: 0, shadow: false });
+    DG.text(ctx, 'valores ilustrativos', 586, 320, { size: 22, font: DG.FONT.body, weight: 600, tracking: 0, color: C.paperDim, shadow: false });
     ctx.restore();
   }
 
@@ -205,8 +205,7 @@
         return;
       }
       frame(ctx, t, S, T);
-      DG.title(ctx, 'CAMADAS GEOLÓGICAS', 540, 236, ep(t, T.title[0], T.title[0] + 0.8, 'linear'), ep(t, T.title[1], T.title[1] + 0.5, 'linear'), { size: 50 });
-      lenses(ctx, t, T);
+
     },
     cues(S) {
       const T = times(S);
@@ -222,7 +221,6 @@
         return S.dur;
       };
       TAGS.forEach(([, d], i) => out.push({ type: i === 5 ? 'interest_chime' : 'layer_tick', t: inv(d), idx: i }));
-      T.lens.forEach((x) => out.push({ type: 'ui_pop', t: x + 0.05 }));
       return out;
     },
   };

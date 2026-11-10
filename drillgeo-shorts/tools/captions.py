@@ -4,7 +4,7 @@ import json, os, re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 tl = json.load(open(os.path.join(ROOT, 'build/timeline.json')))
-MAXC = 34  # chars per caption line
+MAXC = 22  # chars per caption line (speech area right of the mascot)
 
 
 def chunks(text):
@@ -51,11 +51,12 @@ for l in tl['lines']:
     cs = chunks(l['text'])
     total = sum(len(c) for c in cs)
     t = l['start']
+    style = 'Top' if l['id'] == 'N01' else 'Cap'
     for c in cs:
         d = l['dur'] * len(c) / total
-        events.append((t, t + d - 0.04, two_lines(c)))
+        events.append((t, t + d - 0.04, two_lines(c), style))
         t += d
-srt = '\n'.join(f'{i + 1}\n{ts(a)} --> {ts(b)}\n{txt}\n' for i, (a, b, txt) in enumerate(events))
+srt = '\n'.join(f'{i + 1}\n{ts(a)} --> {ts(b)}\n{txt}\n' for i, (a, b, txt, _) in enumerate(events))
 os.makedirs(os.path.join(ROOT, 'renders'), exist_ok=True)
 open(os.path.join(ROOT, 'renders/drillgeo_shorts.srt'), 'w').write(srt)
 ass = """[Script Info]
@@ -67,13 +68,14 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Cap,Inter SemiBold,50,&H00F3EFED,&H00F3EFED,&H00140E0B,&H8C140E0B,0,0,0,0,100,100,0,0,3,14,0,2,90,90,500,1
+Style: Cap,Inter SemiBold,46,&H00F3EFED,&H00F3EFED,&H00140E0B,&H8C140E0B,0,0,0,0,100,100,0,0,3,14,0,2,430,90,470,1
+Style: Top,Inter SemiBold,48,&H00F3EFED,&H00F3EFED,&H00140E0B,&H8C140E0B,0,0,0,0,100,100,0,0,3,14,0,8,110,110,380,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
-for a, b, txt in events:
-    ass += f"Dialogue: 0,{ts(a, True)},{ts(b, True)},Cap,,0,0,0,,{{\\fad(80,80)}}{txt.replace(chr(10), '\\N')}\n"
+for a, b, txt, sty in events:
+    ass += f"Dialogue: 0,{ts(a, True)},{ts(b, True)},{sty},,0,0,0,,{{\\fad(80,80)}}{txt.replace(chr(10), '\\N')}\n"
 os.makedirs(os.path.join(ROOT, 'build'), exist_ok=True)
 open(os.path.join(ROOT, 'build/captions.ass'), 'w').write(ass)
 print(f'{len(events)} caption events')

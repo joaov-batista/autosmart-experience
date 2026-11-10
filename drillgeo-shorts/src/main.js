@@ -78,6 +78,11 @@
     } else {
       DG.text(ctx, sc.id + ' — ' + sc.name, DG.W / 2, DG.H / 2, { align: 'center', size: 44 });
     }
+    // presenter mascot + step badge (didactic layer)
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.globalAlpha = 1;
+    if (DG.MASCOT && !DG.HIDE_MASCOT) DG.MASCOT.overlay(ctx, T);
+    stepBadge(ctx, T - sc.start, sc);
     // global finishing
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.globalAlpha = 1;
@@ -85,6 +90,32 @@
     DG.grain(ctx, fi, 0.025);
     if (DG.SHOW_SAFE) drawSafe(ctx);
   };
+
+  function stepBadge(ctx, t, sc) {
+    const m = DG.SCENES[sc.id];
+    let st = sc.step;
+    if (m && m.step) st = m.step(t, DG.sceneInfo(sc));
+    if (!st) return;
+    const t0 = sc.stepAt || 0;
+    const p = DG.ep(t, t0 + 0.15, t0 + 0.75, 'outCubic');
+    const q = DG.ep(t, sc.dur - 0.45, sc.dur - 0.05, 'linear');
+    if (p <= 0 || q >= 1) return;
+    const [n, title] = st;
+    const small = n === 0 ? 'ENTENDA' : n === 9 ? 'NO FIM' : 'PASSO ' + n;
+    ctx.save();
+    ctx.globalAlpha = (1 - q) * Math.min(1, p * 1.4);
+    const x = 70 - (1 - p) * 60, y = 190;
+    const tw = Math.max(DG.measure(ctx, title, { size: 54 }), DG.measure(ctx, small, { size: 26 })) + 56;
+    DG.rr(ctx, x, y, tw, 132, 16);
+    ctx.fillStyle = 'rgba(11,14,20,0.72)';
+    ctx.fill();
+    ctx.fillStyle = DG.C.amber;
+    DG.rr(ctx, x, y, 10, 132, 5);
+    ctx.fill();
+    DG.text(ctx, small, x + 30, y + 34, { size: 26, color: DG.C.amber, shadow: false });
+    DG.text(ctx, title, x + 30, y + 88, { size: 54, color: DG.C.paper, shadow: false });
+    ctx.restore();
+  }
 
   function drawSafe(ctx) {
     ctx.save();

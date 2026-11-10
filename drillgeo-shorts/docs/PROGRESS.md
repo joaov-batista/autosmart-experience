@@ -1,6 +1,16 @@
 # Progresso
 
-## Estado atual
+## Versão 2 — didática (atual)
+
+Retorno da 1ª versão: bonita, mas difícil de entender para leigos. O que mudou na v2:
+- **Mascote Geo**, funcionário da DrillGeo, apresenta tudo em primeira pessoa (lip-sync, gestos, piscadas).
+- **Roteiro novo** em linguagem simples, com comparações do dia a dia (ver `SCRIPT.md`). São 13 falas geradas pela API do ElevenLabs (voz George, `eleven_v4`) e conferidas por transcrição.
+- **Cena nova "A ideia"**: bolo de camadas + canudo, que vira o corte de rocha ("o canudo na rocha").
+- **Passos numerados** no topo (PASSO 1 a 8) e **resumo** com 4 passos no fim.
+- **Rótulos simplificados** (GIRA, EMPURRA, ESFRIA, LEVA O PÓ, TERRA, ROCHA DURA, RACHADURAS…).
+- Duração 2:29 (máximo do briefing: 3:00).
+
+## Estado atual (v1)
 
 | Fase | Status | Notas |
 |---|---|---|

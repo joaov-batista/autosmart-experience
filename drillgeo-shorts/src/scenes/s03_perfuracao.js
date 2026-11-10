@@ -91,10 +91,11 @@
     return {
       L,
       dive1: Math.min(1.7, L.start + 0.1),
-      rotA: L.start + L.dur * 0.42,
-      feedA: L.start + L.dur * 0.53,
-      faceIn: L.start + L.dur * 0.74,
-      label: L.start + L.dur * 0.84,
+      rotA: L.start + L.dur * 0.44,
+      feedA: L.start + L.dur * 0.54,
+      faceIn: L.start + L.dur * 0.6,
+      label: L.start + L.dur * 0.1,
+      cookie: L.start + L.dur * 0.8,
     };
   }
 
@@ -165,12 +166,12 @@
     // arrows: rotation (around the outer tube) and thrust (down)
     const pa = ep(t, T.rotA, T.rotA + 0.8, 'outCubic');
     DG.rotArrow(ctx, 540, 330, BIT.G.otR * K + 44, 36, pa, rot * 0.2, { width: 8 });
-    if (pa > 0) DG.text(ctx, 'ROTAÇÃO', 540, 255, { size: 34, color: C.amber, align: 'center', alpha: clamp(pa * 2) });
+    if (pa > 0) DG.text(ctx, 'GIRA', 540, 255, { size: 34, color: C.amber, align: 'center', alpha: clamp(pa * 2) });
     const pf = ep(t, T.feedA, T.feedA + 0.7, 'outCubic');
     const bob = Math.sin(t * 5) * 6;
     const ax = 540 + BIT.G.otR * K + 78;
     DG.arrow(ctx, ax, 420 + bob, ax, 660 + bob, pf, { width: 9, head: 28 });
-    if (pf > 0) DG.text(ctx, 'AVANÇO', ax, 712, { size: 34, color: C.amber, align: 'center', alpha: clamp(pf * 2) });
+    if (pf > 0) DG.text(ctx, 'AVANÇA', ax, 712, { size: 34, color: C.amber, align: 'center', alpha: clamp(pf * 2) });
     ctx.restore();
     // face-view inset: the crown cuts a RING, the core stays
     const pi = ep(t, T.faceIn, T.faceIn + 0.6, 'outBack');
@@ -186,7 +187,41 @@
       DG.dashed(ctx, [[cx + r * 0.7, cy + r * 0.75], [540 - BIT.G.Ro * K, FACE_Y - 6]], { alpha: 0.55 * pi, color: C.paper, offset: -t * 25 });
     }
     const pl = ep(t, T.label, T.label + 0.8, 'linear');
-    DG.label(ctx, { x: 540 - BIT.G.Ro * K + 4, y: FACE_Y - 6, lx: 90, ly: 1330, text: 'COROA DIAMANTADA', p: pl, q: 0, side: 'right', size: 36 });
+    DG.label(ctx, { x: 540 - BIT.G.Ro * K + 4, y: FACE_Y - 6, lx: 80, ly: 1020, text: 'COROA', p: pl, q: 0, side: 'right', size: 46 });
+    if (pl > 0.6) DG.text(ctx, 'anel com diamantes', 84, 1082, { size: 30, weight: 500, color: C.paper, alpha: clamp((pl - 0.6) * 3) });
+    // "igual a um cortador de biscoito"
+    const pc = ep(t, T.cookie, T.cookie + 0.6, 'outBack');
+    if (pc > 0) cookie(ctx, 215, 790, 95 * pc, t);
+  }
+  function cookie(ctx, x, y, r, t) {
+    ctx.save();
+    // cookie with a ring cut in it, cutter lifting off
+    ctx.fillStyle = '#C8904E';
+    ctx.strokeStyle = '#0B0E14';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = '#4A2A18';
+    for (let k = 0; k < 9; k++) {
+      ctx.beginPath();
+      ctx.arc(x + Math.cos(k * 2.3) * r * 0.75 * hash(k + 3), y + Math.sin(k * 2.3) * r * 0.75 * hash(k + 3), r * 0.08, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.strokeStyle = 'rgba(60,30,10,0.9)';
+    ctx.lineWidth = r * 0.12;
+    ctx.beginPath();
+    ctx.arc(x, y, r * 0.55, 0, Math.PI * 2);
+    ctx.stroke();
+    const lift = 18 + 8 * Math.sin(t * 4);
+    ctx.strokeStyle = '#C9D1DA';
+    ctx.lineWidth = r * 0.1;
+    ctx.beginPath();
+    ctx.ellipse(x, y - lift, r * 0.6, r * 0.6, 0, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+    DG.text(ctx, '= cortador de biscoito', x - 95, y + 135, { size: 28, weight: 500, color: C.paper, alpha: clamp(r / 95) });
   }
   function faceCore() {
     return GEO.cached('faceCore', () => GEO.rockPatch(-0.032, 0.032, BIT_DEPTH - 0.032, BIT_DEPTH + 0.032, 3000, 30));
@@ -230,6 +265,7 @@
         { type: 'reveal_soft', t: T.faceIn },
         { type: 'diamond_glint', t: T.faceIn + 0.3 },
         { type: 'ui_tick', t: T.label + 0.3 },
+        { type: 'ui_pop', t: T.cookie + 0.1 },
       ];
     },
   };

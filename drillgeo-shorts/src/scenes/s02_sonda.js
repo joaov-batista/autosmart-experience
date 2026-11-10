@@ -7,19 +7,13 @@
 
   function times(S) {
     const L = S.L('N03');
-    const a = L.start;
-    const span = L.dur;
+    const a = L.start, d = L.dur;
     return {
       L,
-      lab: [
-        ['UNIDADE DE PERFURAÇÃO', a + span * 0.08],
-        ['TORRE / MASTRO', a + span * 0.2],
-        ['CABEÇOTE ROTATIVO', a + span * 0.38],
-        ['HASTES', a + span * 0.5],
-        ['SISTEMA DE CIRCULAÇÃO', a + span * 0.64],
-        ['CONJUNTO DE AMOSTRAGEM', a + span * 0.76],
-      ],
-      start: Math.min(S.dur - 2.6, a + span * 0.72), // operator engages rotation
+      lab: [['SONDA', a + d * 0.04], ['HASTES', a + d * 0.62]],
+      gira: a + d * 0.36,
+      push: a + d * 0.84,
+      start: a + d * 0.3, // operator engages rotation when the line says "ela gira"
     };
   }
 
@@ -93,10 +87,16 @@
     // sun rim glow on the rig edge (golden hour)
     const [mx, my] = W2S(c, -0.2, -6);
     glow(ctx, mx + 30, my, 420, '#FFB070', 0.08);
-    // x-ray inset: sampling assembly at the bottom of the hole
-    const insetP = smooth(T.lab[5][1] - 0.4, T.lab[5][1] + 0.3, t);
-    if (insetP > 0) inset(ctx, c, t, insetP, rot, T);
     labels(ctx, c, t, S, T, info);
+    // GIRA (rotation arrow at the head) and EMPURRA (thrust arrow along the rods)
+    const [hx, hy] = W2S(c, 0.05, info.hTop + 0.45);
+    const pg = ep(t, T.gira, T.gira + 0.7, 'outCubic');
+    DG.rotArrow(ctx, hx, hy + 70, 0.75 * c.s, 0.22 * c.s, pg, t * 3, { width: 8, head: 26 });
+    if (pg > 0) DG.text(ctx, 'GIRA', hx + 0.9 * c.s, hy + 10, { size: 40, color: C.amber, alpha: clamp(pg * 2) });
+    const pp = ep(t, T.push, T.push + 0.6, 'outCubic');
+    const [rx, ry] = W2S(c, 0.02, -2.4);
+    DG.arrow(ctx, rx + 0.55 * c.s, ry - 120, rx + 0.55 * c.s, ry + 60, pp, { width: 9, head: 28 });
+    if (pp > 0) DG.text(ctx, 'EMPURRA', rx + 0.75 * c.s, ry - 40, { size: 36, color: C.amber, alpha: clamp(pp * 2) });
   }
 
   function inset(ctx, c, t, p, rot, T) {
@@ -123,22 +123,16 @@
   }
 
   function labels(ctx, c, t, S, T, info) {
-    const on = (i) => [ep(t, T.lab[i][1], T.lab[i][1] + 0.7, 'linear'), ep(t, T.lab[i][1] + 2.6, T.lab[i][1] + 3.1, 'linear')];
     const P = (x, y) => W2S(c, x, y);
     const defs = [
-      [P(-3.6, -2.0), [130, 0, 'right'], -200],
-      [P(-0.42, -9.2), [130, 0, 'right'], -40],
-      [P(0.05, info.hTop + 0.45), [600, 0, 'right'], -110],
-      [P(0.02, -1.5), [600, 0, 'right'], -40],
-      [P(-7.2, -0.7), [120, 0, 'right'], -180],
-      [[330, 1210], [520, 0, 'right'], -150],
+      [P(-3.6, -1.9), 120, -260],
+      [P(0.02, -1.4), 610, -120],
     ];
-    defs.forEach(([tgt, [lx, , side], dy], i) => {
-      const [p, q] = on(i);
+    defs.forEach(([tgt, lx, dy], i) => {
+      const p = ep(t, T.lab[i][1], T.lab[i][1] + 0.7, 'linear');
+      const q = ep(t, S.dur - 0.6, S.dur - 0.2, 'linear');
       if (p <= 0 || q >= 1) return;
-      let ly = tgt[1] + dy;
-      ly = clamp(ly, 250, 1230);
-      DG.label(ctx, { x: tgt[0], y: tgt[1], lx, ly, text: T.lab[i][0], p, q, side, size: 34 });
+      DG.label(ctx, { x: tgt[0], y: tgt[1], lx, ly: clamp(tgt[1] + dy, 360, 1120), text: T.lab[i][0], p, q, side: 'right', size: 44 });
     });
   }
 
@@ -175,6 +169,7 @@
         { type: 'rotation_start', t: T.start + 0.2, dur: S.dur - T.start - 0.2 },
       ];
       T.lab.forEach(([, at]) => out.push({ type: 'ui_tick', t: at + 0.3 }));
+      out.push({ type: 'ui_tick', t: T.gira + 0.2 }, { type: 'ui_tick', t: T.push + 0.2 });
       return out;
     },
   };

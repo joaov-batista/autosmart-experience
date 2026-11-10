@@ -7,31 +7,33 @@
   const BEAT = 60 / BPM; // 0.625 s
 
   DG.NARR = {
-    N01: { est: 5.2, text: 'Você já parou para pensar no que existe centenas de metros abaixo dos seus pés?' },
-    N02: { est: 3.6, text: 'Como podemos descobrir o que está escondido lá embaixo?' },
-    N03: { est: 9.6, text: 'É aqui que entra a sondagem. Com equipamentos especializados, a DrillGeo investiga o subsolo e recupera informações essenciais sobre as rochas.' },
-    N04: { est: 8.64, text: 'Na sondagem rotativa diamantada, a máquina transmite rotação e força de avanço através das hastes… permitindo que a coroa corte a rocha.' },
-    N05: { est: 10.2, text: 'Durante a perfuração, um fluido circula pelo sistema. Ele ajuda a resfriar a coroa, remover os fragmentos de rocha e manter condições adequadas para o avanço.' },
-    N06: { est: 13.6, text: 'Mas o objetivo não é apenas abrir um furo. É recuperar uma amostra da rocha, chamada testemunho de sondagem. Esse cilindro preserva informações valiosas sobre as características do material atravessado.' },
-    N07: { est: 7.8, text: 'No sistema wireline, um cabo de aço traz o tubo interno com o testemunho até a superfície, sem retirar as hastes do furo.' },
-    N08: { est: 10.1, text: 'Cada profundidade pode revelar uma formação diferente. Mudanças de cor, composição, textura e fraturamento ajudam a contar a história geológica daquele local.' },
-    N09: { est: 9.2, text: 'Na superfície, os testemunhos são organizados em caixas, identificados por furo e profundidade, preservando a sequência das rochas recuperadas.' },
-    N10: { est: 10.6, text: 'Com essas amostras, os geólogos estudam as formações, identificam estruturas e investigam possíveis mineralizações e outras características importantes do terreno.' },
-    N11: { est: 10.5, text: 'Em projetos de mineração e de investigação geológica, entender o que existe abaixo da superfície é essencial para tomar decisões com mais conhecimento e precisão.' },
-    N12: { est: 4.6, text: 'DrillGeo. Geologia e sondagem revelando o que a superfície não mostra.' },
+    N01: { est: 8.1, text: 'Oi! Eu sou o Geo, da equipe da DrillGeo. Você já pensou no que existe debaixo dos seus pés? Vem comigo, que eu te mostro!' },
+    N02: { est: 7.7, text: 'Lá embaixo tem camadas e mais camadas de rocha. Mas como a gente descobre o que tem lá… sem cavar um buraco gigante?' },
+    B01: { est: 9.7, text: 'Pensa num bolo de camadas. Se você enfia um canudo e puxa… sai uma amostrinha com todas as camadas dentro. A sondagem faz isso, só que na rocha!' },
+    N03: { est: 8.7, text: 'Essa é a sonda, a máquina que faz o furo. Ela gira uma coluna de tubos de aço, que a gente chama de hastes, e empurra tudo pra baixo.' },
+    N04: { est: 9.4, text: 'Na ponta fica a coroa: um anel cheio de diamantes. Ela gira e corta a rocha em forma de anel… igual a um cortador de biscoito.' },
+    N05: { est: 9.5, text: 'Enquanto ela corta, a gente manda água pelo meio dos tubos. A água esfria a coroa e leva o pó de rocha pra fora, igual à água na broca do dentista.' },
+    N06: { est: 9.5, text: 'E o miolo? O miolo fica inteirinho! Esse cilindro de rocha é o testemunho. Ele vai entrando num tubo, igual ao bolo dentro do canudo.' },
+    N07: { est: 9.7, text: 'Quando o tubo enche, a gente desce um cabo com uma peça que engata, o pescador, e puxa o tubo cheio lá do fundo. As hastes continuam no furo.' },
+    N08: { est: 10.2, text: 'Conforme o furo desce, ele atravessa camadas diferentes: terra, rocha mais mole, rocha dura, rachaduras… e às vezes um veio com minerais.' },
+    N09: { est: 8.5, text: 'Aqui em cima, as amostras vão pra uma caixa, na ordem certinha, com a profundidade anotada. É como um álbum de fotos do subsolo.' },
+    N10: { est: 10.5, text: 'Depois, o geólogo estuda cada pedaço com lupa. Às vezes aparece sinal de minério, às vezes não… e as duas respostas são informação valiosa.' },
+    N11: { est: 10.9, text: 'Resumindo: a coroa corta, o cilindro sobe, vai pra caixa, e o geólogo estuda. Assim dá pra decidir com mais segurança, antes de uma obra ou de uma mina.' },
+    N12: { est: 5.1, text: 'DrillGeo. Geologia e sondagem revelando o que a superfície não mostra.' },
   };
 
   // lines: at = seconds from scene start, or after = previous line id + gap
   DG.SCENE_DEFS = [
-    { id: 's01', name: 'O mundo escondido', min: 12.5, tail: 1.1, lines: [{ id: 'N01', at: 0.8 }, { id: 'N02', after: 'N01', gap: 2.0 }] },
-    { id: 's02', name: 'Conheça a sonda', min: 11.25, tail: 0.9, lines: [{ id: 'N03', at: 0.7 }] },
-    { id: 's03', name: 'A perfuração', min: 10.0, tail: 0.7, lines: [{ id: 'N04', at: 1.6 }] },
-    { id: 's04', name: 'Para que serve o líquido?', min: 11.25, tail: 0.7, lines: [{ id: 'N05', at: 0.6 }] },
-    { id: 's05', name: 'O testemunho', min: 23.75, tail: 1.6, lines: [{ id: 'N06', at: 0.7 }, { id: 'N07', after: 'N06', gap: 1.9 }] },
-    { id: 's06', name: 'As camadas e a profundidade', min: 11.25, tail: 0.9, lines: [{ id: 'N08', at: 0.9 }] },
-    { id: 's07', name: 'A caixa de testemunhos', min: 11.25, tail: 0.9, lines: [{ id: 'N09', at: 1.4 }] },
-    { id: 's08', name: 'O que estão procurando?', min: 12.5, tail: 1.5, lines: [{ id: 'N10', at: 0.7 }] },
-    { id: 's09', name: 'A DrillGeo', min: 18.75, tail: 2.6, lines: [{ id: 'N11', at: 0.9 }, { id: 'N12', after: 'N11', gap: 1.6 }] },
+    { id: 's01', name: 'Oi, eu sou o Geo', min: 12.5, tail: 1.0, lines: [{ id: 'N01', at: 0.6 }, { id: 'N02', after: 'N01', gap: 2.2 }] },
+    { id: 'sb', name: 'A ideia: o bolo e o canudo', min: 11.25, tail: 1.6, lines: [{ id: 'B01', at: 0.8 }], step: [0, 'A IDEIA'] },
+    { id: 's02', name: 'A sonda', min: 10.0, tail: 1.0, lines: [{ id: 'N03', at: 0.7 }], step: [1, 'A SONDA'] },
+    { id: 's03', name: 'A coroa', min: 10.0, tail: 1.4, lines: [{ id: 'N04', at: 1.6 }], step: [2, 'A COROA'], stepAt: 1.6 },
+    { id: 's04', name: 'A água', min: 10.0, tail: 0.9, lines: [{ id: 'N05', at: 0.6 }], step: [3, 'A ÁGUA'] },
+    { id: 's05', name: 'O testemunho e o pescador', min: 22.0, tail: 1.6, lines: [{ id: 'N06', at: 0.7 }, { id: 'N07', after: 'N06', gap: 1.9 }], step: [4, 'O TESTEMUNHO'] },
+    { id: 's06', name: 'As camadas', min: 11.25, tail: 1.0, lines: [{ id: 'N08', at: 0.8 }], step: [6, 'AS CAMADAS'] },
+    { id: 's07', name: 'A caixa', min: 11.25, tail: 1.2, lines: [{ id: 'N09', at: 1.4 }], step: [7, 'A CAIXA'] },
+    { id: 's08', name: 'O geólogo', min: 12.5, tail: 1.5, lines: [{ id: 'N10', at: 0.7 }], step: [8, 'O GEÓLOGO'] },
+    { id: 's09', name: 'Resumo e DrillGeo', min: 18.0, tail: 2.8, lines: [{ id: 'N11', at: 0.8 }, { id: 'N12', after: 'N11', gap: 1.6 }], step: [9, 'RESUMINDO'] },
   ];
 
   function lineDur(id) {
@@ -52,7 +54,7 @@
       }
       let dur = Math.max(def.min, end + def.tail);
       dur = Math.ceil(dur / BEAT - 1e-6) * BEAT;
-      const sc = { id: def.id, name: def.name, start: T, dur, end: T + dur, lines };
+      const sc = { id: def.id, name: def.name, start: T, dur, end: T + dur, lines, step: def.step, stepAt: def.stepAt || 0 };
       for (const k in lines) lines[k].gstart = T + lines[k].start;
       T += dur;
       return sc;

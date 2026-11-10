@@ -458,4 +458,19 @@ def under_drone(dur, seed=52, **k):
     return fade(st(y, 0, 0.7), 0.6, 0.6)
 
 
+def straw_in(dur=1.2, seed=60, **k):
+    n = n_of(dur)
+    tt = np.linspace(0, 1, n)
+    squish = bp(pink(n, seed), 300, 2200) * (0.4 + 0.6 * lp(np.abs(white(n, seed + 1)), 6) * 5).clip(0, 1.4) * np.sin(np.pi * tt) * 0.12
+    return fade(st(squish, 0.2, 0.3), 0.05, 0.2)
+
+
+def straw_out(dur=1.0, seed=61, **k):
+    n = n_of(max(dur, 0.6))
+    tt = np.arange(n) / SR
+    pop = np.sin(2 * np.pi * np.cumsum(260 + 900 * np.exp(-tt * 18)) / SR) * env_exp(n, 0.06) * 0.25
+    slide = bp(pink(n, seed), 600, 3000) * np.linspace(1, 0, n) * 0.08
+    return reverb(st(pop + slide, 0.2, 0.3), 0.15, 1.0)
+
+
 REG = {k: v for k, v in globals().items() if callable(v) and not k.startswith('_')}

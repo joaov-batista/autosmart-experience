@@ -1,0 +1,78 @@
+{
+ "voice": "JBFqnCBsd6RMkjVDRZzb",
+ "model": "eleven_v4",
+ "lines": {
+  "N01": {
+   "lang": "por",
+   "p": 0.969,
+   "match": 1.0,
+   "heard": "Você já parou para pensar no que existe centenas de metros abaixo dos seus pés?"
+  },
+  "N02": {
+   "lang": "por",
+   "p": 0.751,
+   "match": 1.0,
+   "heard": "Como podemos descobrir o que está escondido lá embaixo?"
+  },
+  "N03": {
+   "lang": "por",
+   "p": 0.946,
+   "match": 1.0,
+   "heard": "É aqui que entra a sondagem. Com equipamentos especializados, a DrillGeo investiga o subsolo e recupera informações essenciais sobre as rochas"
+  },
+  "N04": {
+   "lang": "por",
+   "p": 0.807,
+   "match": 1.0,
+   "heard": "Na sondagem rotativa diamantada, a máquina transmite rotação e força de avanço através das hastes, permitindo que a coroa corte a rocha"
+  },
+  "N05": {
+   "lang": "por",
+   "p": 0.994,
+   "match": 1.0,
+   "heard": "Durante a perfuração, um fluido circula pelo sistema. Ele ajuda a resfriar a coroa, remover os fragmentos de rocha e manter condições adequadas para o avanço"
+  },
+  "N06": {
+   "lang": "por",
+   "p": 0.997,
+   "match": 1.0,
+   "heard": "Mas o objetivo não é apenas abrir um furo, é recuperar uma amostra da rocha, chamada testemunho de sondagem. Esse cilindro preserva informações valiosas sobre as características do material atravessado"
+  },
+  "N07": {
+   "lang": "por",
+   "p": 0.933,
+   "match": 1.0,
+   "heard": "No sistema Wireline, um cabo de aço traz o tubo interno com o testemunho até a superfície, sem retirar as hastes do furo"
+  },
+  "N08": {
+   "lang": "por",
+   "p": 0.995,
+   "match": 1.0,
+   "heard": "Cada profundidade pode revelar uma formação diferente. Mudanças de cor, composição, textura e fraturamento ajudam a contar a história geológica daquele local"
+  },
+  "N09": {
+   "lang": "por",
+   "p": 0.959,
+   "match": 1.0,
+   "heard": "Na superfície, os testemunhos são organizados em caixas, identificados por furo e profundidade, preservando a sequência das rochas recuperadas"
+  },
+  "N10": {
+   "lang": "por",
+   "p": 0.978,
+   "match": 1.0,
+   "heard": "Com essas amostras, os geólogos estudam as formações, identificam estruturas e investigam possíveis mineralizações e outras características importantes do terreno"
+  },
+  "N11": {
+   "lang": "por",
+   "p": 0.988,
+   "match": 1.0,
+   "heard": "Em projetos de mineração e de investigação geológica, entender o que existe abaixo da superfície é essencial para tomar decisões com mais conhecimento e precisão"
+  },
+  "N12": {
+   "lang": "por",
+   "p": 0.967,
+   "match": 0.909,
+   "heard": "DrilGeo: geologia e sondagem revelando o que a superfície não mostra."
+  }
+ }
+}

@@ -1,50 +1,54 @@
 {
+ "B01": {
+  "dur": 9.68,
+  "file": "audio/narration/clips/B01.wav"
+ },
  "N01": {
-  "dur": 4.64,
+  "dur": 8.1,
   "file": "audio/narration/clips/N01.wav"
  },
  "N02": {
-  "dur": 3.1,
+  "dur": 7.7,
   "file": "audio/narration/clips/N02.wav"
  },
  "N03": {
-  "dur": 9.32,
+  "dur": 8.66,
   "file": "audio/narration/clips/N03.wav"
  },
  "N04": {
-  "dur": 9.28,
+  "dur": 9.44,
   "file": "audio/narration/clips/N04.wav"
  },
  "N05": {
-  "dur": 10.7,
+  "dur": 9.54,
   "file": "audio/narration/clips/N05.wav"
  },
  "N06": {
-  "dur": 13.56,
+  "dur": 9.54,
   "file": "audio/narration/clips/N06.wav"
  },
  "N07": {
-  "dur": 8.18,
+  "dur": 9.72,
   "file": "audio/narration/clips/N07.wav"
  },
  "N08": {
-  "dur": 10.88,
+  "dur": 10.18,
   "file": "audio/narration/clips/N08.wav"
  },
  "N09": {
-  "dur": 9.38,
+  "dur": 8.48,
   "file": "audio/narration/clips/N09.wav"
  },
  "N10": {
-  "dur": 10.66,
+  "dur": 10.52,
   "file": "audio/narration/clips/N10.wav"
  },
  "N11": {
-  "dur": 10.46,
+  "dur": 10.88,
   "file": "audio/narration/clips/N11.wav"
  },
  "N12": {
-  "dur": 5.26,
+  "dur": 5.14,
   "file": "audio/narration/clips/N12.wav"
  }
 }

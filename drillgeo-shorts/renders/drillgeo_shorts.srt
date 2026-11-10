@@ -1,154 +1,241 @@
 1
-00:00:00,800 --> 00:00:04,627
-Você já parou para pensar no que
-existe centenas de metros abaixo
+00:00:00,600 --> 00:00:03,283
+Oi! Eu sou o Geo, da
+equipe da DrillGeo.
 
 2
-00:00:04,667 --> 00:00:05,400
-dos seus pés?
+00:00:03,323 --> 00:00:06,005
+Você já pensou no que
+existe debaixo dos
 
 3
-00:00:07,440 --> 00:00:10,500
-Como podemos descobrir o que
-está escondido lá embaixo?
+00:00:06,045 --> 00:00:08,660
+seus pés? Vem comigo,
+que eu te mostro!
 
 4
-00:00:13,200 --> 00:00:15,011
-É aqui que entra a sondagem.
+00:00:10,900 --> 00:00:13,515
+Lá embaixo tem camadas
+e mais camadas de
 
 5
-00:00:15,051 --> 00:00:19,307
-Com equipamentos especializados,
-a DrillGeo investiga o subsolo e
+00:00:13,555 --> 00:00:16,303
+rocha. Mas como a gente
+descobre o que tem
 
 6
-00:00:19,347 --> 00:00:22,480
-recupera informações
-essenciais sobre as rochas.
+00:00:16,343 --> 00:00:18,560
+lá... sem cavar
+um buraco gigante?
 
 7
-00:00:25,350 --> 00:00:29,541
-Na sondagem rotativa diamantada,
-a máquina transmite rotação e
+00:00:20,800 --> 00:00:22,532
+Pensa num bolo
+de camadas.
 
 8
-00:00:29,581 --> 00:00:32,065
-força de avanço
-através das hastes...
+00:00:22,572 --> 00:00:24,782
+Se você enfia um
+canudo e puxa...
 
 9
-00:00:32,105 --> 00:00:34,590
-permitindo que a
-coroa corte a rocha.
+00:00:24,822 --> 00:00:27,441
+sai uma amostrinha
+com todas as camadas
 
 10
-00:00:36,225 --> 00:00:39,820
-Durante a perfuração, um
-fluido circula pelo sistema.
+00:00:27,481 --> 00:00:30,031
+dentro. A sondagem
+faz isso, só que na
 
 11
-00:00:39,860 --> 00:00:44,073
-Ele ajuda a resfriar a coroa,
-remover os fragmentos de rocha e
+00:00:30,071 --> 00:00:30,440
+rocha!
 
 12
-00:00:44,113 --> 00:00:46,885
-manter condições
-adequadas para o avanço.
+00:00:33,200 --> 00:00:35,891
+Essa é a sonda, a
+máquina que faz o furo.
 
 13
-00:00:48,825 --> 00:00:51,647
-Mas o objetivo não é
-apenas abrir um furo.
+00:00:35,931 --> 00:00:38,689
+Ela gira uma coluna
+de tubos de aço, que a
 
 14
-00:00:51,687 --> 00:00:56,076
-É recuperar uma amostra da rocha,
-chamada testemunho de sondagem.
+00:00:38,729 --> 00:00:41,420
+gente chama de hastes,
+e empurra tudo pra
 
 15
-00:00:56,116 --> 00:00:59,619
-Esse cilindro preserva
-informações valiosas sobre as
+00:00:41,460 --> 00:00:41,820
+baixo.
 
 16
-00:00:59,659 --> 00:01:02,345
-características do
-material atravessado.
+00:00:44,725 --> 00:00:47,630
+Na ponta fica a coroa:
+um anel cheio de
 
 17
-00:01:04,285 --> 00:01:08,403
-No sistema wireline, um cabo de
-aço traz o tubo interno com o
+00:00:47,670 --> 00:00:50,500
+diamantes. Ela gira
+e corta a rocha em
 
 18
-00:01:08,443 --> 00:01:12,425
-testemunho até a superfície,
-sem retirar as hastes do furo.
+00:00:50,540 --> 00:00:53,445
+forma de anel...
+igual a um cortador de
 
 19
-00:01:15,275 --> 00:01:19,001
-Cada profundidade pode revelar
-uma formação diferente.
+00:00:53,485 --> 00:00:54,125
+biscoito.
 
 20
-00:01:19,041 --> 00:01:23,186
-Mudanças de cor, composição,
-textura e fraturamento ajudam a
+00:00:56,225 --> 00:00:58,720
+Enquanto ela corta,
+a gente manda água
 
 21
-00:01:23,226 --> 00:01:26,115
-contar a história
-geológica daquele local.
+00:00:58,760 --> 00:01:00,054
+pelo meio dos tubos.
 
 22
-00:01:28,900 --> 00:01:32,585
-Na superfície, os testemunhos
-são organizados em caixas,
+00:01:00,094 --> 00:01:02,856
+A água esfria a coroa
+e leva o pó de rocha
 
 23
-00:01:32,625 --> 00:01:36,976
-identificados por furo e profundidade,
-preservando a sequência das
+00:01:02,896 --> 00:01:05,125
+pra fora, igual à
+água na broca do
 
 24
-00:01:37,016 --> 00:01:38,240
-rochas recuperadas.
+00:01:05,165 --> 00:01:05,725
+dentista.
 
 25
-00:01:40,075 --> 00:01:44,339
-Com essas amostras, os geólogos
-estudam as formações, identificam
+00:01:07,575 --> 00:01:10,103
+E o miolo? O miolo
+fica inteirinho!
 
 26
-00:01:44,379 --> 00:01:48,113
-estruturas e investigam
-possíveis mineralizações e outras
+00:01:10,143 --> 00:01:12,892
+Esse cilindro de
+rocha é o testemunho.
 
 27
-00:01:48,153 --> 00:01:50,695
-características
-importantes do terreno.
+00:01:12,932 --> 00:01:15,827
+Ele vai entrando num
+tubo, igual ao bolo
 
 28
-00:01:53,400 --> 00:01:57,544
-Em projetos de mineração e de
-investigação geológica, entender o
+00:01:15,867 --> 00:01:17,075
+dentro do canudo.
 
 29
-00:01:57,584 --> 00:02:01,663
-que existe abaixo da superfície
-é essencial para tomar decisões
+00:01:19,015 --> 00:01:21,933
+Quando o tubo enche,
+a gente desce um cabo
 
 30
-00:02:01,703 --> 00:02:03,820
-com mais conhecimento e precisão.
+00:01:21,973 --> 00:01:24,610
+com uma peça que
+engata, o pescador, e
 
 31
-00:02:05,460 --> 00:02:10,146
-DrillGeo. Geologia e sondagem
-revelando o que a superfície não
+00:01:24,650 --> 00:01:26,723
+puxa o tubo cheio
+lá do fundo.
 
 32
-00:02:10,186 --> 00:02:10,680
-mostra.
+00:01:26,763 --> 00:01:28,695
+As hastes
+continuam no furo.
+
+33
+00:01:31,425 --> 00:01:34,080
+Conforme o furo
+desce, ele atravessa
+
+34
+00:01:34,120 --> 00:01:36,849
+camadas diferentes:
+terra, rocha mais
+
+35
+00:01:36,889 --> 00:01:39,170
+mole, rocha dura,
+rachaduras...
+
+36
+00:01:39,210 --> 00:01:41,565
+e às vezes um
+veio com minerais.
+
+37
+00:01:44,525 --> 00:01:46,995
+Aqui em cima, as
+amostras vão pra uma
+
+38
+00:01:47,035 --> 00:01:49,098
+caixa, na ordem
+certinha, com a
+
+39
+00:01:49,138 --> 00:01:50,523
+profundidade anotada.
+
+40
+00:01:50,563 --> 00:01:52,965
+É como um álbum de
+fotos do subsolo.
+
+41
+00:01:55,075 --> 00:01:58,084
+Depois, o geólogo
+estuda cada pedaço com
+
+42
+00:01:58,124 --> 00:02:01,134
+lupa. Às vezes aparece
+sinal de minério,
+
+43
+00:02:01,174 --> 00:02:04,107
+às vezes não... e as
+duas respostas são
+
+44
+00:02:04,147 --> 00:02:05,555
+informação valiosa.
+
+45
+00:02:08,300 --> 00:02:11,327
+Resumindo: a coroa
+corta, o cilindro sobe,
+
+46
+00:02:11,367 --> 00:02:13,810
+vai pra caixa, e
+o geólogo estuda.
+
+47
+00:02:13,850 --> 00:02:16,730
+Assim dá pra decidir
+com mais segurança,
+
+48
+00:02:16,770 --> 00:02:19,140
+antes de uma obra
+ou de uma mina.
+
+49
+00:02:20,780 --> 00:02:23,794
+DrillGeo. Geologia e
+sondagem revelando o
+
+50
+00:02:23,834 --> 00:02:25,880
+que a superfície
+não mostra.

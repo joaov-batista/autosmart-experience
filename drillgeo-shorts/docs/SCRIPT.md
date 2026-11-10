@@ -8,39 +8,45 @@ Cada fala é um arquivo separado (`audio/narration/Nxx.mp3`), posicionado pelo `
 
 Os timecodes abaixo são gerados por `tools/export_timeline.mjs` a partir das durações reais das falas (ou de estimativas, enquanto a fala não existir). A tabela completa e atualizada fica em `docs/TIMECODES.md`.
 
-## Falas
+## Falas (versão 2 — didática, com o mascote Geo)
 
-| ID | Cena | Texto (enviado ao ElevenLabs) |
+Após a primeira versão, o retorno foi: "ficou legal, mas difícil de entender". A v2 é narrada em primeira pessoa pelo **Geo**, um funcionário da DrillGeo (mascote). A linguagem é do dia a dia e cada conceito vem com uma comparação: bolo e canudo, cortador de biscoito, broca do dentista, pescar o tubo, álbum de fotos. O roteiro está organizado em passos numerados.
+
+| ID | Cena | Texto |
 |---|---|---|
-| N01 | 01 O mundo escondido | [curious] Você já parou para pensar no que existe centenas de metros abaixo dos seus pés? |
-| N02 | 01 | [curious] Como podemos descobrir o que está escondido lá embaixo? |
-| N03 | 02 Conheça a sonda | É aqui que entra a sondagem. Com equipamentos especializados, a DrillGeo investiga o subsolo e recupera informações essenciais sobre as rochas. |
-| N04 | 03 A perfuração | Na sondagem rotativa diamantada, a máquina transmite rotação e força de avanço através das hastes… permitindo que a coroa corte a rocha. |
-| N05 | 04 O fluido | Durante a perfuração, um fluido circula pelo sistema. Ele ajuda a resfriar a coroa, remover os fragmentos de rocha e manter condições adequadas para o avanço. |
-| N06 | 05 O testemunho | Mas o objetivo não é apenas abrir um furo. É recuperar uma amostra da rocha, chamada testemunho de sondagem. [pause] Esse cilindro preserva informações valiosas sobre as características do material atravessado. |
-| N07 | 05 (wireline) | No sistema wireline, um cabo de aço traz o tubo interno com o testemunho até a superfície, sem retirar as hastes do furo. |
-| N08 | 06 Camadas e profundidade | Cada profundidade pode revelar uma formação diferente. Mudanças de cor, composição, textura e fraturamento ajudam a contar a história geológica daquele local. |
-| N09 | 07 Caixa de testemunhos | Na superfície, os testemunhos são organizados em caixas, identificados por furo e profundidade, preservando a sequência das rochas recuperadas. |
-| N10 | 08 O que estão procurando? | Com essas amostras, os geólogos estudam as formações, identificam estruturas e investigam possíveis mineralizações e outras características importantes do terreno. |
-| N11 | 09 A DrillGeo | Em projetos de mineração e de investigação geológica, entender o que existe abaixo da superfície é essencial para tomar decisões com mais conhecimento e precisão. |
-| N12 | 09 (assinatura) | [warmly] DrillGeo. Geologia e sondagem revelando o que a superfície não mostra. |
+| N01 | Oi, eu sou o Geo | Oi! Eu sou o Geo, da equipe da DrillGeo. Você já pensou no que existe debaixo dos seus pés? Vem comigo, que eu te mostro! |
+| N02 | Oi, eu sou o Geo | Lá embaixo tem camadas e mais camadas de rocha. Mas como a gente descobre o que tem lá… sem cavar um buraco gigante? |
+| B01 | A ideia: o bolo e o canudo | Pensa num bolo de camadas. Se você enfia um canudo e puxa… sai uma amostrinha com todas as camadas dentro. A sondagem faz isso, só que na rocha! |
+| N03 | A sonda | Essa é a sonda, a máquina que faz o furo. Ela gira uma coluna de tubos de aço, que a gente chama de hastes, e empurra tudo pra baixo. |
+| N04 | A coroa | Na ponta fica a coroa: um anel cheio de diamantes. Ela gira e corta a rocha em forma de anel… igual a um cortador de biscoito. |
+| N05 | A água | Enquanto ela corta, a gente manda água pelo meio dos tubos. A água esfria a coroa e leva o pó de rocha pra fora, igual à água na broca do dentista. |
+| N06 | O testemunho e o pescador | E o miolo? O miolo fica inteirinho! Esse cilindro de rocha é o testemunho. Ele vai entrando num tubo, igual ao bolo dentro do canudo. |
+| N07 | O testemunho e o pescador | Quando o tubo enche, a gente desce um cabo com uma peça que engata, o pescador, e puxa o tubo cheio lá do fundo. As hastes continuam no furo. |
+| N08 | As camadas | Conforme o furo desce, ele atravessa camadas diferentes: terra, rocha mais mole, rocha dura, rachaduras… e às vezes um veio com minerais. |
+| N09 | A caixa | Aqui em cima, as amostras vão pra uma caixa, na ordem certinha, com a profundidade anotada. É como um álbum de fotos do subsolo. |
+| N10 | O geólogo | Depois, o geólogo estuda cada pedaço com lupa. Às vezes aparece sinal de minério, às vezes não… e as duas respostas são informação valiosa. |
+| N11 | Resumo e DrillGeo | Resumindo: a coroa corta, o cilindro sobe, vai pra caixa, e o geólogo estuda. Assim dá pra decidir com mais segurança, antes de uma obra ou de uma mina. |
+| N12 | Resumo e DrillGeo | DrillGeo. Geologia e sondagem revelando o que a superfície não mostra. |
 
-### Ajustes em relação ao briefing (e por quê)
+### Comparações usadas (e por que estão corretas)
 
-- **N07 (nova)**: o briefing pede que o público entenda *como o testemunho é recuperado* e que a cena mostre a recuperação wireline. Uma frase curta explica o que a imagem mostra: cabo de aço, tubo interno, hastes que ficam no furo.
-- **N11**: o texto original ("Porque entender o que existe abaixo da superfície é essencial para tomar decisões…") ganhou o contexto *"Em projetos de mineração e de investigação geológica"*, para cumprir o objetivo de explicar por que a informação importa nesses projetos.
-- As demais falas estão exatamente como no briefing.
+- **Bolo de camadas + canudo**: o canudo tira uma amostra cilíndrica com as camadas na mesma ordem. É exatamente o que o testemunho faz (analogia clássica de ensino de geologia).
+- **Cortador de biscoito**: a coroa corta um anel e deixa o miolo inteiro.
+- **Água na broca do dentista**: o fluido esfria a ferramenta e leva o pó embora.
+- **Pescar**: a peça que desce no cabo e engata o tubo interno se chama, de fato, *pescador* (overshot).
+- **Álbum de fotos do subsolo**: a caixa guarda as amostras em ordem, com a profundidade anotada.
+- "Às vezes aparece sinal de minério, às vezes não": evita prometer descoberta mineral (regra 11 da revisão técnica).
 
 ## Textos na tela (curtos, em caixa-alta)
 
-`COROA DIAMANTADA` · `HASTES` · `FLUIDO DE PERFURAÇÃO` · `TESTEMUNHO` · `TUBO INTERNO` · `WIRELINE` · `PROFUNDIDADE` · `CAMADAS GEOLÓGICAS` · `CAIXA DE TESTEMUNHOS`
+Selos de passo: `ENTENDA · A IDEIA`, `PASSO 1 · A SONDA` … `PASSO 8 · O GEÓLOGO`, `NO FIM · RESUMINDO`.
 
-Rótulos da sonda (cena 2): `TORRE / MASTRO` · `CABEÇOTE ROTATIVO` · `HASTES` · `UNIDADE DE PERFURAÇÃO` · `SISTEMA DE CIRCULAÇÃO` · `CONJUNTO DE AMOSTRAGEM`
+Rótulos (v2, palavras simples): `SONDA` · `HASTES` · `GIRA` · `EMPURRA` · `COROA – anel com diamantes` · `= cortador de biscoito` · `AVANÇA` · `ÁGUA` · `ESFRIA` · `LEVA O PÓ` · `TESTEMUNHO – o miolo de rocha` · `TUBO` · `CABO DE AÇO (wireline)` · `PESCADOR` · `MOLA EXTRATORA` · `TUBO CHEIO` · `HASTES FICAM NO FURO` · `PROFUNDIDADE` · `AMOSTRA`
 
-Rótulos geológicos (cenas 6 e 8): `SOLO` · `ROCHA ALTERADA` · `ROCHA SÃ` · `FRATURAS` · `VEIO MINERAL` · `OUTRA LITOLOGIA` · `MINERAIS` · `TEXTURA` · `ALTERAÇÃO`
+Camadas (cena 6): `TERRA` · `ROCHA MAIS MOLE` · `ROCHA DURA` · `RACHADURAS` · `OUTRA ROCHA` · `VEIO COM MINERAIS` · `GRANITO`. Lupa (cena 8): `TEXTURA` · `RACHADURA` · `VEIO` · `MINERAIS` · `ROCHA ALTERADA`.
 
 Aviso fixo sempre que há números de profundidade: `valores ilustrativos`.
 
 ## Legendas
 
-`renders/drillgeo_shorts.srt` é gerado a partir do timeline, com blocos de até ~38 caracteres por linha e no máximo 2 linhas. Há duas exportações: uma versão **limpa** (sem legenda queimada, para usar as legendas da plataforma) e uma versão **com legenda queimada**, posicionada acima da área da interface do Shorts.
+`renders/drillgeo_shorts.srt` é gerado a partir do timeline, com blocos de até ~22 caracteres por linha e no máximo 2 linhas, na área de fala à direita do mascote (na abertura, no topo). Há duas exportações: **limpa** (para as legendas da plataforma) e **com legenda queimada**, acima da interface do Shorts.

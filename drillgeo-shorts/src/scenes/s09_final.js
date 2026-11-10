@@ -9,7 +9,9 @@
 
   function times(S) {
     const A = S.L('N11'), B = S.L('N12');
-    return { A, B, rise: [A.end - 0.2, B.start + 0.6], logo: B.start - 0.7, word: B.start + 0.15, sub: B.start + 1.2 };
+    const d = A.dur;
+    return { A, B, rise: [A.end - 0.2, B.start + 0.6], logo: B.start - 0.7, word: B.start + 0.15, sub: B.start + 1.2,
+      steps: [A.start + d * 0.1, A.start + d * 0.22, A.start + d * 0.33, A.start + d * 0.44] };
   }
 
   function section(ctx, t, Y0, SS, a) {
@@ -71,6 +73,75 @@
     // faint unit names on the right
     const names = [['SOLO', 2.5], ['ROCHA ALTERADA', 16], ['ROCHA SÃ', 45], ['OUTRA LITOLOGIA', 135], ['GRANITO', 185]];
     names.forEach(([n, d]) => DG.text(ctx, n, 900, Y0 + d * SS, { size: 22, align: 'right', color: C.paper, alpha: 0.55 * a }));
+  }
+
+  const STEPS = ['A COROA CORTA', 'O CILINDRO SOBE', 'VAI PRA CAIXA', 'O GEÓLOGO ESTUDA'];
+  function icon(ctx, i, x, y) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.strokeStyle = C.amber;
+    ctx.fillStyle = C.amber;
+    ctx.lineWidth = 6;
+    if (i === 0) {
+      ctx.beginPath();
+      ctx.arc(0, 0, 24, 0, Math.PI * 2);
+      ctx.stroke();
+      for (let k = 0; k < 8; k++) {
+        const a = (k / 8) * Math.PI * 2;
+        ctx.fillRect(Math.cos(a) * 24 - 3, Math.sin(a) * 24 - 3, 6, 6);
+      }
+    } else if (i === 1) {
+      ctx.fillStyle = '#4A6A5E';
+      ctx.fillRect(-12, -26, 24, 52);
+      ctx.strokeRect(-12, -26, 24, 52);
+      DG.arrowHead(ctx, 28, -14, -Math.PI / 2, 18, C.amber);
+      ctx.beginPath();
+      ctx.moveTo(28, 24);
+      ctx.lineTo(28, -8);
+      ctx.stroke();
+    } else if (i === 2) {
+      ctx.strokeRect(-30, -20, 60, 40);
+      for (let k = 0; k < 3; k++) ctx.fillRect(-24, -13 + k * 12, 48, 6);
+    } else {
+      ctx.beginPath();
+      ctx.arc(-6, -6, 18, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(7, 7);
+      ctx.lineTo(26, 26);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+  function recap(ctx, t, T) {
+    const out = ep(t, T.rise[0] - 0.2, T.rise[0] + 0.4, 'linear');
+    const din = ep(t, T.steps[0] - 0.6, T.steps[0], 'linear') * (1 - out);
+    if (din <= 0) return;
+    ctx.fillStyle = `rgba(8,12,22,${0.45 * din})`;
+    ctx.fillRect(0, 0, DG.W, DG.H);
+    STEPS.forEach((txt, i) => {
+      const p = ep(t, T.steps[i], T.steps[i] + 0.45, 'outBack') * (1 - out);
+      if (p <= 0) return;
+      const x = 80 + (1 - p) * -80,
+        y = 400 + i * 150;
+      const w = DG.measure(ctx, txt, { size: 44 }) + 190;
+      ctx.save();
+      ctx.globalAlpha = clamp(p);
+      DG.rr(ctx, x, y, w, 112, 56);
+      ctx.fillStyle = 'rgba(11,14,20,0.82)';
+      ctx.fill();
+      ctx.strokeStyle = rgba(C.amber, 0.9);
+      ctx.lineWidth = 3;
+      ctx.stroke();
+      ctx.fillStyle = C.amber;
+      ctx.beginPath();
+      ctx.arc(x + 56, y + 56, 34, 0, Math.PI * 2);
+      ctx.fill();
+      DG.text(ctx, String(i + 1), x + 56, y + 58, { size: 44, align: 'center', color: C.bg, shadow: false });
+      icon(ctx, i, x + 130, y + 56);
+      DG.text(ctx, txt, x + 172, y + 58, { size: 44, shadow: false });
+      ctx.restore();
+    });
   }
 
   function logo(ctx, t, T) {
@@ -149,7 +220,16 @@
           ctx.fillRect(hash(i * 3) * DG.W, hash(i * 7) * 1500 - (1 - r) * 300, 2, 2);
         }
       }
+      recap(ctx, t, T);
       logo(ctx, t, T);
+    },
+    step(t, S) {
+      const T = times(S);
+      return t < T.rise[0] - 0.2 ? [9, 'RESUMINDO'] : null;
+    },
+    mascot(S) {
+      const T = times(S);
+      return [[0, 'idle'], [T.A.start, 'explain'], [T.steps[0], 'count1'], [T.steps[1], 'count2'], [T.steps[2], 'count3'], [T.steps[3], 'count4'], [T.steps[3] + 1.4, 'explain_r'], [T.A.end + 0.1, 'idle'], [T.logo + 0.4, 'wave'], [T.B.end + 0.3, 'thumbs']];
     },
     cues(S) {
       const T = times(S);
@@ -159,6 +239,7 @@
         { type: 'rise_whoosh', t: T.rise[0] - 0.1, dur: T.rise[1] - T.rise[0] + 0.3 },
         { type: 'logo_spin', t: T.logo, dur: 2.2 },
         { type: 'logo_hit', t: T.logo + 1.25 },
+        ...T.steps.map((x) => ({ type: 'ui_pop', t: x + 0.05 })),
       ];
     },
   };

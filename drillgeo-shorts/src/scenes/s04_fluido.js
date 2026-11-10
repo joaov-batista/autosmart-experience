@@ -14,7 +14,7 @@
       xray: [0.0, 1.0],
       title: L.start + 0.5,
       pull: [Math.max(3.0, L.start + L.dur * 0.3), Math.max(4.1, L.start + L.dur * 0.3 + 1.1)],
-      chips: [L.start + L.dur * 0.43, L.start + L.dur * 0.6, L.start + L.dur * 0.78],
+      chips: [L.start + L.dur * 0.46, L.start + L.dur * 0.64],
       back: [S.dur - 1.05, S.dur],
     };
   }
@@ -299,8 +299,8 @@
   }
 
   function overlays(ctx, t, S, T, a) {
-    DG.title(ctx, 'FLUIDO DE PERFURAÇÃO', 540, 236, ep(t, T.title, T.title + 0.8, 'linear') * 1, 0, { size: 50 });
-    const chips = [['RESFRIA A COROA', X - 100, Y.face - 60], ['REMOVE FRAGMENTOS', X - 100, Y.ground + 380], ['MANTÉM O AVANÇO', X - 100, Y.ground + 200]];
+    DG.text(ctx, 'ÁGUA', 600, 470, { size: 40, color: C.blue, alpha: ep(t, T.title, T.title + 0.8, 'linear') * a });
+    const chips = [['ESFRIA', X + 100, Y.face - 40], ['LEVA O PÓ', X + 110, Y.ground + 300]];
     chips.forEach(([txt, x, y], i) => {
       const p = ep(t, T.chips[i], T.chips[i] + 0.6, 'outCubic') * a;
       if (p <= 0) return;

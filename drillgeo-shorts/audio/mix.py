@@ -20,7 +20,7 @@ GAIN = {  # dB per cue type (relative); voice sits on top
     'xray_sweep': -8, 'fluid_flow': -4, 'pump': -6, 'core_slide': -8, 'motor_down': -5, 'winch_run': -5, 'latch_click': -3,
     'metal_clank': -4, 'core_break': -2, 'winch_stop': -5, 'under_drone': -6, 'drill_distant': -8, 'layer_tick': -7,
     'core_slide_metal': -4, 'box_open': -3, 'core_place': -3, 'block_place': -4, 'marker_write': -6, 'cloth_move': -8,
-    'lens_swish': -8, 'feature_bell': -7, 'links_arp': -8, 'ui_tick': -12, 'ui_pop': -11, 'logo_spin': -8, 'logo_hit': -3,
+    'lens_swish': -8, 'straw_in': -4, 'straw_out': -4, 'feature_bell': -7, 'links_arp': -8, 'ui_tick': -12, 'ui_pop': -11, 'logo_spin': -8, 'logo_hit': -3,
 }
 
 

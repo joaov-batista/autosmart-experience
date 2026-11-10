@@ -49,6 +49,15 @@ Rótulo padrão: texto 34–40 px, ponto âmbar de 8 px, linha de chamada fina (
 - Movimento de câmera sempre com *easing* (sem cortes secos sem motivação). Transições com continuidade espacial: mergulho no solo, tilt pelas hastes, zoom no barrilete, subida pelo cabo, retorno ao subsolo.
 - Grão de filme leve (3–4%) e vinheta suave em todos os quadros.
 
+## Mascote "Geo" (v2)
+
+Funcionário da DrillGeo de frente para a câmera, em estilo anime simpático (cabeça grande e olhos expressivos).
+- **EPI:** capacete branco com a hélice da marca, óculos de proteção levantados, uniforme marinho com faixas refletivas e detalhe âmbar, luvas amarelas e botas.
+- **Peito:** patch "DrillGeo".
+- **Animação:** boca sincronizada com a narração (envelope da voz por quadro, `tools/mouth.py`), piscadas, respiração e gestos com transição suave (acenar, apontar, explicar com as mãos, joinha, contar nos dedos).
+- **Posição:** apresentador no canto inferior esquerdo (cabeça em y≈1330; o corpo pode ficar sob a interface do Shorts). Na abertura aparece grande, de corpo inteiro, e encolhe quando a câmera mergulha. As legendas viram a "fala" à direita dele.
+- **Layout:** o conteúdo técnico foi afastado do canto do mascote (rótulos, inset, rack de caixas, caixas da cena 8).
+
 ## Personagens
 
 Proporção de 7,5 cabeças, estilo anime sóbrio. EPI completo: capacete (branco para o geólogo, âmbar para os sondadores), óculos, protetor auricular nos operadores, luvas, botas, uniforme marinho com faixas refletivas. Movimentos econômicos: respiração, olhar, alavanca, guia do tubo. Ninguém fica na zona de rotação.
