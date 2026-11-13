@@ -53,4 +53,25 @@ import { genFont } from './gen-font';
 const NM = new URL('../node_modules/@fontsource/', import.meta.url).pathname;
 // Jersey 10 (SIL OFL 1.1): native grid is 75 units of 1400 → 18.667px em gives 1 unit = 1 pixel.
 genFont(NM + 'jersey-10/files/jersey-10-latin-400-normal.woff', PUB + 'fonts', 'jersey', 1400 / 75, 13, 4);
+
+
+// PWA icons: a seeded dragon portrait over a dusk gradient, upscaled with crisp pixels.
+import { createWild, expressPhenotype, GeneticRegistry } from '../src/dragons/genetics/genome';
+import { drawDragon, dragonPose } from '../src/dragons/rendering/DragonPainter';
+import { mix } from '../src/art/Pix';
+function icon(size: number, pad: number): Pix {
+  const base = new Pix(64, 64);
+  for (let y = 0; y < 64; y++) for (let x = 0; x < 64; x++) base.px(x, y, y > 52 ? mix(0x1f6f9c, 0x2f9fc0, (y - 52) / 12) : mix(0x2a2f6a, 0xf2a04a, Math.pow(y / 52, 1.6)));
+  base.ellipse(46, 40, 7, 7, 0xffe6a0);
+  const d = new Pix(120, 88);
+  drawDragon(d, 0, 0, expressPhenotype(createWild('cinzal', 5, new GeneticRegistry())), 1, dragonPose('alert', 0));
+  base.blit(d, -40 + pad, -26 + pad);
+  const out = new Pix(size, size), k = size / 64;
+  for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) out.px(x, y, base.get(Math.floor(x / k), Math.floor(y / k)));
+  return out;
+}
+savePng(PUB + 'icons/icon-192.png', icon(192, 0));
+savePng(PUB + 'icons/icon-512.png', icon(512, 0));
+savePng(PUB + 'icons/icon-maskable-512.png', icon(512, 2));
+savePng(PUB + 'icons/apple-touch-icon.png', icon(180, 0));
 console.log('assets ok');

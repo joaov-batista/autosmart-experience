@@ -82,7 +82,7 @@ export class IslandView {
     for (const s of this.surfaces) s.ts.tilePositionX += s.speed * dt;
     const l = cam.worldView.x - 100, r = cam.worldView.right + 100;
     for (const img of this.swayers) if (img.x > l && img.x < r) img.setRotation(Math.sin(time / 900 + img.x * 0.05) * 0.03);
-    const a = 0.25 + night * 0.4;
+    const a = 0.07 + night * 0.4;
     for (const img of this.lights) img.setAlpha(a + Math.sin(time / 300 + img.x) * 0.04);
   }
 }

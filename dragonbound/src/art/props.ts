@@ -191,7 +191,7 @@ const herb: Painter = (p) => { const g = ramp(0x4fbf7a); p.line(5, 9, 5, 3, g[1]
 const lavaVent: Painter = (p) => { const r = ramp(0x4b3d48); p.poly([[0, 8], [4, 2], [12, 2], [16, 8]], r[2]); p.line(4, 2, 12, 2, r[4]); p.rect(5, 3, 6, 2, 0xf2742e); p.rect(6, 3, 4, 1, 0xffd27a); p.outline(OUT); };
 
 /** Radial light sprites (used with additive blending). */
-const light = (size: number): Painter => (p) => p.glow(size / 2, size / 2, size / 2, 0xffffff, 0.9, 7);
+const light = (size: number): Painter => (p) => p.glow(size / 2, size / 2, size / 2, 0xffffff, 0.9, 16);
 
 export function propDefs(): Record<string, PropDef> {
   const T = THEMES.tropical, V = THEMES.volcanic, S = THEMES.storm;

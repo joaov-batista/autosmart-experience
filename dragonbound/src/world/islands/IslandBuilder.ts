@@ -63,7 +63,8 @@ export class IslandBuilder {
   terrain(): this {
     for (let x = 0; x < this.w; x++) {
       const e = this.heights[x], sy = this.sea - e;
-      const beach = e <= 2;
+      let avg = 0; for (let k = -3; k <= 3; k++) avg += this.heights[Math.max(0, Math.min(this.w - 1, x + k))]; avg /= 7;
+      const beach = avg <= 2.6;
       const soil = 3 + Math.floor((Math.sin(x * 0.5 + this.seed) + 1) * 1.5);
       for (let y = Math.max(0, sy); y < this.h; y++) {
         const d = y - sy;

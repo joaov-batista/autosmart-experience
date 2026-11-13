@@ -8,7 +8,7 @@ import { Pix } from '../src/art/Pix';
 import { savePng } from './png';
 
 const CHARS = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~' +
-  'ÁÀÂÃÄÉÊÈÍÓÔÕÚÜÇáàâãäéêèíóôõúüçñÑºª°«»–—…×';
+  'ÁÀÂÃÄÉÊÈÍÓÔÕÚÜÇáàâãäéêèíóôõúüçñÑºª°«»–—…×·';
 
 export function genFont(src: string, outBase: string, name: string, px: number, ascPx?: number, descPx?: number): void {
   const buf = readFileSync(src);
@@ -17,7 +17,7 @@ export function genFont(src: string, outBase: string, name: string, px: number, 
   const asc = ascPx ?? Math.ceil(font.ascender * scale), desc = descPx ?? Math.ceil(-font.descender * scale), lineH = asc + desc;
   const cellW = Math.ceil(px * 0.8) + 2, cols = 16, rows = Math.ceil(CHARS.length / cols);
   const pix = new Pix(cols * cellW, rows * (lineH + 1));
-  let xml = `<?xml version="1.0"?><font><info face="${name}" size="${px}"/><common lineHeight="${lineH + 1}" base="${asc}" scaleW="${pix.w}" scaleH="${pix.h}" pages="1"/><pages><page id="0" file="${name}.png"/></pages><chars count="${CHARS.length}">`;
+  let xml = `<?xml version="1.0"?><font><info face="${name}" size="16"/><common lineHeight="${lineH + 1}" base="${asc}" scaleW="${pix.w}" scaleH="${pix.h}" pages="1"/><pages><page id="0" file="${name}.png"/></pages><chars count="${CHARS.length}">`;
   [...CHARS].forEach((ch, i) => {
     const g = font.charToGlyph(ch);
     const path = g.getPath(0, 0, px);

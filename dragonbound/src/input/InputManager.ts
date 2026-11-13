@@ -15,6 +15,9 @@ export class InputManager {
   axisX = 0; axisY = 0;
 
   private keysDown = new Set<string>();
+  /** Inputs that went down since the last poll — so taps shorter than one frame are never lost. */
+  private keysLatched = new Set<string>();
+  private virtLatched = new Set<Action>();
   private virt = new Set<Action>();
   private virtAxis: [number, number] | null = null;
   private cur = new Set<Action>();
@@ -30,7 +33,7 @@ export class InputManager {
     if (!target) return;
     target.addEventListener('keydown', (e) => {
       if (this.captureKey) { e.preventDefault(); const c = this.captureKey; this.captureKey = null; c(e.code); return; }
-      this.keysDown.add(e.code); this.lastDevice = 'keyboard';
+      this.keysDown.add(e.code); this.keysLatched.add(e.code); this.lastDevice = 'keyboard';
       if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(e.code)) e.preventDefault();
     });
     target.addEventListener('keyup', (e) => this.keysDown.delete(e.code));
@@ -73,8 +76,8 @@ export class InputManager {
     if (pads.length) { this.padConnected = true; this.padKind = padKind(pads[0].id); }
 
     for (const a of ACTIONS) {
-      let on = this.virt.has(a) || this.injected.has(a);
-      for (const k of B.keys[a]) if (this.keysDown.has(k)) on = true;
+      let on = this.virt.has(a) || this.virtLatched.has(a) || this.injected.has(a);
+      for (const k of B.keys[a]) if (this.keysDown.has(k) || this.keysLatched.has(k)) on = true;
       for (const p of pads) for (const pb of B.pad[a]) {
         const v = this.padValue(p, pb);
         if (v > ('a' in pb ? Math.max(dz, 0.5) : 0.4)) { on = true; padUsed = true; }
@@ -97,6 +100,8 @@ export class InputManager {
       if (ax < -0.45) this.cur.add('left'); if (ax > 0.45) this.cur.add('right');
       if (ay < -0.45) this.cur.add('up'); if (ay > 0.45) this.cur.add('down');
     }
+    if (this.virtLatched.size) this.lastDevice = 'touch';
+    this.keysLatched.clear(); this.virtLatched.clear();
     if (padUsed) this.lastDevice = 'gamepad';
     this.axisX = ax; this.axisY = ay;
 
@@ -114,7 +119,7 @@ export class InputManager {
   released(a: Action): boolean { return !this.cur.has(a) && this.prev.has(a); }
 
   // touch overlay API
-  setVirtual(a: Action, on: boolean): void { if (on) this.virt.add(a); else this.virt.delete(a); }
+  setVirtual(a: Action, on: boolean): void { if (on) { this.virt.add(a); this.virtLatched.add(a); } else this.virt.delete(a); }
   setVirtualAxis(x: number, y: number, active: boolean): void { this.virtAxis = active ? [x, y] : null; }
   clearVirtual(): void { this.virt.clear(); this.virtAxis = null; }
 
