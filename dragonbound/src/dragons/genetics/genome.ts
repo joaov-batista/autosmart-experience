@@ -52,7 +52,7 @@ export function expressPhenotype(genes: DragonGenes): Phenotype {
   if (morph === 'melanic') { sat *= 0.45; lum = 0.17; lum2 = 0.34; }
   const primary = fromHsl(hue, sat, lum);
   const secondary = fromHsl(hue2, clamp(sat * 0.75, 0.15, 0.8), lum2);
-  const accent = fromHsl(hue + 150 + n('hueAcc') * 90, clamp(sat + 0.15), clamp(lum + (lum > 0.5 ? -0.28 : 0.26), 0.12, 0.85));
+  const accent = fromHsl(hue + (n('hueAcc') - 0.5) * 150, clamp(sat + 0.1), clamp(lum + (lum > 0.48 ? -0.24 : 0.24), 0.12, 0.85));
   const eye = morph === 'albino' ? 0xe04a6a : fromHsl(n('eyeHue') * 360, 0.85, 0.62);
   const horn = n('hornTone') > 0.5 ? fromHsl(42, 0.3, lerp(0.7, 0.86, n('hornTone'))) : fromHsl(265, 0.2, lerp(0.16, 0.3, n('hornTone') * 2));
 

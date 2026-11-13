@@ -47,4 +47,10 @@ for (const [name, a] of [['enemies', paintEnemyAtlas()], ['ocean', paintOceanAtl
   saveAtlas(`${PUB}sprites/${name}.json`, `${name}.png`, a.pix, a.frames);
   if (PREV) savePreview(`${PREV}/${name}.png`, a.pix, 3, 0x4a7a9a);
 }
+
+
+import { genFont } from './gen-font';
+const NM = new URL('../node_modules/@fontsource/', import.meta.url).pathname;
+// Jersey 10 (SIL OFL 1.1): native grid is 75 units of 1400 → 18.667px em gives 1 unit = 1 pixel.
+genFont(NM + 'jersey-10/files/jersey-10-latin-400-normal.woff', PUB + 'fonts', 'jersey', 1400 / 75, 13, 4);
 console.log('assets ok');

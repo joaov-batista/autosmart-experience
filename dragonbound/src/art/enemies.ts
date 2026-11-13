@@ -1,4 +1,4 @@
-import { Pix, ramp, hash2, mix, type Ramp } from './Pix';
+import { Pix, ramp, hash2, mix } from './Pix';
 
 const OUT = 0x1a1424;
 export const ENEMY_FRAMES = { move: 4, attack: 3, hurt: 1 } as const;
