@@ -51,7 +51,7 @@ export class OceanScene extends Phaser.Scene {
     this.stamina = this.comp ? game.phenotype(this.comp).stats.stamina : 0;
     this.vfx = new VfxManager(this);
     this.base = this.add.rectangle(0, 0, W, GAME_H, THEMES.tropical.seaDeep).setOrigin(0).setScrollFactor(0).setDepth(-10);
-    this.waterA = this.add.tileSprite(0, 0, W, GAME_H, 'ocean', 'water_0').setOrigin(0).setScrollFactor(0).setDepth(-9).setAlpha(0.9);
+    this.waterA = this.add.tileSprite(0, 0, W, GAME_H, 'ocean', 'water_0').setOrigin(0).setScrollFactor(0).setDepth(-9).setAlpha(0.6);
     this.waterB = this.add.tileSprite(0, 0, W, GAME_H, 'ocean', 'water_2').setOrigin(0).setScrollFactor(0).setDepth(-8).setAlpha(0.5).setTileScale(2);
     this.shadow = this.add.ellipse(0, 0, 34, 12, 0x000020, 0.28).setDepth(3);
     this.vessel = this.add.sprite(this.x, this.y, 'ocean', 'boat_0').setDepth(10);
@@ -169,7 +169,7 @@ export class OceanScene extends Phaser.Scene {
     game.tick(dt); this.t += dt; this.cd -= dt; this.inv -= dt; this.roll -= dt;
 
     // weather: the storm island drags a permanent tempest; fronts wander elsewhere
-    const st = MAIN_SITES[2], front = Math.max(0, Math.sin(this.t * 0.02 + this.x / 2600 + this.y / 1900) - 0.55) * 1.6;
+    const st = MAIN_SITES[2], front = Math.max(0, Math.sin(this.t * 0.02 + this.x / 2600 + this.y / 1900 + 3.6) - 0.8) * 4;
     this.storm = clamp(Math.max(1.25 - Math.hypot(this.x - st.x, this.y - st.y) / 1300, front), 0, 1);
     this.windA = 0.4 + Math.sin(this.t * 0.03) * 0.9;
     const windV = 14 + this.storm * 40, wx = Math.cos(this.windA) * windV, wy = Math.sin(this.windA) * windV, cur = currentAt(this.x, this.y);

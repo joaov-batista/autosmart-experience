@@ -39,7 +39,7 @@ export class Menu {
   open = false;
   private root: Phaser.GameObjects.Container;
   private tab: TabId = 'inv'; private idx = -1; private rows: Row[] = []; private scroll = 0;
-  private repeat = 0; private capture: string | null = null; private dragonIdx = 0; private status = '';
+  private skip = false; private repeat = 0; private capture: string | null = null; private dragonIdx = 0; private status = '';
   private hit: { x: number; y: number; w: number; h: number; fn: () => void }[] = [];
 
   constructor(private scene: Phaser.Scene, private touch: TouchControls, private onTitle: () => void) {
@@ -52,7 +52,7 @@ export class Menu {
   }
 
   show(tab?: string): void {
-    this.open = true; hud.inMenu = true; this.status = '';
+    this.open = true; hud.inMenu = true; this.status = ''; this.skip = true;
     if (tab && TABS.some((t) => t[0] === tab)) this.tab = tab as TabId;
     this.idx = -1; this.scroll = 0; this.root.setVisible(true); audio.play('ui'); this.draw();
   }
@@ -121,6 +121,7 @@ export class Menu {
   update(dt: number): void {
     if (!this.open) return;
     if (this.touch.editing || this.capture) return;
+    if (this.skip) { this.skip = false; return; } // the press that opened the menu must not also close it
     const inp = input; this.repeat -= dt;
     const nav = (a: Action): boolean => inp.pressed(a) || (inp.down(a) && this.repeat <= 0);
     let dirty = false;
@@ -169,7 +170,7 @@ export class Menu {
     this.idx = Math.min(this.idx, this.rows.length - 1);
     const listX = mx + 8, listY = top + 26, listH = H - top - 30 - 30, vis = Math.floor(listH / LINE);
     const split = this.tab === 'inv' || this.tab === 'dragons';
-    const listW = split ? Math.floor(pw * 0.44) : pw - 16;
+    const listW = split ? Math.floor(pw * 0.38) : pw - 16;
     if (this.idx >= 0) { if (this.idx < this.scroll) this.scroll = this.idx; if (this.idx >= this.scroll + vis) this.scroll = this.idx - vis + 1; }
     this.scroll = Phaser.Math.Clamp(this.scroll, 0, Math.max(0, this.rows.length - vis));
     for (let k = 0; k < vis && k + this.scroll < this.rows.length; k++) {
@@ -210,9 +211,10 @@ export class Menu {
     add(sc.add.image(x + w - 46, y + 30, key, 'idle_0').setScale(0.8));
     const L: [string, number][] = [];
     L.push([know > 0.25 ? r.name : '???', COL.gold]);
-    L.push([`${sp.name} · ${ELEM[sp.element]} · ${r.genes.sex === 'f' ? 'fêmea' : 'macho'}`, COL.text]);
+    L.push([`${sp.name} · ${ELEM[sp.element]}`, COL.text]);
     const st = game.stage(r);
-    L.push([`${{ egg: 'Ovo', hatchling: 'Filhote', juvenile: 'Jovem', adult: 'Adulto' }[st]} · linhagem ${r.genes.lineage.line} · ger. ${r.genes.lineage.generation}`, COL.dim]);
+    L.push([`${{ egg: 'Ovo', hatchling: 'Filhote', juvenile: 'Jovem', adult: 'Adulto' }[st]}, ${r.genes.sex === 'f' ? 'fêmea' : 'macho'}`, COL.dim]);
+    L.push([`Linhagem ${r.genes.lineage.line}, geração ${r.genes.lineage.generation}`, COL.dim]);
     L.push([`Vínculo: ${STAGE_LABEL[bondStage(r)]}  (${Math.round(r.trust)}%)`, COL.teal]);
     if (r.bonded) L.push([`Treino ${Math.round(r.training)}%  ·  ${game.canRide(r) ? 'pode ser montado' : ph.rideable ? 'ainda não montável' : 'porte pequeno'}`, COL.text]);
     if (know > 0.3) { const tr = TRAITS.map((t) => [t, ph.personality[t] + (r.drift[t] ?? 0)] as const).sort((a, b) => Math.abs(b[1] - 0.5) - Math.abs(a[1] - 0.5)).slice(0, know > 0.7 ? 4 : 2); L.push([tr.map(([t, v]) => TRAIT_WORDS[t][v > 0.5 ? 1 : 0]).join(', '), COL.text]); }
@@ -223,7 +225,8 @@ export class Menu {
     const last = r.memories[r.memories.length - 1];
     if (last) L.push([`Lembrança: ${{ fed: 'você o alimentou', fedDisliked: 'comida ruim', pet: 'um carinho', petTooSoon: 'um susto com sua mão', startled: 'você o assustou', hurtByHuman: 'foi ferido por humano', freed: 'você o libertou', healed: 'você o curou', respected: 'você respeitou seu território', played: 'brincaram juntos', observed: 'viu você de longe', calmed: 'seu gesto de calma', bonded: 'o dia do vínculo', noise: 'um barulho assustador', music: 'seu assobio', foughtTogether: 'lutaram juntos', flew: 'voaram juntos' }[last.kind]}`, COL.dim]);
     let yy = y;
-    for (const [s, c] of L) { const t = add(txt(sc, x, yy - 2, wrap(sc, s, w - (yy < y + 56 ? 86 : 0)), c)); yy += Math.max(LINE, t.height + 1); }
+    const maxY = sc.scale.height - 40;
+    for (const [s, c] of L) { if (yy + LINE > maxY) break; const t = add(txt(sc, x, yy - 2, wrap(sc, s, w - (yy < y + 50 ? 78 : 0)), c)); yy += Math.max(LINE, t.height - 3); }
   }
 
   private drawMap(add: <T extends Phaser.GameObjects.GameObject>(o: T) => T, x: number, y: number, w: number, h: number): void {
