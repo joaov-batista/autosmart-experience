@@ -98,6 +98,61 @@ Os golpes ficam em `src/dragons/DragonCombat.ts` e valem para a montaria e para 
   - Natureza: ira da floresta, que também cura
 - Inimigos abatidos por dragões explodem.
 
+## Dragonbound 3D: mundo aberto em terceira pessoa (sessão 3, protótipo)
+Pixel art em mundo 3D, no estilo HD-2D: personagens, dragões, árvores e efeitos são recortes em pixel art que ficam de frente para a câmera, num terreno 3D. A página é `/3d/` (`3d/index.html`, código em `src3d/`, Three.js 0.187 fixo). O jogo 2D continua em `/`.
+- **Mundo** (`world.ts`):
+  - uma ilha de cerca de 1,5 km, cercada de mar até o horizonte, com campina plana (início), colinas suaves, florestas, praias e uma montanha com neve;
+  - terreno low-poly com textura em pixel, árvores e moitas em quads cruzados instanciados, nuvens, névoa e céu;
+  - renderização em 300 px de altura, ampliada sem suavização.
+- **Vistas** (`views.ts`): frente e costas novas para o herói e para cada dragão (gerados a partir do fenótipo), voo visto de trás com e sem cavaleiro. A vista lateral vem dos painters do 2D. `billboard.ts` escolhe frente, costas ou lado pelo ângulo da câmera.
+- **Herói** (`hero3d.ts`): movimento relativo à câmera, andar devagar (Shift), pulo, oferecer comida (segurar F), carinho (E).
+- **Dragões** (`dragon3d.ts`):
+  - 29 selvagens por região: marulhos na costa, folhascas nas florestas, cinzais e troviscos na montanha, geadinos no pico, pedruscos nas encostas;
+  - pastam, vagam, fogem, voam alto pela ilha, se aproximam e comem da mão, e esperam o vínculo;
+  - usam as regras de confiança e medo de `Bond` do jogo 2D;
+  - vinculados seguem o herói (a pé ou voando).
+- **Montar e voar** (`main.ts`):
+  - R monta; Espaço decola;
+  - no ar: o mouse ou A/D giram; Q/Espaço sobem e C desce; W/S mudam a velocidade; K dá dash;
+  - câmera atrás do dragão, que inclina nas curvas, com campo de visão maior em alta velocidade;
+  - rasante levanta poeira ou spray; pouso automático quando o dragão está lento perto do chão.
+- **Combate aéreo** (`fx3d.ts`):
+  - esquadrões de planadores dos Caçadores com arpões;
+  - tiro elemental com mira automática (clique ou I), bola de poder ao segurar e tapa de asa (J);
+  - esquiva perfeita com câmera lenta;
+  - planadores abatidos caem em espiral e explodem.
+- **Interface:** HUD em DOM com pouco texto; controles de toque (analógico, arrastar para olhar e botões).
+- **Save:** o progresso fica em `localStorage` (`dragonbound3d.v2`).
+- **Sessão 4: mundo vivo e loop de fazenda**
+  - **Dragões únicos com vidas:** cada dragão pode ser nocauteado 3 vezes (fica caído e se recupera). No 4º nocaute ele morre para sempre e o save guarda isso. Nocaute no mar leva herói e dragão para a praia.
+  - **Breu:** espécie original noturna e furtiva, de tempestade, que só aparece à noite perto do pico.
+  - **Orientação:**
+    - bússola com marcador do objetivo e distância em metros;
+    - objetivo numa linha só, com o diário completo no M;
+    - tutorial de domar passo a passo (achar, aproximar devagar, alimentar, confiança, vínculo, montar).
+  - **Herói personalizável:** criador de personagem com pele, cabelo, estilo, barba e cores; aparece em todas as vistas.
+  - **Combate a pé (base Peregrinos):**
+    - estamina; combo de 3; segurar para ataque forte;
+    - bloqueio com aparar perfeito, que devolve projéteis; rolamento com invencibilidade; postura e atordoamento;
+    - espadas (madeira, ferro, fogo), escudos e armaduras com defesa.
+  - **Inimigos em terra:** acampamentos de caçadores com espadachins e besteiros, e baús com equipamento.
+  - **Dash do dragão:** mais longo (0,95 s, 2,8× a velocidade).
+  - **Mundo vivo:**
+    - vila de Vigiamar com casas, píer e NPCs (chefe Ragna, ferreiro Olvar e mercado de Sigrun);
+    - rebanhos de ovelhas e flores.
+  - **Mar:**
+    - navios inimigos com canhões e barcos aliados;
+    - serpentes marinhas indomáveis;
+    - a Fera do Abismo, um chefe gigante de 14 segmentos.
+  - **Loop de fazenda:**
+    - dia e noite (15 min); casa com cama para dormir;
+    - 6 canteiros para plantar, regar e colher;
+    - loja e mochila para equipar e ver as vidas dos dragões.
+  - **Mobile:** HUD respeita a safe-area do aparelho.
+  - **2D:** a camada da frente fica translúcida quando o herói está na camada de trás.
+  - **Não verificado:** balanceamento não foi jogado do início ao fim, e a visibilidade de navios e serpentes nas capturas não ficou clara. Não foi testado em celular real.
+- **Não medido:** no Chromium headless com GL por software roda a cerca de 7 fps (130 mil triângulos, 73 draw calls). Não foi medido em GPU nem em celular.
+
 ## Fase atual
 Fases 1–8 do plano têm implementação jogável. O projeto está em **polimento e aprofundamento** (ver "Próximos passos").
 
