@@ -99,6 +99,10 @@ function ThemeSync() {
 
 export default function App() {
   const route = useHashRoute();
+  // Fora da leitura (que restaura o próprio ponto), cada tela abre no topo.
+  useEffect(() => {
+    if (!route.startsWith('/estudar')) window.scrollTo(0, 0);
+  }, [route]);
   return (
     <ProgressProvider>
       <NotesProvider>

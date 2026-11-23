@@ -1,255 +1,310 @@
-import type { Chapter } from './types';
+import type { Block, Chapter, Layer } from './types';
 
 /**
- * Texto de estudo. IDs de parágrafo (c1p1, c2p3…) são estáveis: o marcador de leitura,
- * a revisão e os links da prática apontam para eles.
+ * Texto de estudo em dois modos.
+ *  - Resumido: só os parágrafos `lead` de cada trecho (leitura contínua de 3–4 minutos).
+ *  - Completo: o mesmo `lead`, seguido de `more` e, quando interromperia o raciocínio, `deep` (“Aprofundar”).
+ * Regra editorial: primeiro a pergunta e o fenômeno, depois o nome técnico.
+ * IDs (s2-1, s2-1a, s2-d1…) são estáveis: marcações, anotações, revisão e exercícios apontam para eles.
  */
 export const chapters: Chapter[] = [
   {
     id: 'c1',
     number: 1,
-    title: 'O que é memória, biologicamente?',
-    keyIdea: 'Memória pode ser descrita como capacidade (registrar, conservar, recuperar) ou investigada como mudança física no cérebro. A experiência passa; a mudança no circuito fica.',
-    minutes: 2,
-    blocks: [
+    title: 'O que é memória?',
+    minutes: 1,
+    sections: [
       {
-        kind: 'p',
-        id: 'c1p1',
-        text: 'Em psicologia, memória é o conjunto de processos pelos quais uma experiência pode ser registrada, conservada e utilizada posteriormente. Em neurociência, a pergunta é mais específica: o que uma experiência modifica no sistema nervoso para que ela influencie o que uma pessoa consegue fazer ou recordar depois? As duas definições descrevem o mesmo fenômeno em escalas diferentes. Uma descreve uma capacidade observável. A outra investiga os mecanismos que sustentam essa capacidade. [1, 3]',
+        id: 's1-1',
+        lead: 'Quando alguém diz “esqueci”, vemos apenas o resultado. A psicologia separa a memória em processos: registrar uma experiência, conservá-la ao longo do tempo e acessá-la depois. Uma dificuldade pode surgir em qualquer um deles, e o “esqueci”, sozinho, não diz em qual. [1]',
+        more: [
+          {
+            kind: 'p',
+            id: 's1-1a',
+            text: 'A neurociência faz a mesma pergunta em outra escala: o que uma experiência modifica no sistema nervoso para influenciar o que a pessoa faz ou recorda depois? As duas descrições tratam do mesmo fenômeno. Uma descreve uma capacidade que observamos; a outra procura os mecanismos que a sustentam. [1, 3]',
+          },
+        ],
       },
       {
-        kind: 'p',
-        id: 'c1p2',
-        text: 'Durante uma experiência, diferentes populações de neurônios entram em atividade. Algumas processam características sensoriais, outras representam significados, relações e contexto. A atividade daquele momento é passageira. Para que a experiência tenha efeitos duradouros, algo precisa mudar na maneira como os neurônios respondem ou se comunicam. A capacidade do sistema nervoso de se modificar com a atividade e com a experiência recebe o nome de **plasticidade neural**. [2, 3]',
-      },
-      {
-        kind: 'p',
-        id: 'c1p3',
-        text: 'O termo **traço de memória**, ou **engrama**, designa as modificações físicas duradouras associadas a uma experiência e que contribuem para sua recuperação posterior. Um traço pode envolver conjuntos de células e mudanças nas conexões entre elas. Quando recordamos, parte da atividade associada à experiência pode ser reativada.',
-      },
-      {
-        kind: 'p',
-        id: 'c1p4',
-        text: 'Isso ajuda a responder uma pergunta importante: como conseguimos lembrar de algo mesmo depois que os neurônios deixaram de apresentar o padrão de atividade original? A experiência alterou o circuito, modificando sua possibilidade de responder no futuro. Grande parte da evidência experimental que permite identificar e manipular células de um engrama vem de estudos em animais. [3]',
+        id: 's1-2',
+        lead: 'Como uma experiência que já terminou continua tendo efeito? Durante a experiência, grupos de neurônios ficam ativos, mas essa atividade passa. O que permanece é uma mudança na maneira como esses neurônios respondem e se comunicam. Essa capacidade do cérebro de se modificar com a experiência se chama **plasticidade neural**. [2, 3]',
+        more: [
+          {
+            kind: 'p',
+            id: 's1-2a',
+            text: 'O conjunto de mudanças físicas duradouras ligadas a uma experiência, que contribuem para que ela seja recuperada depois, é chamado de **traço de memória**, ou **engrama**. Ele pode envolver grupos de células e as conexões entre elas. Quando lembramos, parte da atividade daquele momento pode ser reativada. Isso não acontece porque os neurônios ficaram ativos desde então, e sim porque o circuito foi alterado e passou a responder de outro jeito. [3]',
+          },
+          {
+            kind: 'p',
+            id: 's1-2b',
+            text: 'Uma ressalva sobre a evidência: grande parte dos experimentos que identificam e manipulam células de um engrama foi feita em animais. Em pessoas, o conceito ajuda a organizar o que sabemos, mas não é medido célula a célula. [3]',
+          },
+        ],
       },
     ],
   },
   {
     id: 'c2',
     number: 2,
-    title: 'O que acontece em uma sinapse quando aprendemos?',
-    keyIdea: 'Na sinapse, um neurônio libera neurotransmissor e o outro responde por meio de receptores. Na LTP, a atividade conjunta faz um sinal parecido gerar uma resposta maior depois.',
+    title: 'O que muda numa sinapse quando aprendemos?',
     minutes: 3,
-    blocks: [
+    sections: [
       {
-        kind: 'p',
-        id: 'c2p1',
-        text: 'Um **neurônio** é uma célula que recebe, integra e transmite sinais. Uma **sinapse** é uma região de comunicação entre células. Em uma sinapse química, a chegada de um sinal elétrico à terminação do neurônio pré-sináptico favorece a liberação de moléculas chamadas **neurotransmissores**. Elas atravessam uma pequena fenda e se ligam a **receptores** na célula pós-sináptica.',
-      },
-      {
-        kind: 'p',
-        id: 'c2p2',
-        text: 'O receptor é uma proteína cuja ativação modifica a resposta dessa célula. Assim, neurotransmissor e receptor têm funções diferentes: um leva o sinal químico, o outro responde a ele. [2]',
-      },
-      {
-        kind: 'p',
-        id: 'c2p3',
-        text: 'Como isso se relaciona com a memória? A mesma entrada pode produzir uma resposta diferente depois de uma experiência. Se certos padrões de atividade aumentam de forma persistente a eficácia da comunicação entre dois neurônios, temos uma forma de **potenciação de longa duração**, conhecida pela sigla {{LTP|ltp}}. “Mais forte” tem um significado concreto: um estímulo posterior comparável produz uma resposta pós-sináptica maior. [2]',
-      },
-      {
-        kind: 'p',
-        id: 'c2p4',
-        text: 'Uma das formas mais estudadas de LTP ocorre em sinapses excitatórias do **hipocampo**. Nelas, o **glutamato** pode atuar sobre dois tipos de receptor, {{AMPA|ampa}} e {{NMDA|nmda}}. A ativação de receptores AMPA contribui para a **despolarização**, uma mudança na diferença de carga elétrica através da membrana do neurônio.',
-      },
-      {
-        kind: 'p',
-        id: 'c2p5',
-        text: 'Em condições próximas ao repouso, íons de magnésio dificultam a passagem pelo canal do receptor NMDA. Quando há glutamato e despolarização suficiente, esse bloqueio pode ser aliviado. O canal então permite a entrada de cálcio. [2]',
-      },
-      {
-        kind: 'p',
-        id: 'c2p6',
-        text: 'Por que a entrada de cálcio importa? Dentro da célula, o cálcio também funciona como sinal químico. Ele pode ativar processos que aumentam o número ou a eficácia de receptores AMPA disponíveis naquela sinapse. Em uma estimulação futura, a resposta pode ser maior. Essa sequência oferece uma explicação biológica para uma propriedade da aprendizagem: a atividade conjunta de células pode modificar a influência futura de uma sobre a outra.',
-      },
-      { kind: 'figure', id: 'fig-sinapse', figure: 'synapse' },
-      {
-        kind: 'p',
-        id: 'c2p7',
-        text: 'Existem outras formas de plasticidade, inclusive reduções persistentes da eficácia sináptica. A LTP explica um mecanismo possível de fortalecimento. Uma lembrança autobiográfica inteira envolve muitos circuitos e processos adicionais. [2, 3]',
+        id: 's2-1',
+        lead: 'Como uma experiência breve pode deixar um efeito duradouro? Os neurônios se comunicam em pontos de contato chamados **sinapses**. Quando certos neurônios se ativam juntos, a comunicação entre eles pode mudar. Em algumas conexões do hipocampo, o mesmo sinal passa a produzir uma resposta maior no neurônio que o recebe. Esse fortalecimento persistente é uma forma de **potenciação de longa duração**, ou {{LTP|ltp}}. [2]',
+        more: [
+          {
+            kind: 'p',
+            id: 's2-1a',
+            text: '“Mais forte”, aqui, tem um sentido preciso: depois daquela atividade, um estímulo comparável produz uma resposta maior na célula que recebe o sinal. É assim que uma experiência de poucos segundos pode alterar a maneira como o circuito vai responder amanhã. Use o controle da figura para comparar. [2]',
+          },
+          { kind: 'figure', id: 'fig-comparar', figure: 'synapse-compare' },
+          {
+            kind: 'p',
+            id: 's2-1b',
+            text: 'Para entender o que muda, vale olhar a sinapse por dentro. O {{neurônio|neuronio}} que envia o sinal libera moléculas chamadas **neurotransmissores**. Elas atravessam uma fenda estreita e se ligam a **receptores**, proteínas na membrana da célula que recebe. Os dois têm papéis diferentes: o neurotransmissor leva a mensagem; o receptor responde a ela e altera a atividade da célula. [2]',
+          },
+          {
+            kind: 'p',
+            id: 's2-1c',
+            text: 'Dois limites evitam exageros. Existem outras formas de plasticidade, inclusive enfraquecimentos persistentes das conexões. E uma lembrança inteira envolve muitas células e circuitos, não uma única sinapse. [2, 3]',
+          },
+        ],
+        deep: {
+          question: 'Como esse fortalecimento acontece?',
+          blocks: [
+            {
+              kind: 'p',
+              id: 's2-d1',
+              text: 'Nas sinapses do hipocampo mais estudadas, o neurotransmissor é o **glutamato**, que atua sobre dois tipos de receptor com funções complementares. O {{receptor AMPA|ampa}} é a via rápida: quando o glutamato se liga a ele, cargas positivas entram na célula e provocam uma **despolarização**, isto é, o interior da célula fica menos negativo. [2]',
+            },
+            {
+              kind: 'p',
+              id: 's2-d2',
+              text: 'O {{receptor NMDA|nmda}} funciona como um detector de coincidência. Perto do repouso, um íon de magnésio fica preso no seu canal e o mantém bloqueado, mesmo com glutamato presente. O bloqueio só é aliviado quando há glutamato e, ao mesmo tempo, despolarização suficiente. Em outras palavras, quando a célula que envia e a que recebe estão ativas juntas. [2]',
+            },
+            {
+              kind: 'p',
+              id: 's2-d3',
+              text: 'Com o canal NMDA aberto, entra cálcio. Dentro da célula, o cálcio funciona como um sinal químico: ativa processos que aumentam o número ou a eficácia dos receptores AMPA naquela sinapse. Com mais receptores AMPA disponíveis, o mesmo glutamato liberado no futuro gera uma resposta maior. É essa mudança que torna o fortalecimento duradouro. [2]',
+            },
+            { kind: 'figure', id: 'fig-sinapse', figure: 'synapse-steps' },
+          ],
+        },
       },
     ],
   },
   {
     id: 'c3',
     number: 3,
-    title: 'Como uma experiência vira uma lembrança que podemos recuperar?',
-    keyIdea: 'Codificar, consolidar, armazenar e recuperar são etapas diferentes. Não conseguir responder não mostra, sozinho, em qual etapa houve dificuldade.',
+    title: 'Como uma experiência vira uma lembrança?',
     minutes: 2,
-    blocks: [
+    sections: [
       {
-        kind: 'p',
-        id: 'c3p1',
-        text: '**Codificação** é o processamento inicial que permite formar uma representação da experiência. A atenção influencia quais informações recebem processamento suficiente. A organização também importa: registrar elementos separadamente e representar as relações entre eles são demandas diferentes. Uma pessoa pode guardar a identidade de dois elementos e ter dificuldade para recuperar como estavam ligados. [1, 5]',
+        id: 's3-1',
+        lead: 'Nem tudo o que vivemos é registrado da mesma forma. A **codificação**, o processamento que forma a representação de uma experiência, depende da atenção e da organização. E há uma distinção que será central para a esquizofrenia: registrar os elementos de uma experiência e registrar como eles se relacionam são tarefas diferentes. Dá para guardar dois rostos e não lembrar que estavam juntos. [1, 5]',
       },
       {
-        kind: 'p',
-        id: 'c3p2',
-        text: '**Consolidação** é o conjunto de processos pelos quais uma representação inicialmente vulnerável se estabiliza e se reorganiza. Na escala sináptica, certas mudanças desencadeadas pela aprendizagem são mantidas ao longo do tempo. Na escala dos sistemas cerebrais, muda a contribuição relativa das redes que sustentam uma memória.',
-      },
-      {
-        kind: 'p',
-        id: 'c3p3',
-        text: 'Hipocampo e áreas corticais participam dessa dinâmica. Dizer que a lembrança simplesmente “sai do hipocampo e vai para o córtex” obscurece essa interação e sugere uma transferência física que não descreve bem o processo. [3]',
-      },
-      {
-        kind: 'p',
-        id: 'c3p4',
-        text: '**Armazenamento** designa a retenção da informação ao longo do tempo. **Recuperação** é o acesso posterior ao que foi aprendido. Essa distinção tem uma consequência importante: o desempenho observado hoje depende tanto do que foi aprendido antes quanto das condições oferecidas para acessar aquela informação agora.',
-      },
-      {
-        kind: 'p',
-        id: 'c3p5',
-        text: 'Uma dificuldade para responder não revela, por si só, se a representação se formou de maneira incompleta, se perdeu estabilidade ou se estava difícil de recuperar naquele momento. [1, 3]',
+        id: 's3-2',
+        lead: 'Depois do registro, a lembrança precisa se manter e ser encontrada. **Armazenamento** é a retenção ao longo do tempo; **recuperação** é o acesso posterior. O desempenho de hoje depende do que foi aprendido e das condições oferecidas agora para lembrar. Por isso, errar uma resposta não revela, sozinho, se a lembrança se formou incompleta, se perdeu estabilidade ou se apenas estava difícil de acessar naquele momento. [1, 3]',
+        more: [
+          {
+            kind: 'p',
+            id: 's3-2a',
+            text: 'Entre o registro e o uso posterior acontece a **consolidação**: processos que estabilizam e reorganizam uma representação que, no início, é frágil. Na escala da sinapse, certas mudanças desencadeadas pela aprendizagem se mantêm. Na escala dos sistemas cerebrais, muda a participação relativa das redes que sustentam aquela memória. [3]',
+          },
+        ],
+        deep: {
+          question: 'A lembrança “sai do hipocampo e vai para o córtex”?',
+          blocks: [
+            {
+              kind: 'p',
+              id: 's3-d1',
+              text: 'Essa imagem é comum, mas engana. Hipocampo e áreas corticais interagem durante a consolidação. Falar em transferência física sugere que a lembrança é um objeto que muda de lugar, e isso não descreve bem o processo. [3]',
+            },
+          ],
+        },
       },
     ],
   },
   {
     id: 'c4',
     number: 4,
-    title: 'Que regiões e sistemas participam da memória?',
-    keyIdea: 'O hipocampo participa da ligação entre os elementos de um episódio; o pré-frontal seleciona, organiza e orienta a busca. Cada tipo de memória é avaliado por tarefas diferentes.',
+    title: 'Que tipos de memória e regiões entram em jogo?',
     minutes: 2,
-    blocks: [
+    sections: [
       {
-        kind: 'p',
-        id: 'c4p1',
-        text: 'O **hipocampo**, localizado na porção medial do lobo temporal, participa da formação de memórias episódicas e da representação de relações entre os elementos de uma experiência. Uma memória episódica diz respeito a um acontecimento vivido e ao seu contexto.',
+        id: 's4-1',
+        lead: 'Perguntar “como está a memória?” é vago, porque existem vários tipos. A **memória de trabalho** mantém uma informação disponível enquanto fazemos algo com ela, como guardar um número enquanto o digitamos. A **memória episódica** recupera um acontecimento com seu contexto: o que aconteceu, onde e com quem. Cada tipo é avaliado por tarefas diferentes. [1, 6]',
+        more: [
+          {
+            kind: 'p',
+            id: 's4-1a',
+            text: 'Outros dois tipos completam o quadro: a **memória semântica** sustenta conhecimentos e significados que usamos sem lembrar quando os aprendemos, e a **memória procedural** participa da aquisição e execução de habilidades, como andar de bicicleta. [1]',
+          },
+        ],
       },
       {
-        kind: 'p',
-        id: 'c4p2',
-        text: 'A identidade de um objeto, o lugar em que apareceu e a pessoa que estava presente são informações distintas. Lembrar o acontecimento como episódio envolve recuperar como esses elementos se relacionavam. Essa função ajuda a entender por que reconhecer um elemento familiar pode ser mais fácil do que situá-lo em sua ocasião de origem. [1, 3, 5]',
-      },
-      {
-        kind: 'p',
-        id: 'c4p3',
-        text: 'O **córtex pré-frontal** participa do controle da atividade mental conforme os objetivos da tarefa. Entre outras funções, contribui para selecionar o que é relevante, organizar informação durante a aprendizagem e orientar a busca durante a recuperação. A porção **dorsolateral** é especialmente estudada em tarefas que exigem organização, controle e manipulação da informação.',
-      },
-      {
-        kind: 'p',
-        id: 'c4p4',
-        text: 'O hipocampo e o córtex pré-frontal trabalham em interação com outras regiões. Dividir as funções ajuda a estudá-las, mas nenhuma dessas estruturas executa sozinha toda a memória humana. [5, 6]',
-      },
-      { kind: 'figure', id: 'fig-episodica', figure: 'episodic' },
-      {
-        kind: 'p',
-        id: 'c4p5',
-        text: 'É importante distinguir os sistemas pelo que permitem fazer. A **memória de trabalho** mantém informações temporariamente disponíveis para orientar uma operação em andamento. A **memória episódica** permite recuperar acontecimentos e seus contextos. A **memória semântica** sustenta conhecimentos e significados que podem ser usados independentemente da ocasião em que foram aprendidos. A **memória procedural** participa da aquisição e execução de habilidades.',
-      },
-      {
-        kind: 'p',
-        id: 'c4p6',
-        text: 'Portanto, perguntar “como está a memória?” exige uma segunda pergunta: qual dessas funções foi avaliada e por qual tarefa? [1, 6]',
+        id: 's4-2',
+        lead: 'Duas regiões aparecem muito nos estudos. O **hipocampo** participa da formação de memórias episódicas e, em especial, das relações entre os elementos de uma experiência. O **córtex pré-frontal** ajuda a selecionar o que é relevante, a organizar a informação ao aprender e a orientar a busca ao lembrar; também participa da {{memória de trabalho|memoria-de-trabalho}}. Nenhuma das duas faz a memória sozinha: elas trabalham em interação com outras regiões. [1, 3, 5, 6]',
+        more: [
+          {
+            kind: 'p',
+            id: 's4-2a',
+            text: 'Por que separar elementos de relações? Reconhecer um rosto como familiar pode se apoiar apenas na identidade do rosto. Lembrar que você viu essa pessoa na biblioteca, ontem, exige recuperar a ligação entre o rosto, o lugar e o momento. Essa ligação é justamente o tipo de informação em que o hipocampo é mais estudado. [1, 3, 5]',
+          },
+          { kind: 'figure', id: 'fig-episodica', figure: 'episodic' },
+          {
+            kind: 'p',
+            id: 's4-2b',
+            text: 'Dentro do pré-frontal, a porção **dorsolateral** é especialmente estudada em tarefas que exigem organizar, controlar e manipular informação, o que inclui a memória de trabalho. [6]',
+          },
+        ],
       },
     ],
   },
   {
     id: 'c5',
     number: 5,
-    title: 'O que muda na memória de pessoas com esquizofrenia?',
-    keyIdea: 'Em média, as dificuldades aparecem sobretudo em manter informação em uso e em aprender relações entre itens. O formato da tarefa muda o tamanho da diferença, e as pessoas variam.',
-    minutes: 4,
-    blocks: [
+    title: 'O que pode mudar na memória de uma pessoa com esquizofrenia?',
+    minutes: 3,
+    sections: [
       {
-        kind: 'p',
-        id: 'c5p1',
-        text: 'A **esquizofrenia** é um transtorno mental que pode envolver sintomas psicóticos, como delírios e alucinações, além de sintomas negativos e dificuldades cognitivas. A cognição inclui atenção, aprendizagem, memória e outras funções. Uma alucinação diz respeito à percepção. Já uma dificuldade de memória diz respeito ao registro, à manutenção ou à recuperação de informação. São dimensões diferentes que podem coexistir e afetar o cotidiano de formas distintas. [4]',
+        id: 's5-1',
+        lead: 'A **esquizofrenia** pode envolver sintomas psicóticos, como delírios e alucinações, sintomas negativos e dificuldades cognitivas, como as de atenção, aprendizagem e memória. São dimensões diferentes: uma alucinação é uma alteração da percepção; uma dificuldade de memória diz respeito a registrar, manter ou recuperar informação. Elas podem coexistir e afetar o dia a dia de formas distintas. [4]',
       },
       {
-        kind: 'p',
-        id: 'c5p2',
-        text: '**Na memória de trabalho**, estudos encontram, em média, dificuldades para manter e usar informação enquanto uma tarefa continua. A exigência aumenta quando é preciso conservar determinados elementos, ignorar interferências e manipular o conteúdo conforme uma regra. Isso ajuda a explicar por que compreender cada frase de uma orientação e conseguir utilizar todas as suas partes em sequência são capacidades relacionadas, mas separáveis. Os estudos relacionam esse tipo de desempenho ao funcionamento de circuitos pré-frontais. [4, 6]',
+        id: 's5-2',
+        lead: 'O que pode mudar na {{memória de trabalho|memoria-de-trabalho}}? Em média, os estudos encontram mais dificuldade para manter uma informação disponível enquanto se faz algo com ela. Pense numa orientação com várias etapas: é preciso guardar o começo enquanto se escuta o fim e, depois, usar cada parte na ordem certa. Entender cada frase não garante isso, e a exigência cresce com interferências. Os pesquisadores relacionam esse desempenho ao funcionamento de circuitos do {{córtex pré-frontal|cortex-pre-frontal}}. [4, 6]',
       },
       {
-        kind: 'p',
-        id: 'c5p3',
-        text: '**Na memória episódica**, uma distinção central é entre aprender um item e aprender a relação entre itens. Ragland e colaboradores estudaram essa diferença em pessoas com esquizofrenia e participantes de comparação. Durante uma tarefa de memória acompanhada por {{ressonância magnética funcional|rmf}}, examinaram a aprendizagem das características de itens e a aprendizagem das relações entre eles.',
+        id: 's5-3',
+        lead: 'E na {{memória episódica|memoria-episodica}}? A pessoa pode reconhecer os elementos de uma experiência e ter mais dificuldade para recuperar a relação entre eles: sentir que um rosto é familiar, mas não lembrar onde o viu. Reconhecer o rosto depende da informação sobre o próprio rosto; lembrar onde o encontrou depende da ligação entre rosto e lugar. Ragland e colaboradores testaram essa diferença comparando a aprendizagem de itens isolados com a aprendizagem das relações entre itens. O grupo com esquizofrenia teve dificuldade especialmente grande quando precisava aprender as relações. [5]',
+        more: [
+          {
+            kind: 'p',
+            id: 's5-3a',
+            text: 'O estudo usou {{ressonância magnética funcional|rmf}} durante a tarefa. Além do desempenho, encontrou diferenças no recrutamento do pré-frontal enquanto as relações eram codificadas e no recrutamento do hipocampo durante a recuperação, em condições específicas. Isso sugere que parte da dificuldade pode surgir já no registro das relações, e não apenas no armazenamento. [5]',
+          },
+          {
+            kind: 'p',
+            id: 's5-3b',
+            text: 'Duas noções ajudam a falar disso com precisão. **Familiaridade** é a sensação de já ter encontrado algo. **Recordação contextual** é recuperar detalhes da experiência anterior, como o lugar e o que estava junto. A separação não é absoluta: até um teste de reconhecimento exige contexto quando a pergunta é quais elementos apareceram juntos. [5]',
+          },
+        ],
       },
       {
-        kind: 'p',
-        id: 'c5p4',
-        text: 'O grupo com esquizofrenia apresentou dificuldade particularmente importante quando a tarefa exigia representar relações. Os resultados também apontaram diferenças no recrutamento pré-frontal durante a codificação relacional e no recrutamento do hipocampo durante a recuperação em condições específicas da tarefa. [5]',
-      },
-      {
-        kind: 'p',
-        id: 'c5p5',
-        text: 'O significado desse achado vai além de dizer “a memória é pior”. Alguém pode conservar uma sensação de **familiaridade** e ainda ter dificuldade para recuperar a relação que dá contexto à lembrança. Familiaridade é a sensação de já ter encontrado algo. **Recordação contextual** envolve recuperar detalhes da experiência anterior. Essa distinção não é absoluta: até uma tarefa de reconhecimento pode exigir contexto quando a pessoa precisa identificar quais elementos apareceram juntos. [5]',
-      },
-      {
-        kind: 'p',
-        id: 'c5p6',
-        text: '**Recordação livre**, **recordação com pista** e **reconhecimento** são maneiras de avaliar a memória. Na primeira, a pessoa precisa produzir o conteúdo sem opções. Na segunda, recebe uma ajuda para a busca. Na terceira, decide se algo apresentado corresponde ao que aprendeu.',
-      },
-      {
-        kind: 'p',
-        id: 'c5p7',
-        text: 'Uma {{meta-análise|meta}} de Aleman e colaboradores reuniu 70 estudos e encontrou diferença média maior entre os grupos nas tarefas de recordação. O reconhecimento também apresentou diferença significativa, embora menor. Isso permite dizer que o formato da tarefa influencia o tamanho da dificuldade observada. Não autoriza afirmar que toda pessoa com esquizofrenia tem reconhecimento intacto. [7]',
-      },
-      {
-        kind: 'p',
-        id: 'c5p8',
-        text: '**Qual é, então, a diferença em relação a pessoas sem esquizofrenia?** Os dois grupos usam os mesmos princípios gerais de memória. A pesquisa identifica diferenças médias na eficiência de certos processos e no recrutamento dos circuitos necessários sob determinadas condições. Entre os pontos importantes estão sustentar informações enquanto se trabalha com elas, organizar relações durante a aprendizagem e recuperar detalhes de um episódio.',
-      },
-      {
-        kind: 'p',
-        id: 'c5p9',
-        text: 'A intensidade e o perfil variam entre indivíduos. Um diagnóstico, sozinho, não permite prever quais lembranças determinada pessoa conserva ou quanto apoio ela precisará. [4–7]',
+        id: 's5-4',
+        lead: 'O que a comparação entre grupos permite concluir? Que existe uma tendência média, e não um padrão igual para todos. Uma {{meta-análise|meta}} de Aleman e colaboradores reuniu 70 estudos e mostrou que a diferença entre os grupos era maior quando as pessoas precisavam recordar sozinhas e menor, mas ainda presente, quando podiam reconhecer o material entre opções. Ou seja, a maneira de perguntar muda o desempenho observado. E o perfil varia entre pessoas: o diagnóstico, sozinho, não diz o que alguém lembra nem de quanta ajuda precisa. [4, 7]',
+        more: [
+          {
+            kind: 'p',
+            id: 's5-4a',
+            text: 'Os formatos de tarefa têm nomes. Na **recordação livre**, a pessoa produz o conteúdo sem ajuda. Na **recordação com pista**, recebe uma dica, como “era uma fruta”. No **reconhecimento**, decide se algo apresentado estava entre o que aprendeu, como em “era manga ou uva?”. O achado de Aleman compara sobretudo recordar e reconhecer, e não autoriza dizer que o reconhecimento de pessoas com esquizofrenia é intacto. [1, 7]',
+          },
+          {
+            kind: 'p',
+            id: 's5-4b',
+            text: 'Uma última distinção: encontrar uma diferença numa tarefa é uma coisa; explicar sua causa biológica é outra. Os estudos descrevem em quais tarefas e condições o desempenho muda. Por que isso acontece ainda está sendo investigado, e esse é o assunto do próximo capítulo. [5, 7]',
+          },
+        ],
       },
     ],
   },
   {
     id: 'c6',
     number: 6,
-    title: 'O que sabemos sobre as sinapses na esquizofrenia?',
-    keyIdea: 'Conhecer um mecanismo sináptico não prova que ele falhou numa pessoa. Alterações de circuito são investigadas como contribuição possível, e parte das dificuldades pode vir antes do tratamento.',
+    title: 'O que se sabe sobre a causa biológica?',
     minutes: 2,
-    blocks: [
+    sections: [
       {
-        kind: 'p',
-        id: 'c6p1',
-        text: 'Agora conecte os capítulos anteriores com cuidado. Para manter informação disponível, os neurônios de um circuito precisam influenciar uns aos outros de maneira coordenada. No córtex pré-frontal, neurônios excitatórios que usam glutamato e interneurônios inibitórios que usam principalmente **GABA** participam dessa coordenação. A inibição ajuda a regular quando e quais células ficam ativas. Por isso, tanto a excitação quanto a inibição importam para a precisão do funcionamento da rede. [6]',
+        id: 's6-1',
+        lead: 'Os pesquisadores sabem por que essas dificuldades aparecem? Ainda não completamente. Uma linha de investigação olha para os circuitos do pré-frontal, onde neurônios excitatórios, que usam {{glutamato|glutamato}}, e interneurônios inibitórios, que usam principalmente **GABA**, regulam juntos quais células ficam ativas e quando. Alterações nesse equilíbrio são investigadas como possíveis contribuições para as dificuldades de memória de trabalho. [6]',
+        more: [
+          {
+            kind: 'p',
+            id: 's6-1a',
+            text: 'Cada tipo de estudo responde a uma pergunta diferente. Uma análise de tecido cerebral pode sugerir um mecanismo molecular. Um estudo de imagem pode relacionar a atividade de uma região a um desempenho. Um teste cognitivo mostra em quais condições o desempenho muda. Nenhum deles, sozinho, liga a molécula ao comportamento de uma pessoa. [5, 6]',
+          },
+        ],
       },
       {
-        kind: 'p',
-        id: 'c6p2',
-        text: 'Pesquisadores investigam se alterações em componentes desses circuitos contribuem para dificuldades de memória de trabalho na esquizofrenia. Estudos de tecido cerebral, estudos de atividade cerebral em pessoas e modelos experimentais oferecem informações complementares. Uma alteração molecular identificada em tecido pode sugerir um mecanismo. Um estudo de imagem pode relacionar atividade regional e desempenho. Um teste cognitivo pode mostrar em qual condição o desempenho muda. Cada método responde a uma pergunta diferente. [5, 6]',
+        id: 's6-2',
+        lead: 'Por isso, é preciso cuidado ao passar do mecanismo para a pessoa. Saber que {{receptores NMDA|nmda}} participam de uma forma de plasticidade no hipocampo não demonstra que alguém esqueceu algo por uma falha nesses receptores, e a {{ressonância funcional|rmf}} mostra atividade regional, não a quantidade de glutamato numa sinapse. O que se pode afirmar é que mudanças na função e na coordenação de circuitos são investigadas como mecanismos que podem contribuir para as dificuldades observadas. [2, 5, 6]',
       },
       {
-        kind: 'p',
-        id: 'c6p3',
-        text: 'Aqui está o limite que você precisa saber defender: o fato de receptores NMDA participarem de uma forma de plasticidade no hipocampo não demonstra que uma pessoa esqueceu uma informação por causa de uma falha nesses receptores. E uma diferença na ressonância funcional não mede diretamente a quantidade de glutamato ou GABA em uma sinapse.',
-      },
-      {
-        kind: 'p',
-        id: 'c6p4',
-        text: 'A formulação sustentada é que mudanças na função e na coordenação de circuitos são investigadas como mecanismos que podem contribuir para as dificuldades cognitivas observadas. [2, 5, 6]',
-      },
-      {
-        kind: 'p',
-        id: 'c6p5',
-        text: 'Outra pergunta provável é se essas dificuldades são inteiramente consequência dos antipsicóticos. Uma meta-análise publicada em 2024 identificou diferenças cognitivas já no primeiro episódio psicótico em pessoas que ainda não haviam usado antipsicóticos. Portanto, ao menos parte das dificuldades observadas nessa população pode preceder o tratamento.',
-      },
-      {
-        kind: 'p',
-        id: 'c6p6',
-        text: 'A população estudada foi a de **primeiro episódio psicótico**, categoria mais ampla do que esquizofrenia. O estudo tampouco estabelece o efeito de um medicamento específico em uma pessoa. [8]',
+        id: 's6-3',
+        lead: 'E os remédios? Uma {{meta-análise|meta}} publicada em 2024 encontrou diferenças cognitivas em pessoas no **primeiro episódio psicótico** que ainda não tinham usado antipsicóticos. Isso indica que ao menos parte das dificuldades pode existir antes do tratamento. Há dois limites: o estudo avaliou primeiro episódio psicótico, uma categoria mais ampla que esquizofrenia, e não mede o efeito de um medicamento específico numa pessoa. [8]',
       },
     ],
   },
 ];
 
-export const allParagraphs = chapters.flatMap((c) =>
-  c.blocks.filter((b): b is Extract<typeof b, { kind: 'p' }> => b.kind === 'p').map((b) => ({ ...b, chapter: c })),
+/** Mapa de IDs da versão anterior do texto → IDs atuais (preserva marcações, anotações e marcadores). */
+export const legacyPidMap: Record<string, string> = {
+  c1p1: 's1-1', c1p2: 's1-2', c1p3: 's1-2a', c1p4: 's1-2b',
+  c2p1: 's2-1b', c2p2: 's2-1b', c2p3: 's2-1a', c2p4: 's2-d1', c2p5: 's2-d2', c2p6: 's2-d3', c2p7: 's2-1c',
+  c3p1: 's3-1', c3p2: 's3-2a', c3p3: 's3-d1', c3p4: 's3-2', c3p5: 's3-2',
+  c4p1: 's4-2', c4p2: 's4-2a', c4p3: 's4-2', c4p4: 's4-2', c4p5: 's4-1', c4p6: 's4-1',
+  c5p1: 's5-1', c5p2: 's5-2', c5p3: 's5-3', c5p4: 's5-3a', c5p5: 's5-3b', c5p6: 's5-4a', c5p7: 's5-4', c5p8: 's5-4', c5p9: 's5-4',
+  c6p1: 's6-1', c6p2: 's6-1a', c6p3: 's6-2', c6p4: 's6-2', c6p5: 's6-3', c6p6: 's6-3',
+  'fig-sinapse': 'fig-sinapse', 'fig-episodica': 'fig-episodica',
+};
+export const mapLegacyPid = (pid: string) => legacyPidMap[pid] ?? pid;
+
+export interface ParagraphInfo {
+  id: string;
+  text: string;
+  chapter: Chapter;
+  sectionId: string;
+  layer: Layer;
+}
+
+export const allParagraphs: ParagraphInfo[] = chapters.flatMap((c) =>
+  c.sections.flatMap((s) => {
+    const out: ParagraphInfo[] = [{ id: s.id, text: s.lead, chapter: c, sectionId: s.id, layer: 'lead' }];
+    const add = (blocks: Block[] | undefined, layer: Layer) =>
+      blocks?.forEach((b) => b.kind === 'p' && out.push({ id: b.id, text: b.text, chapter: c, sectionId: s.id, layer }));
+    add(s.more, 'more');
+    add(s.deep?.blocks, 'deep');
+    return out;
+  }),
 );
-export const getParagraph = (pid: string) => allParagraphs.find((p) => p.id === pid);
-export const chapterOf = (blockId: string) => chapters.find((c) => c.blocks.some((b) => b.id === blockId));
+
+export const getParagraph = (pid: string) => allParagraphs.find((p) => p.id === mapLegacyPid(pid));
+
+/** Trecho (seção) e camada de qualquer bloco: parágrafo, figura ou título de capítulo. */
+export function locateBlock(id: string): { chapter: Chapter; sectionId: string | null; layer: Layer | 'heading' } | null {
+  const mid = mapLegacyPid(id);
+  for (const c of chapters) {
+    if (c.id === mid) return { chapter: c, sectionId: c.sections[0].id, layer: 'heading' };
+    for (const s of c.sections) {
+      if (s.id === mid) return { chapter: c, sectionId: s.id, layer: 'lead' };
+      if (s.more?.some((b) => b.id === mid)) return { chapter: c, sectionId: s.id, layer: 'more' };
+      if (s.deep?.blocks.some((b) => b.id === mid)) return { chapter: c, sectionId: s.id, layer: 'deep' };
+    }
+  }
+  return null;
+}
+
+export const chapterOf = (id: string) => locateBlock(id)?.chapter;
+
+/** Texto como aparece na tela (igual ao textContent renderizado por RichText). */
+export function plainText(text: string): string {
+  return text
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/\{\{([^|}]+)(\|[^}]*)?\}\}/g, '$1')
+    .replace(/\[([\d\s,–-]+)\]/g, (_, ids: string) =>
+      ids
+        .split(',')
+        .flatMap((part) => {
+          const r = part.trim().match(/^(\d+)\s*[–-]\s*(\d+)$/);
+          if (!r) return [part.trim()];
+          const out: string[] = [];
+          for (let i = +r[1]; i <= +r[2]; i++) out.push(String(i));
+          return out;
+        })
+        .map((n) => `[${n}]`)
+        .join(''),
+    );
+}

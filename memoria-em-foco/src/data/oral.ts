@@ -1,10 +1,10 @@
 import type { OralQuestion } from './types';
 
-/** Banca oral: perguntas 4, 6, 7, 9, 10 e 12 da prática, com réplica pertinente. */
+/** Banca oral: versões orais dos exercícios 6, 10, 11, 13, 14 e 16, com réplica pertinente. */
 export const oralQuestions: OralQuestion[] = [
   {
     id: 'o4',
-    number: 4,
+    number: 6,
     question: 'Por que a mudança duradoura na sinapse importa mais para a memória do que o impulso elétrico inicial?',
     model:
       'O impulso produz atividade naquele momento, e essa atividade passa. A mudança persistente, como na potenciação de longa duração, altera como o circuito vai responder depois que a experiência terminou. É isso que permite a experiência influenciar o que lembramos amanhã.',
@@ -17,12 +17,12 @@ export const oralQuestions: OralQuestion[] = [
       guidance:
         'A LTP explica um mecanismo possível de fortalecimento numa sinapse. Uma lembrança autobiográfica inteira envolve muitos circuitos e processos adicionais, e existem outras formas de plasticidade.',
     },
-    pid: 'c2p7',
+    pid: 's2-1c',
     refs: [2, 3],
   },
   {
     id: 'o6',
-    number: 6,
+    number: 10,
     question: 'Uma pessoa reconhece duas fotografias, mas não lembra se apareceram juntas. O que isso permite investigar?',
     model:
       'Permite separar memória de itens e memória relacional. Reconhecer cada foto mostra que os itens parecem familiares, mas não garante que a ligação entre eles foi codificada ou recuperada. Essa distinção é central no estudo de Ragland.',
@@ -35,12 +35,12 @@ export const oralQuestions: OralQuestion[] = [
       guidance:
         'Não. Um resultado individual nessa tarefa não identifica diagnóstico. O estudo comparou grupos e encontrou diferença média; perfis variam entre pessoas.',
     },
-    pid: 'c5p5',
+    pid: 's5-3b',
     refs: [5],
   },
   {
     id: 'o7',
-    number: 7,
+    number: 11,
     question: 'Um teste de reconhecimento pode exigir memória relacional?',
     model:
       'Pode. Se pergunto “qual destes pares foi apresentado junto?”, a pessoa escolhe entre opções, mas só acerta se discriminar as relações anteriores. O formato da resposta e o conteúdo que precisa ser recuperado são coisas diferentes.',
@@ -53,12 +53,12 @@ export const oralQuestions: OralQuestion[] = [
       guidance:
         'Aleman mostrou que, em média, a diferença entre grupos foi maior na recordação e menor (mas presente) no reconhecimento. O formato influencia o tamanho da dificuldade; ainda assim, o reconhecimento pode exigir contexto e não está garantidamente intacto.',
     },
-    pid: 'c5p5',
+    pid: 's5-3b',
     refs: [5, 7],
   },
   {
     id: 'o9',
-    number: 9,
+    number: 13,
     question: '“A imagem mostrou que faltou glutamato durante aquela lembrança.” O que há de errado?',
     model:
       'A ressonância funcional examina diferenças de recrutamento de regiões cerebrais durante uma tarefa. Ela não mede diretamente a quantidade de glutamato ou de GABA numa sinapse. A frase conclui algo que o método não mediu.',
@@ -71,12 +71,12 @@ export const oralQuestions: OralQuestion[] = [
       guidance:
         'Ragland e colaboradores mediram desempenho numa tarefa que separa aprendizagem de itens e de relações e, com ressonância funcional, o recrutamento pré-frontal e hipocampal em condições específicas.',
     },
-    pid: 'c6p3',
+    pid: 's6-2',
     refs: [5, 6],
   },
   {
     id: 'o10',
-    number: 10,
+    number: 14,
     question: '“Na esquizofrenia, qual parte do cérebro para de guardar memórias?” Como você responderia?',
     model:
       'Eu reformularia: quais operações tiveram dificuldade, em qual tarefa e com quais achados nos circuitos? No estudo de Ragland, a dificuldade foi maior na codificação relacional, com diferenças no recrutamento pré-frontal nessa codificação e na contribuição do hipocampo na recuperação, em condições específicas. Não há uma região que simplesmente para de guardar.',
@@ -89,12 +89,12 @@ export const oralQuestions: OralQuestion[] = [
       guidance:
         'São diferenças médias entre grupos. A intensidade e o perfil variam entre indivíduos; o diagnóstico sozinho não prevê o que uma pessoa conserva.',
     },
-    pid: 'c5p4',
+    pid: 's5-3a',
     refs: [5, 6],
   },
   {
     id: 'o12',
-    number: 12,
+    number: 16,
     question: 'Se você conhece a sequência da LTP, por que não pode dizer que foi isso que falhou no paciente?',
     model:
       'Porque conhecer um mecanismo geral não demonstra que ele está alterado numa pessoa. A participação de receptores NMDA numa forma de plasticidade no hipocampo não mostra que alguém esqueceu por falha nesses receptores. Seria preciso evidência específica ligando aquele mecanismo àquele desempenho.',
@@ -107,7 +107,7 @@ export const oralQuestions: OralQuestion[] = [
       guidance:
         'Que mudanças na função e na coordenação de circuitos (excitação por glutamato, inibição por GABA, no pré-frontal) são investigadas como mecanismos que podem contribuir para as dificuldades cognitivas. Estudos de tecido, imagem e modelos respondem a perguntas diferentes.',
     },
-    pid: 'c6p4',
+    pid: 's6-2',
     refs: [2, 5, 6],
   },
 ];

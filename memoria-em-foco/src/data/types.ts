@@ -10,6 +10,10 @@ export type RefId = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 export interface Reference {
   id: RefId;
   short: string;
+  /** Referência completa (autores, ano, título, periódico, DOI quando houver). */
+  citation: string;
+  /** Pergunta que a fonte ajuda a responder. */
+  question: string;
   originalTitle: string;
   detail: string;
   url: string;
@@ -19,17 +23,29 @@ export interface Reference {
 
 export type Block =
   | { kind: 'p'; id: string; text: string }
-  | { kind: 'figure'; id: string; figure: 'synapse' | 'episodic' };
+  | { kind: 'figure'; id: string; figure: 'synapse-compare' | 'synapse-steps' | 'episodic' };
+
+/**
+ * Um trecho do capítulo. O parágrafo `lead` aparece nos dois modos de leitura.
+ * No modo Completo, `more` continua a partir dele e `deep` fica atrás de “Aprofundar”.
+ */
+export interface Section {
+  id: string;
+  lead: string;
+  more?: Block[];
+  deep?: { question: string; blocks: Block[] };
+}
 
 export interface Chapter {
   id: string;
   number: number;
   title: string;
-  /** Resumo de 1–2 frases mostrado no início do capítulo (a explicação completa vem nos parágrafos). */
-  keyIdea: string;
+  /** Minutos aproximados no modo Completo. */
   minutes: number;
-  blocks: Block[];
+  sections: Section[];
 }
+
+export type Layer = 'lead' | 'more' | 'deep';
 
 export interface GlossaryEntry {
   key: string;

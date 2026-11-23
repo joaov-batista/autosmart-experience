@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { RefButtons } from './References';
 
 // Figuras esquemáticas da leitura. Desenho em SVG leve; os textos explicativos ficam em HTML
@@ -72,10 +72,68 @@ function SynapseBase({ children, glu = true }: { children: ReactNode; glu?: bool
   );
 }
 
+/**
+ * Figura interativa: o mesmo estímulo antes e depois do fortalecimento.
+ * Muda só o lado que recebe (receptores AMPA); a entrada é idêntica nas duas condições.
+ */
+export function SynapseCompare() {
+  const [after, setAfter] = useState(false);
+  const ampas = after ? [60, 110, 160] : [110];
+  return (
+    <figure className="figure" aria-labelledby="figc-cap">
+      <p className="fig-kicker">Figura 1 · interativa</p>
+      <div className="seg" role="radiogroup" aria-label="Comparar a sinapse">
+        <button role="radio" aria-checked={!after} className={`seg-btn ${!after ? 'on' : ''}`} onClick={() => setAfter(false)}>
+          Antes do fortalecimento
+        </button>
+        <button role="radio" aria-checked={after} className={`seg-btn ${after ? 'on' : ''}`} onClick={() => setAfter(true)}>
+          Depois
+        </button>
+      </div>
+      <SynapseBase>
+        {ampas.map((x) => (
+          <Receptor key={x} x={x} kind="ampa" state="open" />
+        ))}
+        <Receptor x={230} kind="nmda" state="blocked" />
+        <text x={150} y={154} textAnchor="middle" className="fig-tiny fig-strong">
+          {after ? '3 receptores AMPA prontos' : '1 receptor AMPA pronto'}
+        </text>
+      </SynapseBase>
+      <div className="fig-bars" aria-hidden="true">
+        <span className="bar-row">
+          <span className="bar-label">estímulo</span>
+          <span className="bar input" style={{ width: '40%' }} />
+        </span>
+        <span className="bar-row">
+          <span className="bar-label">resposta</span>
+          <span className={`bar ${after ? 'strong' : ''}`} style={{ width: after ? '78%' : '32%' }} />
+        </span>
+      </div>
+      <p className="fig-live" aria-live="polite">
+        {after ? (
+          <>
+            <strong>Depois:</strong> o estímulo é <strong>o mesmo</strong> (mesma quantidade de glutamato). O que mudou foi a
+            célula que recebe: há mais receptores AMPA disponíveis, então a resposta é maior.
+          </>
+        ) : (
+          <>
+            <strong>Antes:</strong> o glutamato liberado encontra poucos receptores AMPA prontos, e a célula que recebe responde
+            pouco.
+          </>
+        )}
+      </p>
+      <figcaption id="figc-cap">
+        <strong>Mesma entrada, resposta diferente.</strong> É isso que “fortalecer a sinapse” quer dizer na potenciação de
+        longa duração. Esquema simplificado, fora de escala; os números de receptores são ilustrativos. <RefButtons refs={[2]} />
+      </figcaption>
+    </figure>
+  );
+}
+
 export function SynapseFigure() {
   return (
     <figure className="figure" aria-labelledby="fig1-cap">
-      <p className="fig-kicker">Figura 1</p>
+      <p className="fig-kicker">Figura 2 · o mecanismo em três etapas</p>
       <ol className="fig-steps">
         <li>
           <SynapseBase>
@@ -151,7 +209,7 @@ export function EpisodicFigure() {
   const tri = { a: [80, 110], b: [260, 110], c: [170, 30] } as const;
   return (
     <figure className="figure" aria-labelledby="fig2-cap">
-      <p className="fig-kicker">Figura 2</p>
+      <p className="fig-kicker">Figura 3</p>
       <ol className="fig-steps">
         <li>
           <svg viewBox="0 0 340 80" className="fig-svg" aria-hidden="true" focusable="false">

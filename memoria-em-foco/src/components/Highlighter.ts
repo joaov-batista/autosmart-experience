@@ -77,6 +77,7 @@ export function paintHighlights(highlights: Highlight[]) {
   document.querySelectorAll('.reading-p.has-hl').forEach((el) => el.classList.remove('has-hl'));
   const byColor: Record<string, Range[]> = { yellow: [], green: [], blue: [], pink: [] };
   for (const h of highlights) {
+    if (h.orphan) continue;
     const p = document.querySelector<HTMLElement>(`.reading-p[data-bid="${h.pid}"]`);
     if (!p) continue;
     p.classList.add('has-hl');
@@ -114,5 +115,5 @@ export function highlightAtPoint(x: number, y: number, highlights: Highlight[]):
   const p = (node.nodeType === 1 ? (node as Element) : node.parentElement)?.closest<HTMLElement>('.reading-p[data-bid]');
   if (!p) return null;
   const o = textOffset(p, node, off);
-  return highlights.find((h) => h.pid === p.dataset.bid && o >= h.start && o <= h.end) ?? null;
+  return highlights.find((h) => !h.orphan && h.pid === p.dataset.bid && o >= h.start && o <= h.end) ?? null;
 }

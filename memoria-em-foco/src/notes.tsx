@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
+import { mapLegacyPid } from './data/chapters';
 
 const KEY = 'memoria-em-foco:notes:v1';
 
@@ -41,7 +42,9 @@ function load(): NotesState {
     const raw = localStorage.getItem(KEY);
     if (raw) {
       const s = JSON.parse(raw);
-      if (Array.isArray(s.pages)) return { pages: s.pages, activeId: s.activeId ?? null };
+      // Anotações antigas continuam apontando para o trecho correspondente do texto atual.
+      if (Array.isArray(s.pages))
+        return { pages: s.pages.map((p: NotePage) => (p.pid ? { ...p, pid: mapLegacyPid(p.pid) } : p)), activeId: s.activeId ?? null };
     }
   } catch {
     /* sem armazenamento: começa vazio */

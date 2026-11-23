@@ -71,6 +71,7 @@ export function HighlightList() {
           {items.map(({ h, p }) => (
             <li key={h.id} className={`hl-item hl-border-${h.color}`}>
               <p className="hl-quote">“{h.text}”</p>
+              {h.orphan && <p className="small notice">Trecho de uma versão anterior do texto, que foi reescrito. Veja o parágrafo correspondente.</p>}
               <p className="muted small">
                 Cap. {p!.chapter.number} · {COLOR_LABEL[h.color]}
               </p>

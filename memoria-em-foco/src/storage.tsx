@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
+import { allParagraphs, getParagraph, mapLegacyPid, plainText } from './data/chapters';
 
 const KEY = 'memoria-em-foco:v2';
 
@@ -16,10 +17,18 @@ export interface Highlight {
   color: HighlightColor;
   text: string;
   at: string;
+  /** Trecho de uma versão anterior do texto que não foi reencontrado; fica na lista, mas não é pintado. */
+  orphan?: boolean;
 }
+
+export type ReadMode = 'summary' | 'full';
+/** Versão da estrutura dos capítulos. Mudou de 1 (c1p1…) para 2 (s1-1…). */
+const CONTENT_VERSION = 2;
 
 export interface Progress {
   version: 2;
+  contentVersion?: number;
+  readMode: ReadMode;
   theme: Theme;
   highlights: Highlight[];
   onboardingSeen: boolean;
@@ -44,6 +53,8 @@ export interface Progress {
 
 const empty: Progress = {
   version: 2,
+  contentVersion: CONTENT_VERSION,
+  readMode: 'full',
   theme: 'auto',
   highlights: [],
   onboardingSeen: false,
@@ -63,12 +74,34 @@ function load(): Progress {
     const raw = localStorage.getItem(KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (parsed && parsed.version === 2) return { ...empty, ...parsed };
+      if (parsed && parsed.version === 2) return migrate({ ...empty, ...parsed, contentVersion: parsed.contentVersion ?? 1 });
     }
   } catch {
     /* armazenamento indisponível: segue com progresso vazio */
   }
   return empty;
+}
+
+/** Reencontra uma marcação antiga pelo texto marcado, primeiro no trecho correspondente e depois no texto todo. */
+function reanchor(h: Highlight): Highlight {
+  const pid = mapLegacyPid(h.pid);
+  const candidates = [getParagraph(pid), ...allParagraphs].filter(Boolean) as typeof allParagraphs;
+  for (const p of candidates) {
+    const idx = plainText(p.text).indexOf(h.text);
+    if (idx >= 0) return { ...h, pid: p.id, start: idx, end: idx + h.text.length, orphan: false };
+  }
+  return { ...h, pid, orphan: true };
+}
+
+function migrate(p: Progress): Progress {
+  if ((p.contentVersion ?? 1) >= CONTENT_VERSION) return p;
+  return {
+    ...p,
+    contentVersion: CONTENT_VERSION,
+    bookmarks: Array.from(new Set(p.bookmarks.map(mapLegacyPid))),
+    readPos: p.readPos ? { pid: mapLegacyPid(p.readPos.pid), offset: 0 } : null,
+    highlights: p.highlights.map(reanchor),
+  };
 }
 
 function save(p: Progress) {

@@ -51,8 +51,9 @@ export function ReferenceCard({ id }: { id: number }) {
       <h3>
         <span className="ref-num">[{r.id}]</span> {r.short}
       </h3>
-      <p className="ref-title">
-        <em>{r.originalTitle}</em>
+      <p className="ref-citation">{r.citation}</p>
+      <p className="ref-question">
+        <strong>Para consultar:</strong> {r.question}
       </p>
       <p className="muted small">{r.detail}</p>
       <h4>O que esta fonte sustenta no app</h4>

@@ -48,7 +48,7 @@ export function PracticeHub() {
           <span className="action-step">2</span>
           <span className="action-title">Exercícios comentados</span>
           <span className="action-sub">
-            12 exercícios · {done} feito(s){progress.exerciseIndex > 0 && progress.exerciseIndex < exercises.length ? ` · continuar do ${progress.exerciseIndex + 1}` : ''}
+            16 exercícios · {done} feito(s){progress.exerciseIndex > 0 && progress.exerciseIndex < exercises.length ? ` · continuar do ${progress.exerciseIndex + 1}` : ''}
           </span>
         </button>
         <button className="action" onClick={() => navigate('/praticar/revisar')}>

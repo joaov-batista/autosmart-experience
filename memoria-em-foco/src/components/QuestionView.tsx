@@ -14,7 +14,7 @@ function RereadButton({ pid }: { pid: string }) {
   const { openParagraph } = useSheets();
   return (
     <button className="btn ghost small" onClick={() => openParagraph(pid)}>
-      Reler o trecho do texto
+      Rever explicação
     </button>
   );
 }

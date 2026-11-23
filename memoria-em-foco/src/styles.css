@@ -528,3 +528,51 @@ textarea { resize: vertical; line-height: 1.6; }
 }
 .notes-split > *, .notes-editor, .notebook-panel, .panel-body { min-width: 0; }
 .ink-toolbar { max-width: 100%; }
+.ref-citation { font-size: 0.95rem; line-height: 1.55; margin: 0.4em 0; }
+.ref-question { background: var(--brand-soft); border-radius: 12px; padding: 8px 12px; font-size: 0.95rem; }
+.bar.input { background: var(--ok-soft); border-color: var(--ok); }
+.fig-live { min-height: 4.8em; margin-top: 8px; }
+
+/* ───── Modos de leitura ───── */
+.mode-switch { display: inline-flex; background: var(--surface-2); border-radius: 12px; padding: 3px; gap: 2px; }
+.mode-switch button {
+  font: inherit; font-size: 0.82rem; font-weight: 650; border: none; background: transparent; color: var(--muted);
+  border-radius: 9px; min-height: 36px; padding: 0 12px; cursor: pointer;
+}
+.mode-switch button.on { background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
+@media (max-width: 380px) { .mode-switch button { padding: 0 8px; font-size: 0.78rem; } }
+.reader-where { gap: 5px; }
+.sec { margin-bottom: 0.4em; }
+.deep { margin: 0.4em 0 1.4em; border: 1.5px solid var(--line); border-radius: 16px; background: var(--surface); overflow: hidden; }
+.deep.open { border-color: color-mix(in srgb, var(--brand) 40%, var(--line)); }
+.deep-toggle {
+  width: 100%; display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto auto; column-gap: 12px; text-align: left;
+  font: inherit; border: none; background: transparent; color: var(--ink); padding: 12px 16px; cursor: pointer; min-height: 56px;
+}
+.deep-kicker { font-size: 0.68em; font-weight: 750; text-transform: uppercase; letter-spacing: 0.08em; color: var(--brand-strong); }
+.deep-q { font-weight: 650; font-size: 0.95em; grid-column: 1; }
+.deep-icon { grid-row: 1 / span 2; grid-column: 2; align-self: center; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--brand-soft); color: var(--brand-strong); font-weight: 750; font-size: 1.1rem; }
+.deep-body { padding: 0 16px 6px; border-top: 1px dashed var(--line); padding-top: 12px; }
+.deep-body .figure { box-shadow: none; border: 1px solid var(--line); }
+.refs-section { margin-top: 3em; font-size: 0.92em; }
+.refs-list { padding-left: 0; list-style: none; display: grid; gap: 10px; }
+.refs-list li { line-height: 1.55; }
+.ref-inline-link { color: var(--brand-strong); font-weight: 650; white-space: nowrap; }
+
+/* ───── Ensaio (fala, lembretes, perguntas, referências) ───── */
+.tabs4 { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 12px; background: var(--surface-2); padding: 4px; border-radius: 14px; }
+@media (min-width: 700px) { .tabs4 { grid-template-columns: repeat(4, 1fr); } }
+.tabs4 .tab { font-size: 0.86rem; line-height: 1.2; padding: 6px; }
+.speech-tools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 1rem; margin-bottom: 8px; }
+.speech-p { line-height: 1.75; color: var(--ink-read); margin: 0 0 1em; }
+.reminders { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.reminder { width: 100%; display: flex; align-items: center; gap: 12px; text-align: left; font: inherit; font-size: 1.15rem; font-weight: 700; background: var(--brand-soft); color: var(--ink); border: 1.5px solid transparent; border-radius: 16px; padding: 14px 16px; cursor: pointer; min-height: 60px; }
+.reminder.on { border-color: var(--brand); }
+.reminder-n { flex: 0 0 32px; height: 32px; border-radius: 50%; background: var(--surface); color: var(--brand-strong); display: grid; place-items: center; font-size: 0.95rem; }
+.reminder-body { padding: 4px 6px 0; color: var(--ink-read); line-height: 1.7; }
+.qa-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+.qa { border-bottom: 1px solid var(--line); padding-bottom: 14px; }
+.qa-q { font-weight: 700; font-size: 1.08rem; margin-top: 0; }
+.qa-a { background: var(--surface-2); border-radius: 14px; padding: 4px 14px 10px; }
+.ref-sheet-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+.ref-item { border-bottom: 1px solid var(--line); padding: 10px 0 12px; }

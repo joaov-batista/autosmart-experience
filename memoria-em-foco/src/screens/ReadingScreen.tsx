@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { chapters, chapterOf, getParagraph } from '../data/chapters';
-import { RichText, Modal } from '../components/References';
-import { EpisodicFigure, SynapseFigure } from '../components/Figures';
+import { chapters, chapterOf, getParagraph, locateBlock } from '../data/chapters';
+import { references } from '../data/references';
+import type { Block, Section } from '../data/types';
+import { RichText, Modal, useSheets } from '../components/References';
+import { EpisodicFigure, SynapseCompare, SynapseFigure } from '../components/Figures';
 import { HL_COLORS, highlightAtPoint, paintHighlights, selectionToParts, type SelectionPart } from '../components/Highlighter';
 import { NotesEditor } from '../components/NotesEditor';
 import { useNotes, newId } from '../notes';
@@ -13,6 +15,7 @@ import {
   useProgress,
   type Highlight,
   type HighlightColor,
+  type ReadMode,
   type Theme,
 } from '../storage';
 import { navigate } from '../utils';
@@ -191,6 +194,17 @@ export function ReadingScreen({ jumpTo }: { jumpTo?: string }) {
   const { progress, update } = useProgress();
   const { createPage } = useNotes();
   const wide = useMedia(WIDE);
+  // Modo de leitura: um link para um trecho do Completo abre o Completo.
+  const startTarget = jumpTo ?? progress.readPos?.pid ?? null;
+  const startLoc = startTarget ? locateBlock(startTarget) : null;
+  const [mode, setModeState] = useState<ReadMode>(
+    jumpTo && startLoc && (startLoc.layer === 'more' || startLoc.layer === 'deep') ? 'full' : progress.readMode,
+  );
+  const [openDeep, setOpenDeep] = useState<Set<string>>(
+    () => new Set(startLoc?.layer === 'deep' && startLoc.sectionId && (jumpTo || progress.readMode === 'full') ? [startLoc.sectionId] : []),
+  );
+  const modeRestore = useRef<string | null>(null);
+  const { openRef } = useSheets();
   const [current, setCurrent] = useState<string | null>(progress.readPos?.pid ?? null);
   const [pct, setPct] = useState(0);
   const [sheet, setSheet] = useState<null | 'toc' | 'look' | 'help'>(progress.onboardingSeen ? null : 'help');
@@ -228,9 +242,31 @@ export function ReadingScreen({ jumpTo }: { jumpTo?: string }) {
       return;
     }
     const pos = progress.readPos;
-    if (pos) scrollToBlock(pos.pid, pos.offset);
-    else window.scrollTo(0, 0);
+    if (pos && !scrollToBlock(pos.pid, pos.offset)) {
+      const loc = locateBlock(pos.pid);
+      if (loc?.sectionId) scrollToBlock(loc.sectionId);
+    } else if (!pos) window.scrollTo(0, 0);
+    if (jumpTo && mode !== progress.readMode) update((p) => ({ ...p, readMode: mode }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jumpTo, progress.readPos]);
+
+  // Troca de modo no meio de um assunto: continua no trecho correspondente.
+  const setMode = (m: ReadMode) => {
+    if (m === mode) return;
+    const pos = currentBlock();
+    const loc = pos ? locateBlock(pos.pid) : null;
+    modeRestore.current = loc ? (loc.layer === 'heading' ? loc.chapter.id : loc.sectionId) : null;
+    setModeState(m);
+    update((p) => ({ ...p, readMode: m }));
+  };
+  useLayoutEffect(() => {
+    if (modeRestore.current) {
+      scrollToBlock(modeRestore.current);
+      setFlash(modeRestore.current);
+      window.setTimeout(() => setFlash(null), 1600);
+      modeRestore.current = null;
+    }
+  }, [mode]);
 
   // Posição de leitura e progresso
   useEffect(() => {
@@ -263,7 +299,7 @@ export function ReadingScreen({ jumpTo }: { jumpTo?: string }) {
   // Pinta as marcações sempre que mudam (ou quando o texto é redesenhado)
   useEffect(() => {
     paintHighlights(progress.highlights);
-  }, [progress.highlights, progress.fontStep, showNotebook]);
+  }, [progress.highlights, progress.fontStep, showNotebook, mode, openDeep]);
   useEffect(() => () => paintHighlights([]), []);
 
   // Acompanha a seleção de texto dentro da leitura
@@ -338,14 +374,23 @@ export function ReadingScreen({ jumpTo }: { jumpTo?: string }) {
     }
   }, [progress.fontStep]);
 
-  const goTo = useCallback((id: string) => {
-    setSheet(null);
-    window.setTimeout(() => {
-      scrollToBlock(id);
-      setFlash(id);
-      window.setTimeout(() => setFlash(null), 2200);
-    }, 0);
-  }, []);
+  const goTo = useCallback(
+    (id: string) => {
+      setSheet(null);
+      const loc = locateBlock(id);
+      if (loc && (loc.layer === 'more' || loc.layer === 'deep') && mode === 'summary') {
+        setModeState('full');
+        update((p) => ({ ...p, readMode: 'full' }));
+      }
+      if (loc?.layer === 'deep' && loc.sectionId) setOpenDeep((s) => new Set(s).add(loc.sectionId!));
+      window.setTimeout(() => {
+        scrollToBlock(id);
+        setFlash(id);
+        window.setTimeout(() => setFlash(null), 2200);
+      }, 30);
+    },
+    [mode, update],
+  );
 
   const closeHelp = () => {
     setSheet(null);
@@ -372,10 +417,18 @@ export function ReadingScreen({ jumpTo }: { jumpTo?: string }) {
             <span className="it-label">Índice</span>
           </button>
           <div className="reader-where">
-            <span className="rw-chapter">{chapter ? `Capítulo ${chapter.number} de 6` : ''}</span>
+            <div className="mode-switch" role="radiogroup" aria-label="Modo de leitura">
+              <button role="radio" aria-checked={mode === 'summary'} className={mode === 'summary' ? 'on' : ''} onClick={() => setMode('summary')}>
+                Resumido
+              </button>
+              <button role="radio" aria-checked={mode === 'full'} className={mode === 'full' ? 'on' : ''} onClick={() => setMode('full')}>
+                Completo
+              </button>
+            </div>
             <span className="rw-progress" aria-hidden="true">
               <span style={{ width: `${pct}%` }} />
             </span>
+            <span className="sr-only">{chapter ? `Capítulo ${chapter.number} de 6` : ''}</span>
           </div>
           <button className="icon-text" onClick={() => setSheet('look')} aria-label="Aparência: letra e cores">
             <span aria-hidden="true" className="aa">
@@ -406,8 +459,10 @@ export function ReadingScreen({ jumpTo }: { jumpTo?: string }) {
             <p className="kicker">Texto de estudo</p>
             <h1>Memória no cérebro e na esquizofrenia</h1>
             <p className="lead-muted">
-              6 capítulos curtos · cerca de 15 minutos. Toque nas palavras sublinhadas para ver a definição. Selecione um trecho
-              para marcar com cor.
+              {mode === 'summary'
+                ? 'Modo Resumido: o tema inteiro em cerca de 4 minutos, com os porquês. Mude para Completo quando quiser os detalhes; você continua no mesmo trecho.'
+                : 'Modo Completo: cada trecho começa pelo mesmo parágrafo do Resumido e continua com o mecanismo, os estudos e os limites. Cerca de 13 minutos.'}{' '}
+              Toque nas palavras sublinhadas para ver a definição e nos números para ver a fonte. Selecione um trecho para marcar.
             </p>
           </header>
 
@@ -415,32 +470,49 @@ export function ReadingScreen({ jumpTo }: { jumpTo?: string }) {
             <section key={c.id} className="chapter" aria-labelledby={`h-${c.id}`}>
               <h2 id={`h-${c.id}`} data-bid={c.id} className={flash === c.id ? 'flash' : ''}>
                 <span className="chapter-num">
-                  Capítulo {c.number} · {c.minutes} min
+                  Capítulo {c.number}
+                  {mode === 'full' ? ` · ${c.minutes} min` : ''}
                 </span>
                 {c.title}
               </h2>
-              <div className="key-idea">
-                <span className="key-label">Ideia-chave</span>
-                <p>{c.keyIdea}</p>
-              </div>
-              {c.blocks.map((b) =>
-                b.kind === 'p' ? (
-                  <p
-                    key={b.id}
-                    id={b.id}
-                    data-bid={b.id}
-                    className={`reading-p ${flash === b.id ? 'flash' : ''} ${progress.bookmarks.includes(b.id) ? 'marked' : ''}`}
-                  >
-                    <RichText text={b.text} />
-                  </p>
-                ) : (
-                  <div key={b.id} data-bid={b.id} className={flash === b.id ? 'flash' : ''}>
-                    {b.figure === 'synapse' ? <SynapseFigure /> : <EpisodicFigure />}
-                  </div>
-                ),
-              )}
+              {c.sections.map((sec) => (
+                <SectionView
+                  key={sec.id}
+                  sec={sec}
+                  mode={mode}
+                  deepOpen={openDeep.has(sec.id)}
+                  onToggleDeep={() =>
+                    setOpenDeep((st) => {
+                      const n = new Set(st);
+                      if (n.has(sec.id)) n.delete(sec.id);
+                      else n.add(sec.id);
+                      return n;
+                    })
+                  }
+                  flash={flash}
+                  bookmarks={progress.bookmarks}
+                />
+              ))}
             </section>
           ))}
+
+          <section className="refs-section" aria-labelledby="h-refs">
+            <h2 id="h-refs">Referências</h2>
+            <p className="lead-muted">As citações no texto são indiretas. Toque no número para ver o que cada fonte sustenta.</p>
+            <ol className="refs-list">
+              {references.map((r) => (
+                <li key={r.id}>
+                  <button className="cite" onClick={() => openRef(r.id)} aria-label={`Abrir ficha da fonte ${r.id}`}>
+                    [{r.id}]
+                  </button>{' '}
+                  {r.citation}{' '}
+                  <a href={r.url} target="_blank" rel="noopener noreferrer" className="ref-inline-link">
+                    abrir ↗
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </section>
 
           <section id="fim-da-materia" data-bid="fim" className="end-card">
             <h2>Você chegou ao fim da matéria 🎉</h2>
@@ -505,15 +577,21 @@ export function ReadingScreen({ jumpTo }: { jumpTo?: string }) {
               <li key={c.id}>
                 <button className={`toc-item ${chapter?.id === c.id ? 'here' : ''}`} onClick={() => goTo(c.id)}>
                   <span className="muted small">
-                    Capítulo {c.number} · {c.minutes} min
+                    Capítulo {c.number}
+                    {mode === 'full' ? ` · ${c.minutes} min` : ''}
                   </span>
                   <span>{c.title}</span>
                 </button>
-                {c.blocks
+                {c.sections.flatMap((sec) => [...(sec.more ?? []), ...(sec.deep?.blocks ?? [])])
                   .filter((b) => b.kind === 'figure')
                   .map((b) => (
                     <button key={b.id} className="toc-sub" onClick={() => goTo(b.id)}>
-                      {b.kind === 'figure' && b.figure === 'synapse' ? 'Figura 1 · Sinapse química' : 'Figura 2 · Memória episódica'}
+                      {b.kind === 'figure' &&
+                        (b.figure === 'synapse-compare'
+                          ? 'Figura 1 · Antes e depois do fortalecimento'
+                          : b.figure === 'synapse-steps'
+                            ? 'Figura 2 · O mecanismo em três etapas (Aprofundar)'
+                            : 'Figura 3 · Memória episódica')}
                     </button>
                   ))}
               </li>
@@ -550,6 +628,61 @@ export function ReadingScreen({ jumpTo }: { jumpTo?: string }) {
             </button>
           </div>
         </Modal>
+      )}
+    </div>
+  );
+}
+
+function renderBlock(b: Block, flash: string | null, bookmarks: string[]) {
+  if (b.kind === 'p')
+    return (
+      <p key={b.id} id={b.id} data-bid={b.id} className={`reading-p ${flash === b.id ? 'flash' : ''} ${bookmarks.includes(b.id) ? 'marked' : ''}`}>
+        <RichText text={b.text} />
+      </p>
+    );
+  return (
+    <div key={b.id} data-bid={b.id} className={flash === b.id ? 'flash' : ''}>
+      {b.figure === 'synapse-compare' ? <SynapseCompare /> : b.figure === 'synapse-steps' ? <SynapseFigure /> : <EpisodicFigure />}
+    </div>
+  );
+}
+
+function SectionView({
+  sec,
+  mode,
+  deepOpen,
+  onToggleDeep,
+  flash,
+  bookmarks,
+}: {
+  sec: Section;
+  mode: ReadMode;
+  deepOpen: boolean;
+  onToggleDeep: () => void;
+  flash: string | null;
+  bookmarks: string[];
+}) {
+  return (
+    <div className="sec">
+      <p id={sec.id} data-bid={sec.id} className={`reading-p ${flash === sec.id ? 'flash' : ''} ${bookmarks.includes(sec.id) ? 'marked' : ''}`}>
+        <RichText text={sec.lead} />
+      </p>
+      {mode === 'full' && (
+        <>
+          {sec.more?.map((b) => renderBlock(b, flash, bookmarks))}
+          {sec.deep && (
+            <div className={`deep ${deepOpen ? 'open' : ''}`}>
+              <button className="deep-toggle" aria-expanded={deepOpen} onClick={onToggleDeep}>
+                <span className="deep-kicker">Aprofundar</span>
+                <span className="deep-q">{sec.deep.question}</span>
+                <span className="deep-icon" aria-hidden="true">
+                  {deepOpen ? '−' : '+'}
+                </span>
+              </button>
+              {deepOpen && <div className="deep-body">{sec.deep.blocks.map((b) => renderBlock(b, flash, bookmarks))}</div>}
+            </div>
+          )}
+        </>
       )}
     </div>
   );
