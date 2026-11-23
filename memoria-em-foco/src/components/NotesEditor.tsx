@@ -101,7 +101,7 @@ export function NotesEditor({ pageId, compact }: { pageId: string; compact?: boo
       />
       {para && (
         <p className="note-link small">
-          Sobre o Cap. {para.chapter.number} ·{' '}
+          Sobre: {para.sectionTitle} ·{' '}
           <button className="linklike" onClick={() => navigate(`/estudar/${para.id}`)}>
             ver o trecho no texto
           </button>

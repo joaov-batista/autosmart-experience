@@ -576,3 +576,38 @@ textarea { resize: vertical; line-height: 1.6; }
 .qa-a { background: var(--surface-2); border-radius: 14px; padding: 4px 14px 10px; }
 .ref-sheet-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
 .ref-item { border-bottom: 1px solid var(--line); padding: 10px 0 12px; }
+
+/* ───── Figura de Gold, nota lateral, subtítulos do Completo ───── */
+.gold-rows { display: grid; gap: 12px; margin-top: 8px; }
+.gold-row { display: grid; grid-template-columns: 76px 1fr; gap: 8px; align-items: start; }
+.gold-name { font-weight: 700; font-size: 0.9em; padding-top: 2px; }
+.gold-bars { display: grid; gap: 4px; }
+.gold-bars .bar-row .bar { flex: 0 0 auto; height: 14px; }
+.gold-bars .bar-row { gap: 8px; }
+.gold-n { font-weight: 700; font-variant-numeric: tabular-nums; font-size: 0.9em; }
+.gold-keep { font-size: 0.82em; color: var(--muted); }
+.sub-h { font-size: 1.12em; line-height: 1.3; margin: 1.6em 0 0.5em; color: var(--ink); scroll-margin-top: 80px; }
+.side-note {
+  margin: 0.6em 0 1.3em; padding: 12px 14px; border-radius: 14px; background: var(--accent-soft);
+  border-left: 4px solid var(--accent); font-size: 0.92em; line-height: 1.6; color: var(--ink);
+}
+.side-note .note-label { display: block; font-size: 0.72em; font-weight: 750; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-bottom: 2px; }
+@media (min-width: 1280px) {
+  .reader:not(.with-notebook) .side-note { float: right; width: 15rem; margin: 0.2em -17rem 1em 1.2em; }
+}
+.sec-label { display: block; font-size: 0.68em; font-weight: 750; text-transform: uppercase; letter-spacing: 0.08em; color: var(--brand); margin: 1.4em 0 0.3em; }
+.sec:first-of-type .sec-label { margin-top: 0.4em; }
+.expand-btn {
+  display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 0.85em; font-weight: 650;
+  border: 1.5px solid var(--line); background: var(--surface); color: var(--brand-strong); border-radius: 99px;
+  min-height: 40px; padding: 0 14px; margin: -0.3em 0 1.2em; cursor: pointer;
+}
+.expand-btn[aria-expanded='true'] { background: var(--brand-soft); border-color: transparent; }
+.expanded-more { border-left: 3px solid var(--brand-soft); padding-left: 14px; margin: 0 0 1em; }
+.return-chip {
+  position: fixed; z-index: 35; left: 50%; transform: translateX(-50%); bottom: calc(80px + env(safe-area-inset-bottom));
+  display: flex; align-items: center; gap: 6px; font: inherit; font-weight: 700; font-size: 0.95rem;
+  background: var(--brand); color: var(--brand-ink); border: none; border-radius: 99px; padding: 12px 20px; min-height: 48px;
+  box-shadow: 0 8px 24px rgba(20, 25, 35, 0.2); cursor: pointer;
+}
+@media (min-width: 1200px) { .return-chip { bottom: 28px; left: calc(50% + 110px); } }

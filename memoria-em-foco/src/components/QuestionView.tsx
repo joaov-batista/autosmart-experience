@@ -10,11 +10,11 @@ interface Props {
   onDone: (ok: boolean) => void;
 }
 
-function RereadButton({ pid }: { pid: string }) {
+function RereadButton({ pid, wrong }: { pid: string; wrong?: boolean }) {
   const { openParagraph } = useSheets();
   return (
-    <button className="btn ghost small" onClick={() => openParagraph(pid)}>
-      Rever explicação
+    <button className={`btn small ${wrong ? 'secondary' : 'ghost'}`} onClick={() => openParagraph(pid)}>
+      {wrong ? 'Entender meu erro' : 'Rever explicação'}
     </button>
   );
 }
@@ -55,8 +55,8 @@ function Result({ ok, q, onNext }: { ok: boolean; q: Exercise; onNext: () => voi
       <p>
         <RichText text={q.explanation} />
       </p>
-      <RereadButton pid={q.pid} />
-      {!ok && <p className="small muted">Este exercício foi guardado em “Para revisar”.</p>}
+      <RereadButton pid={q.pid} wrong={!ok} />
+      {!ok && <p className="small muted">Abre o parágrafo que responde à dúvida; ao fechar, você volta aqui. Este exercício também foi guardado em “Para revisar”.</p>}
       <button className="btn primary block" onClick={onNext} autoFocus>
         Continuar
       </button>

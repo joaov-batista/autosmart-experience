@@ -48,7 +48,7 @@ export function PracticeHub() {
           <span className="action-step">2</span>
           <span className="action-title">Exercícios comentados</span>
           <span className="action-sub">
-            16 exercícios · {done} feito(s){progress.exerciseIndex > 0 && progress.exerciseIndex < exercises.length ? ` · continuar do ${progress.exerciseIndex + 1}` : ''}
+            9 exercícios · {done} feito(s){progress.exerciseIndex > 0 && progress.exerciseIndex < exercises.length ? ` · continuar do ${progress.exerciseIndex + 1}` : ''}
           </span>
         </button>
         <button className="action" onClick={() => navigate('/praticar/revisar')}>
@@ -125,8 +125,8 @@ export function CaseScreen() {
           <p>
             É essa a distinção estudada por Ragland e colaboradores: aprender as características dos itens versus aprender
             as relações entre eles. Em média, o grupo com esquizofrenia teve dificuldade particularmente importante nas
-            relações, com diferenças no recrutamento pré-frontal durante a codificação relacional e do hipocampo na
-            recuperação, em condições específicas. <RefButtons refs={[5]} />
+            relações, com menor ativação de uma região pré-frontal durante a aprendizagem relacional e diferenças na resposta do
+            hipocampo num teste posterior. <RefButtons refs={[4]} />
           </p>
           <p className="notice small">
             Um resultado individual nessa atividade não identifica um diagnóstico. O estudo compara médias de grupos; a
@@ -317,7 +317,7 @@ export function ReviewScreen() {
   const orals = progress.reviewOral.map(getOral).filter(Boolean);
   const where = (pid: string) => {
     const p = getParagraph(pid);
-    return p ? `Cap. ${p.chapter.number}` : '';
+    return p ? p.sectionTitle : '';
   };
   return (
     <div className="screen">

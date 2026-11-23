@@ -1,72 +1,82 @@
 import type { RefId } from './types';
 
-/** Fala pronta (versão principal). As referências ficam ocultas durante a leitura em voz alta. */
+/**
+ * Fala pronta (até 5 minutos). Espinha dorsal: o Resumido, com Gold e Ragland em linguagem oral.
+ * Escrita para colegas que nunca abriram o app. Referências ficam ocultas na leitura em voz alta.
+ */
 export const speech: { text: string; refs: RefId[] }[] = [
   {
-    text: 'Boa tarde. O tema da minha apresentação é a memória em pessoas com esquizofrenia. Para entender o que pode mudar, primeiro precisamos entender o que acontece quando qualquer pessoa aprende e depois tenta lembrar de alguma coisa.',
+    text: 'Boa tarde. Meu tema é a memória em pessoas com esquizofrenia. Durante a apresentação, vou usar uma frase simples como exemplo: “Ana colocou a batata na sacola azul”.',
     refs: [],
   },
   {
-    text: 'A memória envolve três processos: codificar, armazenar e recuperar. Codificar é registrar uma experiência. Nessa etapa, prestar atenção e estabelecer relações ajuda a formar a lembrança. Armazenar é conservar a informação ao longo do tempo. Recuperar é conseguir acessá-la depois. Essa distinção importa porque, quando alguém diz ‘eu esqueci’, a gente observa o resultado, mas ainda não sabe em qual desses processos surgiu a dificuldade.',
+    text: 'Para lembrar de qualquer coisa, passamos por três momentos. Primeiro registramos a informação, o que chamamos de codificar. Depois a conservamos, que é armazenar. Por fim, conseguimos acessá-la, que é recuperar. Quando alguém diz “esqueci”, essa palavra mostra o resultado, mas não diz em qual desses momentos surgiu a dificuldade.',
     refs: [1],
   },
   {
-    text: 'E como uma experiência que já terminou consegue deixar uma marca no cérebro? Parte da resposta está nas sinapses, que são pontos de comunicação entre neurônios. Em algumas sinapses, quando os neurônios são ativados juntos em determinadas condições, a conexão pode se fortalecer. Isso significa que, depois, um sinal semelhante consegue produzir uma resposta maior na célula que o recebe. Esse fenômeno é chamado de potenciação de longa duração. Ele ajuda a explicar como uma experiência breve pode produzir uma mudança que persiste. Uma lembrança inteira envolve muitas dessas células e conexões trabalhando em conjunto.',
+    text: 'O primeiro ponto é manter uma informação ativa. Quando escuto “Ana colocou…”, preciso segurar “Ana” na mente até a frase terminar. Isso é a memória de trabalho: manter uma informação disponível enquanto a usamos. Na esquizofrenia, essa tarefa pode exigir mais esforço. Ela depende de grupos de neurônios do córtex pré-frontal, na parte da frente do cérebro, que trocam sinais para sustentar a informação por alguns segundos.',
     refs: [2, 3],
   },
   {
-    text: 'Quando pensamos na esquizofrenia, duas funções merecem atenção. A primeira é a memória de trabalho, que mantém uma informação disponível enquanto fazemos algo com ela. Para acompanhar uma orientação com várias etapas, por exemplo, eu preciso manter o começo da frase na mente enquanto escuto o final. Pessoas com esquizofrenia podem ter mais dificuldade nessa tarefa. Circuitos do córtex pré-frontal, uma região que participa da organização e do controle da informação, estão entre os estudados para entender essa dificuldade.',
-    refs: [4, 6],
+    text: 'O segundo ponto é aprender relações. Para contar amanhã o que aconteceu, não basta saber quem é Ana e reconhecer uma sacola azul. Preciso ter ligado a pessoa, a ação e o objeto: foi Ana quem colocou a batata naquela sacola. Isso é a memória episódica. Ragland e colaboradores compararam duas situações: estudar características de objetos isolados e estudar relações entre objetos. O grupo com esquizofrenia teve dificuldade principalmente na segunda. E, nessa condição, o exame de imagem mostrou menos ativação de uma região do córtex pré-frontal enquanto as pessoas aprendiam.',
+    refs: [4],
   },
   {
-    text: 'A segunda função é a memória episódica, que nos permite lembrar de um acontecimento junto com seu contexto. Pensem na diferença entre dizer ‘esse rosto é familiar’ e dizer ‘eu vi essa pessoa na biblioteca ontem’. Na segunda frase, eu consegui ligar o rosto a um lugar e a um momento. O hipocampo participa da formação dessas relações.',
-    refs: [1, 3, 5],
+    text: 'O terceiro ponto é recuperar. Imagine que, no dia seguinte, a pessoa lembre menos. Ela esqueceu mais depressa? Gold e colaboradores investigaram isso com 76 pessoas com esquizofrenia e 51 sem o transtorno. Quando compararam pessoas que tinham aprendido a mesma quantidade no início, a lembrança depois do intervalo foi praticamente igual. Ou seja, naquele estudo, boa parte da diferença surgiu na aprendizagem, e não num esquecimento mais rápido. A forma de perguntar também importa: numa análise de 70 estudos, a diferença entre os grupos foi maior quando as pessoas precisavam recordar sozinhas e menor quando podiam reconhecer entre opções.',
+    refs: [6, 7],
   },
   {
-    text: 'Um estudo de Ragland e colaboradores ajuda a entender por que essa distinção importa. Os pesquisadores compararam a aprendizagem de itens separados com a aprendizagem das relações entre eles. No grupo com esquizofrenia, a dificuldade foi especialmente evidente quando era preciso aprender como os itens se relacionavam. Então, dizer que a lembrança ficou ‘quebrada no armazenamento’ seria uma conclusão precipitada. A relação entre os detalhes pode ter sido registrada com menos precisão desde o início.',
-    refs: [5],
+    text: 'E o que acontece no cérebro? Pesquisadores encontraram diferenças na atividade do córtex pré-frontal e do hipocampo, uma estrutura que ajuda a ligar os elementos de um episódio, durante certas tarefas. Em estudos de tecido cerebral, também encontraram, em média, menos pontos de contato entre neurônios em algumas regiões do córtex. Esses pontos de contato são as sinapses, onde os neurônios se comunicam.',
+    refs: [3, 4, 5],
   },
   {
-    text: 'A maneira de pedir que a pessoa lembre também faz diferença. Aleman e colaboradores reuniram 70 estudos e observaram que a diferença média entre os grupos era maior quando os participantes precisavam recordar o conteúdo por conta própria. Quando recebiam opções para reconhecer o que tinham visto, a diferença era menor, embora continuasse presente. Isso ajuda a entender por que oferecer uma pista pode ser útil em algumas situações. A necessidade de ajuda varia de pessoa para pessoa.',
-    refs: [7],
+    text: 'Mas é importante separar o que foi observado do que ainda é hipótese. Um exame de imagem mostra em que tarefa a resposta do cérebro foi diferente; ele não conta sinapses nem prova a causa. Ainda se investiga quanto cada alteração contribui para a dificuldade de cada pessoa. E as dificuldades de memória não dependem só das alucinações: elas aparecem em outros momentos e, em algumas pessoas, antes do primeiro episódio psicótico.',
+    refs: [2, 4],
   },
   {
-    text: 'Então, qual é a principal diferença? Em média, pessoas com esquizofrenia podem ter mais dificuldade para manter informações em uso e para aprender ou recuperar as relações que dão contexto a uma lembrança. Para entender a memória de uma pessoa específica, precisamos saber o que ela conseguiu registrar, o que a tarefa exigia e em que condições conseguiu lembrar. Obrigada.',
-    refs: [4, 5, 6, 7],
+    text: 'Então, voltando à frase: uma pessoa com esquizofrenia pode reconhecer a sacola azul e ainda ter dúvida sobre quem colocou a batata nela. Reconhecer depende da familiaridade; lembrar quem fez exige ter aprendido a relação. Em média, essa aprendizagem pode ser mais difícil, mas a intensidade varia de pessoa para pessoa. Obrigada.',
+    refs: [4, 7],
   },
 ];
 
-/** Cinco lembretes. Tocar revela só o(s) parágrafo(s) correspondente(s) da fala. */
+/** Cinco lembretes, na ordem da fala. Tocar revela só o parágrafo correspondente. */
 export const reminders: { label: string; paragraphs: number[] }[] = [
-  { label: 'Registrar, conservar e recuperar', paragraphs: [1] },
-  { label: 'Como a sinapse muda', paragraphs: [2] },
-  { label: 'Memória de trabalho', paragraphs: [3] },
-  { label: 'Rosto e contexto', paragraphs: [4] },
-  { label: 'O que os estudos encontraram', paragraphs: [5, 6] },
+  { label: 'Manter', paragraphs: [2] },
+  { label: 'Relacionar', paragraphs: [3] },
+  { label: 'Recuperar', paragraphs: [4] },
+  { label: 'Evidência', paragraphs: [5] },
+  { label: 'Limite da conclusão', paragraphs: [6] },
 ];
 
-/** “Se a professora perguntar”: pergunta primeiro, resposta ao tocar. */
+/** “Se a professora perguntar”: poda sináptica, dopamina, NMDA e alucinações ficam aqui. */
 export const teacherQuestions: { question: string; answer: string; refs: RefId[]; pid: string }[] = [
   {
-    question: 'Então o problema acontece no armazenamento?',
+    question: 'O que é poda sináptica? Ela explica o esquecimento?',
     answer:
-      'Um esquecimento isolado não permite localizar a dificuldade. A relação entre os detalhes pode ter sido registrada com pouca precisão na codificação, ou pode estar difícil recuperá-la naquele momento. Para distinguir essas possibilidades, precisamos saber como a informação foi aprendida e como foi testada.',
-    refs: [1, 5],
-    pid: 's5-3a',
+      'Durante o desenvolvimento, o cérebro forma conexões e elimina parte delas: isso é a poda sináptica, e células chamadas micróglias participam dela. Num experimento com células derivadas de pessoas com e sem esquizofrenia, houve mais remoção de material sináptico no primeiro grupo. Em tecido humano, há menor densidade de estruturas pós-sinápticas em algumas regiões. Mas quanto isso explica as dificuldades de memória de cada pessoa ainda está em investigação.',
+    refs: [5, 9],
+    pid: 'm4b',
   },
   {
-    question: 'Você disse que uma pista ajuda. Isso quer dizer que a pessoa sempre precisa ser guiada?',
+    question: 'Então falta dopamina no pré-frontal, e por isso a pessoa esquece?',
     answer:
-      'A necessidade varia. Também vale separar duas coisas: receber uma dica, como ‘era uma fruta’, é recordação com pista. Escolher entre ‘manga ou uva’ é reconhecimento. O resultado que citei compara especialmente recordar e reconhecer. Ele mostra que mudar a tarefa altera o desempenho médio.',
-    refs: [1, 7],
-    pid: 's5-4a',
+      'A dopamina é investigada como possível participante das alterações cognitivas, mas a evidência não sustenta essa cadeia — “falta dopamina, então a pessoa esquece” — como explicação para uma pessoa. Os estudos de imagem com dopamina mostram resultados diferentes conforme a região, e isso não se traduz diretamente no esquecimento de alguém.',
+    refs: [2, 11],
+    pid: 'm5-d2',
   },
   {
-    question: 'Essas dificuldades seriam causadas só pela medicação?',
+    question: 'E os receptores NMDA? O problema está neles?',
     answer:
-      'Há estudos que encontraram diferenças cognitivas em pessoas no primeiro episódio psicótico antes do uso de antipsicóticos. Isso indica que algumas dificuldades podem preceder o tratamento. Primeiro episódio psicótico é uma categoria mais ampla que esquizofrenia, então é importante respeitar a população estudada.',
-    refs: [8],
-    pid: 's6-3',
+      'Os receptores NMDA respondem ao glutamato e são investigados como possíveis participantes das alterações cognitivas. Saber que eles participam do funcionamento das sinapses não demonstra que uma pessoa esqueceu algo por causa deles. Para isso, seria preciso evidência ligando esse mecanismo àquele desempenho.',
+    refs: [2],
+    pid: 'm5-d2',
+  },
+  {
+    question: 'As alucinações causam a perda de memória?',
+    answer:
+      'Uma alucinação pode desviar a atenção no momento em que algo é dito, e aquilo pode ser registrado com pouca clareza. Mas as dificuldades de memória também existem sem alucinações e, em algumas pessoas, antes do primeiro episódio psicótico. Dificuldades em lembrar a fonte de uma informação estão associadas a algumas experiências alucinatórias, sem ser uma explicação universal.',
+    refs: [2, 8, 10],
+    pid: 'm5a',
   },
 ];
 

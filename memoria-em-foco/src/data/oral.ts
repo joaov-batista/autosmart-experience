@@ -1,114 +1,90 @@
 import type { OralQuestion } from './types';
 
-/** Banca oral: versões orais dos exercícios 6, 10, 11, 13, 14 e 16, com réplica pertinente. */
+/** Banca oral: perguntas abertas para responder em voz alta, com réplica e autoavaliação. */
 export const oralQuestions: OralQuestion[] = [
   {
-    id: 'o4',
-    number: 6,
-    question: 'Por que a mudança duradoura na sinapse importa mais para a memória do que o impulso elétrico inicial?',
+    id: 'b1',
+    number: 2,
+    question: 'Qual é a diferença entre manter uma informação ativa, aprender uma relação e recuperar uma experiência?',
     model:
-      'O impulso produz atividade naquele momento, e essa atividade passa. A mudança persistente, como na potenciação de longa duração, altera como o circuito vai responder depois que a experiência terminou. É isso que permite a experiência influenciar o que lembramos amanhã.',
-    criteria: [
-      'Precisão do conceito: distingui atividade passageira de mudança persistente na sinapse.',
-      'Justificativa: expliquei que a mudança altera a resposta futura do circuito.',
-    ],
+      'Manter ativa é a memória de trabalho: segurar “Ana” na mente até a frase terminar. Aprender uma relação é ligar os elementos de um episódio: que foi Ana quem colocou a batata naquela sacola. Recuperar é acessar depois o que foi aprendido, por exemplo contar a cena amanhã. Uma dificuldade pode aparecer em qualquer uma dessas operações.',
+    criteria: ['Precisão do conceito: descrevi as três operações com um exemplo.', 'Justificativa: disse por que é útil separá-las (o “esqueci” não diz qual falhou).'],
     followUp: {
-      question: 'Isso vale para uma lembrança inteira?',
-      guidance:
-        'A LTP explica um mecanismo possível de fortalecimento numa sinapse. Uma lembrança autobiográfica inteira envolve muitos circuitos e processos adicionais, e existem outras formas de plasticidade.',
+      question: 'Dá para ter Ana e a sacola disponíveis e mesmo assim errar quem colocou a batata?',
+      guidance: 'Sim. Ter A e B disponíveis não garante ter aprendido a relação entre eles; são duas operações diferentes.',
     },
-    pid: 's2-1c',
-    refs: [2, 3],
+    pid: 'm3-nota',
+    refs: [1, 3, 4],
   },
   {
-    id: 'o6',
-    number: 10,
-    question: 'Uma pessoa reconhece duas fotografias, mas não lembra se apareceram juntas. O que isso permite investigar?',
+    id: 'b2',
+    number: 3,
+    question: 'O que o estudo de Gold mostrou: as pessoas com esquizofrenia esquecem mais depressa?',
     model:
-      'Permite separar memória de itens e memória relacional. Reconhecer cada foto mostra que os itens parecem familiares, mas não garante que a ligação entre eles foi codificada ou recuperada. Essa distinção é central no estudo de Ragland.',
-    criteria: [
-      'Precisão do conceito: nomeei memória de itens e memória relacional.',
-      'Justificativa: expliquei por que reconhecer itens não garante recuperar a relação.',
-    ],
+      'Gold e colaboradores compararam 76 pessoas com esquizofrenia e 51 sem o transtorno, logo depois de aprender histórias e figuras e após um intervalo. Comparando pessoas que tinham lembrado a mesma quantidade no início, o desempenho depois foi praticamente igual. Naquele estudo, boa parte da diferença surgiu na aprendizagem inicial, não num esquecimento mais rápido.',
+    criteria: ['Precisão do conceito: descrevi o que foi comparado (mesma lembrança inicial).', 'Justificativa: expliquei por que comparar só o resultado final não mostra a velocidade do esquecimento.'],
     followUp: {
-      question: 'Isso vale para todo indivíduo? Esse resultado diz se a pessoa tem esquizofrenia?',
-      guidance:
-        'Não. Um resultado individual nessa tarefa não identifica diagnóstico. O estudo comparou grupos e encontrou diferença média; perfis variam entre pessoas.',
+      question: 'Isso vale para qualquer tarefa e qualquer pessoa?',
+      guidance: 'Não necessariamente. O próprio texto ressalta que outras tarefas e outras pessoas podem apresentar resultados diferentes.',
     },
-    pid: 's5-3b',
-    refs: [5],
+    pid: 'm3d',
+    refs: [6],
   },
   {
-    id: 'o7',
-    number: 11,
-    question: 'Um teste de reconhecimento pode exigir memória relacional?',
+    id: 'b3',
+    number: 4,
+    question: 'O que o estudo de Ragland encontrou, e o que a imagem do cérebro não pode dizer?',
     model:
-      'Pode. Se pergunto “qual destes pares foi apresentado junto?”, a pessoa escolhe entre opções, mas só acerta se discriminar as relações anteriores. O formato da resposta e o conteúdo que precisa ser recuperado são coisas diferentes.',
-    criteria: [
-      'Precisão do conceito: dei um exemplo de reconhecimento que exige relação.',
-      'Justificativa: separei formato da resposta de conteúdo a recuperar.',
-    ],
-    followUp: {
-      question: 'Então como isso se relaciona com o achado de Aleman?',
-      guidance:
-        'Aleman mostrou que, em média, a diferença entre grupos foi maior na recordação e menor (mas presente) no reconhecimento. O formato influencia o tamanho da dificuldade; ainda assim, o reconhecimento pode exigir contexto e não está garantidamente intacto.',
-    },
-    pid: 's5-3b',
-    refs: [5, 7],
-  },
-  {
-    id: 'o9',
-    number: 13,
-    question: '“A imagem mostrou que faltou glutamato durante aquela lembrança.” O que há de errado?',
-    model:
-      'A ressonância funcional examina diferenças de recrutamento de regiões cerebrais durante uma tarefa. Ela não mede diretamente a quantidade de glutamato ou de GABA numa sinapse. A frase conclui algo que o método não mediu.',
-    criteria: [
-      'Precisão do conceito: disse o que a ressonância funcional mede (recrutamento regional na tarefa).',
-      'Justificativa: expliquei por que não se pode concluir sobre neurotransmissor numa sinapse.',
-    ],
+      'Ragland comparou estudar características de objetos com estudar relações entre objetos. O grupo com esquizofrenia teve dificuldade especialmente na condição relacional, com menor ativação de uma região pré-frontal durante a aprendizagem e diferenças na resposta do hipocampo num teste posterior. A imagem mostra em qual condição a resposta cerebral diferiu; ela não conta sinapses nem prova sozinha a causa.',
+    criteria: ['Precisão do conceito: descrevi itens × relações e onde houve diferença.', 'Justificativa: disse o limite da ressonância funcional.'],
     followUp: {
       question: 'O que o estudo realmente mediu?',
-      guidance:
-        'Ragland e colaboradores mediram desempenho numa tarefa que separa aprendizagem de itens e de relações e, com ressonância funcional, o recrutamento pré-frontal e hipocampal em condições específicas.',
+      guidance: 'Desempenho em tarefas de itens e de relações, e respostas cerebrais relacionadas à atividade durante essas tarefas. Não mediu sinapses.',
     },
-    pid: 's6-2',
-    refs: [5, 6],
+    pid: 'm3b',
+    refs: [4],
   },
   {
-    id: 'o10',
-    number: 14,
-    question: '“Na esquizofrenia, qual parte do cérebro para de guardar memórias?” Como você responderia?',
+    id: 'b4',
+    number: 7,
+    question: 'O que é poda sináptica e o que se sabe sobre ela na esquizofrenia?',
     model:
-      'Eu reformularia: quais operações tiveram dificuldade, em qual tarefa e com quais achados nos circuitos? No estudo de Ragland, a dificuldade foi maior na codificação relacional, com diferenças no recrutamento pré-frontal nessa codificação e na contribuição do hipocampo na recuperação, em condições específicas. Não há uma região que simplesmente para de guardar.',
-    criteria: [
-      'Precisão do conceito: citei codificação relacional, pré-frontal e hipocampo em condições específicas.',
-      'Justificativa: expliquei por que não faz sentido atribuir uma falha global a uma região.',
-    ],
+      'Poda sináptica é a eliminação de parte das conexões durante o desenvolvimento, com participação das micróglias. Num experimento com células derivadas de pessoas com e sem esquizofrenia, houve mais remoção de material sináptico no primeiro grupo, e fatores do sistema complemento explicaram parte disso. Em tecido humano, há menor densidade de estruturas pós-sinápticas em algumas regiões. Quanto isso explica as dificuldades de cada pessoa ainda é investigado.',
+    criteria: ['Precisão do conceito: separei o observado no laboratório do observado em tecido humano.', 'Justificativa: disse o que ainda é hipótese.'],
     followUp: {
-      question: 'Isso vale para toda pessoa com esquizofrenia?',
-      guidance:
-        'São diferenças médias entre grupos. A intensidade e o perfil variam entre indivíduos; o diagnóstico sozinho não prevê o que uma pessoa conserva.',
+      question: 'Então a poda causa o esquecimento?',
+      guidance: 'Isso não foi demonstrado. Para ligar a poda a um esquecimento específico, seria preciso outro tipo de evidência.',
     },
-    pid: 's5-3a',
-    refs: [5, 6],
+    pid: 'm4b',
+    refs: [5, 9],
   },
   {
-    id: 'o12',
-    number: 16,
-    question: 'Se você conhece a sequência da LTP, por que não pode dizer que foi isso que falhou no paciente?',
+    id: 'b5',
+    number: 8,
+    question: 'Qual é o papel das alucinações nas dificuldades de memória?',
     model:
-      'Porque conhecer um mecanismo geral não demonstra que ele está alterado numa pessoa. A participação de receptores NMDA numa forma de plasticidade no hipocampo não mostra que alguém esqueceu por falha nesses receptores. Seria preciso evidência específica ligando aquele mecanismo àquele desempenho.',
-    criteria: [
-      'Precisão do conceito: distingui mecanismo geral de alteração demonstrada no indivíduo.',
-      'Justificativa: disse que tipo de evidência faltaria para fazer a ligação.',
-    ],
+      'Uma voz pode desviar a atenção no momento em que alguém diz “sacola azul”, e a cor pode ser registrada com pouca clareza. Mas as dificuldades cognitivas também aparecem sem alucinações e, em parte das pessoas, antes do primeiro episódio psicótico. Então a alucinação explica uma maneira de atrapalhar uma conversa, não todas as dificuldades.',
+    criteria: ['Precisão do conceito: expliquei a interferência na atenção no momento do registro.', 'Justificativa: disse que as dificuldades também existem sem alucinações.'],
     followUp: {
-      question: 'Então o que se pode dizer com segurança sobre sinapses na esquizofrenia?',
-      guidance:
-        'Que mudanças na função e na coordenação de circuitos (excitação por glutamato, inibição por GABA, no pré-frontal) são investigadas como mecanismos que podem contribuir para as dificuldades cognitivas. Estudos de tecido, imagem e modelos respondem a perguntas diferentes.',
+      question: 'E a memória da fonte? Ela explica ouvir vozes?',
+      guidance: 'Dificuldades para identificar se algo foi visto, ouvido ou imaginado estão associadas a algumas experiências alucinatórias, mas a associação não é uma explicação universal.',
     },
-    pid: 's6-2',
-    refs: [2, 5, 6],
+    pid: 'm5a',
+    refs: [2, 8, 10],
+  },
+  {
+    id: 'b6',
+    number: 9,
+    question: 'Afinal, por que uma pessoa pode reconhecer a sacola e não lembrar quem a trouxe?',
+    model:
+      'Reconhecer a sacola pode depender da familiaridade. Lembrar quem a trouxe exige aprender e recuperar a relação entre pessoa, objeto e contexto. Em média, essa aprendizagem relacional pode ser mais difícil na esquizofrenia. A intensidade varia entre pessoas.',
+    criteria: ['Precisão do conceito: separei familiaridade de relação.', 'Justificativa: falei em tendência média e variação individual.'],
+    followUp: {
+      question: 'Qual parte dessa conclusão vale para grupos e qual vale para uma pessoa?',
+      guidance: 'A dificuldade relacional é uma tendência média entre grupos. Para uma pessoa, é preciso saber o que ela aprendeu, o que a tarefa exigia e em que condições conseguiu lembrar.',
+    },
+    pid: 'm3',
+    refs: [4, 7],
   },
 ];
 

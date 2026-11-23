@@ -112,8 +112,8 @@ export function SheetsProvider({ children }: { children: ReactNode }) {
     const p = getParagraph(open.pid);
     if (p)
       sheet = (
-        <Modal title={`Capítulo ${p.chapter.number}`} onClose={close}>
-          <p className="muted small">{p.chapter.title}</p>
+        <Modal title={p.sectionTitle} onClose={close}>
+          <p className="muted small">{p.layer === 'lead' ? 'Parágrafo do Resumido' : 'Trecho do modo Completo'}</p>
           <p className="reading-p">
             <RichText text={p.text} />
           </p>
@@ -121,6 +121,18 @@ export function SheetsProvider({ children }: { children: ReactNode }) {
             className="btn secondary block"
             onClick={() => {
               close();
+              // Quem veio de um exercício ou da banca ganha um botão para voltar à questão.
+              const from = window.location.hash.replace(/^#/, '');
+              if (!from.startsWith('/estudar')) {
+                try {
+                  sessionStorage.setItem(
+                    'mef:return',
+                    JSON.stringify({ route: from, label: from.startsWith('/praticar') || from.startsWith('/banca') ? 'Voltar à questão' : 'Voltar' }),
+                  );
+                } catch {
+                  /* ignorado */
+                }
+              }
               navigate(`/estudar/${p.id}`);
             }}
           >

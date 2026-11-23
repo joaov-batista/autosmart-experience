@@ -5,7 +5,7 @@
 //   {{texto|chave}}      → termo técnico tocável sem negrito (chave do glossário)
 //   [1] · [2, 3] · [4–7] → citações tocáveis que abrem a ficha da fonte
 
-export type RefId = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+export type RefId = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
 
 export interface Reference {
   id: RefId;
@@ -23,7 +23,11 @@ export interface Reference {
 
 export type Block =
   | { kind: 'p'; id: string; text: string }
-  | { kind: 'figure'; id: string; figure: 'synapse-compare' | 'synapse-steps' | 'episodic' };
+  /** Subtítulo do modo Completo, escrito como pergunta. */
+  | { kind: 'h'; id: string; text: string }
+  /** Nota curta ao lado do texto. */
+  | { kind: 'note'; id: string; text: string }
+  | { kind: 'figure'; id: string; figure: 'episodic' | 'gold' };
 
 /**
  * Um trecho do capítulo. O parágrafo `lead` aparece nos dois modos de leitura.
@@ -31,6 +35,8 @@ export type Block =
  */
 export interface Section {
   id: string;
+  /** Nome curto do assunto (índice e rótulo acima do parágrafo). */
+  title: string;
   lead: string;
   more?: Block[];
   deep?: { question: string; blocks: Block[] };

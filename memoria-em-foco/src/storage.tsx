@@ -1,5 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import { allParagraphs, getParagraph, mapLegacyPid, plainText } from './data/chapters';
+import { getExercise } from './data/exercises';
+import { getOral } from './data/oral';
 
 const KEY = 'memoria-em-foco:v2';
 
@@ -22,8 +24,8 @@ export interface Highlight {
 }
 
 export type ReadMode = 'summary' | 'full';
-/** Versão da estrutura dos capítulos. Mudou de 1 (c1p1…) para 2 (s1-1…). */
-const CONTENT_VERSION = 2;
+/** Versão da estrutura do texto: 1 (c1p1…), 2 (s1-1…), 3 (m1…, capítulo único). */
+const CONTENT_VERSION = 3;
 
 export interface Progress {
   version: 2;
@@ -54,7 +56,7 @@ export interface Progress {
 const empty: Progress = {
   version: 2,
   contentVersion: CONTENT_VERSION,
-  readMode: 'full',
+  readMode: 'summary',
   theme: 'auto',
   highlights: [],
   onboardingSeen: false,
@@ -101,6 +103,10 @@ function migrate(p: Progress): Progress {
     bookmarks: Array.from(new Set(p.bookmarks.map(mapLegacyPid))),
     readPos: p.readPos ? { pid: mapLegacyPid(p.readPos.pid), offset: 0 } : null,
     highlights: p.highlights.map(reanchor),
+    // Exercícios que deixaram de existir saem da revisão; os que continuam mantêm o resultado.
+    reviewExercises: p.reviewExercises.filter((id) => getExercise(id)),
+    reviewOral: p.reviewOral.filter((id) => getOral(id)),
+    exerciseIndex: 0,
   };
 }
 

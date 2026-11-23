@@ -48,7 +48,7 @@ export function HighlightList() {
     .filter((h) => filter === 'all' || h.color === filter)
     .map((h) => ({ h, p: getParagraph(h.pid) }))
     .filter((x) => x.p)
-    .sort((a, b) => a.p!.chapter.number - b.p!.chapter.number || a.h.pid.localeCompare(b.h.pid) || a.h.start - b.h.start);
+    .sort((a, b) => a.h.pid.localeCompare(b.h.pid) || a.h.start - b.h.start);
   return (
     <div>
       <div className="filter-row" role="group" aria-label="Filtrar por cor">
@@ -73,7 +73,7 @@ export function HighlightList() {
               <p className="hl-quote">“{h.text}”</p>
               {h.orphan && <p className="small notice">Trecho de uma versão anterior do texto, que foi reescrito. Veja o parágrafo correspondente.</p>}
               <p className="muted small">
-                Cap. {p!.chapter.number} · {COLOR_LABEL[h.color]}
+                {p!.sectionTitle} · {COLOR_LABEL[h.color]}
               </p>
               <div className="row-btns">
                 <button className="btn ghost small" onClick={() => navigate(`/estudar/${h.pid}`)}>
