@@ -9,6 +9,8 @@ export const chapters: Chapter[] = [
     id: 'c1',
     number: 1,
     title: 'O que é memória, biologicamente?',
+    keyIdea: 'Memória pode ser descrita como capacidade (registrar, conservar, recuperar) ou investigada como mudança física no cérebro. A experiência passa; a mudança no circuito fica.',
+    minutes: 2,
     blocks: [
       {
         kind: 'p',
@@ -36,6 +38,8 @@ export const chapters: Chapter[] = [
     id: 'c2',
     number: 2,
     title: 'O que acontece em uma sinapse quando aprendemos?',
+    keyIdea: 'Na sinapse, um neurônio libera neurotransmissor e o outro responde por meio de receptores. Na LTP, a atividade conjunta faz um sinal parecido gerar uma resposta maior depois.',
+    minutes: 3,
     blocks: [
       {
         kind: 'p',
@@ -79,6 +83,8 @@ export const chapters: Chapter[] = [
     id: 'c3',
     number: 3,
     title: 'Como uma experiência vira uma lembrança que podemos recuperar?',
+    keyIdea: 'Codificar, consolidar, armazenar e recuperar são etapas diferentes. Não conseguir responder não mostra, sozinho, em qual etapa houve dificuldade.',
+    minutes: 2,
     blocks: [
       {
         kind: 'p',
@@ -111,6 +117,8 @@ export const chapters: Chapter[] = [
     id: 'c4',
     number: 4,
     title: 'Que regiões e sistemas participam da memória?',
+    keyIdea: 'O hipocampo participa da ligação entre os elementos de um episódio; o pré-frontal seleciona, organiza e orienta a busca. Cada tipo de memória é avaliado por tarefas diferentes.',
+    minutes: 2,
     blocks: [
       {
         kind: 'p',
@@ -149,6 +157,8 @@ export const chapters: Chapter[] = [
     id: 'c5',
     number: 5,
     title: 'O que muda na memória de pessoas com esquizofrenia?',
+    keyIdea: 'Em média, as dificuldades aparecem sobretudo em manter informação em uso e em aprender relações entre itens. O formato da tarefa muda o tamanho da diferença, e as pessoas variam.',
+    minutes: 4,
     blocks: [
       {
         kind: 'p',
@@ -201,6 +211,8 @@ export const chapters: Chapter[] = [
     id: 'c6',
     number: 6,
     title: 'O que sabemos sobre as sinapses na esquizofrenia?',
+    keyIdea: 'Conhecer um mecanismo sináptico não prova que ele falhou numa pessoa. Alterações de circuito são investigadas como contribuição possível, e parte das dificuldades pode vir antes do tratamento.',
+    minutes: 2,
     blocks: [
       {
         kind: 'p',

@@ -25,6 +25,9 @@ export interface Chapter {
   id: string;
   number: number;
   title: string;
+  /** Resumo de 1–2 frases mostrado no início do capítulo (a explicação completa vem nos parágrafos). */
+  keyIdea: string;
+  minutes: number;
   blocks: Block[];
 }
 

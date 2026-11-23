@@ -4,8 +4,25 @@ const KEY = 'memoria-em-foco:v2';
 
 export type SessionKind = 'exercises' | 'review' | 'oral' | 'presentation' | 'case';
 
+export type Theme = 'auto' | 'light' | 'warm' | 'dark';
+export type HighlightColor = 'yellow' | 'green' | 'blue' | 'pink';
+
+/** Marcação no texto: trecho de um parágrafo por posição de caractere. */
+export interface Highlight {
+  id: string;
+  pid: string;
+  start: number;
+  end: number;
+  color: HighlightColor;
+  text: string;
+  at: string;
+}
+
 export interface Progress {
   version: 2;
+  theme: Theme;
+  highlights: Highlight[];
+  onboardingSeen: boolean;
   /** Ponto exato da leitura: parágrafo no topo da tela e deslocamento dentro dele. */
   readPos: { pid: string; offset: number } | null;
   /** Marcadores colocados pela estudante. */
@@ -27,6 +44,9 @@ export interface Progress {
 
 const empty: Progress = {
   version: 2,
+  theme: 'auto',
+  highlights: [],
+  onboardingSeen: false,
   readPos: null,
   bookmarks: [],
   fontStep: 1,
@@ -105,4 +125,16 @@ export const toggleBookmark = (pid: string): Updater => (p) => ({
 export const addSession = (kind: SessionKind, seconds?: number): Updater => (p) => ({
   ...p,
   sessions: [...p.sessions, { kind, at: new Date().toISOString(), seconds }].slice(-200),
+});
+
+export const addHighlights = (items: Highlight[]): Updater => (p) => {
+  // substitui marcações que se sobrepõem no mesmo parágrafo
+  const overlaps = (a: Highlight, b: Highlight) => a.pid === b.pid && a.start < b.end && b.start < a.end;
+  const kept = p.highlights.filter((h) => !items.some((n) => overlaps(h, n)));
+  return { ...p, highlights: [...kept, ...items] };
+};
+export const removeHighlight = (id: string): Updater => (p) => ({ ...p, highlights: p.highlights.filter((h) => h.id !== id) });
+export const recolorHighlight = (id: string, color: HighlightColor): Updater => (p) => ({
+  ...p,
+  highlights: p.highlights.map((h) => (h.id === id ? { ...h, color } : h)),
 });
