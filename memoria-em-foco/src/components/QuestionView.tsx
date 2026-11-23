@@ -1,59 +1,62 @@
 import { useMemo, useState } from 'react';
-import type { MatchQuestion, OrderQuestion, Question, ShortQuestion, SingleQuestion } from '../data/types';
-import { normalize, shuffle } from '../utils';
-import { FictionalTag, RichText } from './References';
+import type { Exercise, OrderExercise, SingleExercise } from '../data/types';
+import { shuffle } from '../utils';
+import { RichText, useSheets } from './References';
 import { SelfCheck } from './SelfCheck';
 
 interface Props {
-  question: Question;
-  /** Chamado quando a estudante segue adiante depois da correção. */
-  onDone: (correct: boolean) => void;
-  badge?: string;
+  exercise: Exercise;
+  /** Chamado quando a estudante segue adiante; `ok=false` guarda o item para revisão. */
+  onDone: (ok: boolean) => void;
 }
 
-export function QuestionView({ question, onDone, badge }: Props) {
-  // key garante estado novo a cada questão
+function RereadButton({ pid }: { pid: string }) {
+  const { openParagraph } = useSheets();
   return (
-    <div className="question" key={question.id}>
-      {badge && <p className="badge">{badge}</p>}
-      {question.fictional && <FictionalTag />}
-      {question.context && <p>{question.context}</p>}
-      <Body question={question} onDone={onDone} />
+    <button className="btn ghost small" onClick={() => openParagraph(pid)}>
+      Reler o trecho do texto
+    </button>
+  );
+}
+
+export function QuestionView({ exercise, onDone }: Props) {
+  return (
+    <div className="question">
+      <p className="badge">Exercício {exercise.number}</p>
+      {exercise.type === 'single' && <Single q={exercise} onDone={onDone} />}
+      {exercise.type === 'order' && <Order q={exercise} onDone={onDone} />}
+      {exercise.type === 'open' && (
+        <SelfCheck
+          prompt={<h2 className="q-prompt">{exercise.prompt}</h2>}
+          model={exercise.model}
+          criteria={exercise.criteria}
+          compareLabel="Ver o gabarito"
+          extra={
+            <>
+              <p className="small">
+                <RichText text={exercise.explanation} />
+              </p>
+              <RereadButton pid={exercise.pid} />
+            </>
+          }
+          onRate={(r) => onDone(r === 'ok')}
+        />
+      )}
     </div>
   );
 }
 
-function Body({ question, onDone }: Props) {
-  switch (question.type) {
-    case 'single':
-      return <Single q={question} onDone={onDone} />;
-    case 'match':
-      return <Match q={question} onDone={onDone} />;
-    case 'order':
-      return <Order q={question} onDone={onDone} />;
-    case 'short':
-      return <Short q={question} onDone={onDone} />;
-    case 'open':
-      return (
-        <SelfCheck
-          prompt={<h2 className="q-prompt">{question.prompt}</h2>}
-          model={question.model}
-          criteria={question.criteria}
-          onRate={(r) => onDone(r === 'ok')}
-        />
-      );
-  }
-}
-
-function Result({ correct, explanation, onNext }: { correct: boolean; explanation: string; onNext: () => void }) {
+function Result({ ok, q, onNext }: { ok: boolean; q: Exercise; onNext: () => void }) {
   return (
-    <div className={`result ${correct ? 'is-correct' : 'is-wrong'}`} role="status" aria-live="polite">
+    <div className={`result ${ok ? 'is-correct' : 'is-wrong'}`} role="status" aria-live="polite">
       <p className="result-title">
-        <span aria-hidden="true">{correct ? '✓' : '↻'}</span> {correct ? 'Certo!' : 'Ainda não — veja o raciocínio'}
+        <span aria-hidden="true">{ok ? '✓' : '↻'}</span> {ok ? 'Certo!' : 'Ainda não — veja o raciocínio'}
       </p>
       <p>
-        <RichText text={explanation} />
+        <RichText text={q.explanation} />
       </p>
+      <RereadButton pid={q.pid} />
+      {!ok && <p className="small muted">Este exercício foi guardado em “Para revisar”.</p>}
       <button className="btn primary block" onClick={onNext} autoFocus>
         Continuar
       </button>
@@ -61,11 +64,11 @@ function Result({ correct, explanation, onNext }: { correct: boolean; explanatio
   );
 }
 
-function Single({ q, onDone }: { q: SingleQuestion; onDone: Props['onDone'] }) {
+function Single({ q, onDone }: { q: SingleExercise; onDone: Props['onDone'] }) {
   const choices = useMemo(() => shuffle(q.choices), [q]);
   const [selected, setSelected] = useState<string | null>(null);
   const [checked, setChecked] = useState(false);
-  const correct = selected === q.correctId; // correção pelo ID, nunca pela posição
+  const ok = selected === q.correctId; // correção pelo ID, nunca pela posição
   const chosen = q.choices.find((c) => c.id === selected);
 
   return (
@@ -78,14 +81,7 @@ function Single({ q, onDone }: { q: SingleQuestion; onDone: Props['onDone'] }) {
           const isSel = selected === c.id;
           const state = checked ? (c.id === q.correctId ? 'correct' : isSel ? 'wrong' : 'idle') : isSel ? 'selected' : 'idle';
           return (
-            <button
-              key={c.id}
-              role="radio"
-              aria-checked={isSel}
-              className={`choice ${state}`}
-              disabled={checked}
-              onClick={() => setSelected(c.id)}
-            >
+            <button key={c.id} role="radio" aria-checked={isSel} className={`choice ${state}`} disabled={checked} onClick={() => setSelected(c.id)}>
               <span className="choice-text">{c.text}</span>
               {checked && c.id === q.correctId && <span className="mark">✓ Correta</span>}
               {checked && isSel && c.id !== q.correctId && <span className="mark">✗ Sua escolha</span>}
@@ -105,74 +101,21 @@ function Single({ q, onDone }: { q: SingleQuestion; onDone: Props['onDone'] }) {
               <p>{chosen.feedback}</p>
             </div>
           )}
-          <Result correct={correct} explanation={q.explanation} onNext={() => onDone(correct)} />
+          <Result ok={ok} q={q} onNext={() => onDone(ok)} />
         </>
       )}
     </>
   );
 }
 
-function Match({ q, onDone }: { q: MatchQuestion; onDone: Props['onDone'] }) {
-  const lefts = useMemo(() => shuffle(q.pairs), [q]);
-  const rights = useMemo(() => shuffle(q.pairs.map((p) => ({ id: p.id, text: p.right }))), [q]);
-  const [answers, setAnswers] = useState<Record<string, string>>({});
-  const [checked, setChecked] = useState(false);
-  const complete = q.pairs.every((p) => answers[p.id]);
-  const allCorrect = q.pairs.every((p) => answers[p.id] === p.id);
-
-  return (
-    <>
-      <h2 className="q-prompt">{q.prompt}</h2>
-      <div className="match">
-        {lefts.map((p) => {
-          const ok = answers[p.id] === p.id;
-          return (
-            <div key={p.id} className={`match-row ${checked ? (ok ? 'correct' : 'wrong') : ''}`}>
-              <label htmlFor={`m-${q.id}-${p.id}`} className="match-left">
-                {p.left}
-              </label>
-              <select
-                id={`m-${q.id}-${p.id}`}
-                value={answers[p.id] ?? ''}
-                disabled={checked}
-                onChange={(e) => setAnswers((a) => ({ ...a, [p.id]: e.target.value }))}
-              >
-                <option value="">Escolha…</option>
-                {rights.map((r) => (
-                  <option key={r.id} value={r.id}>
-                    {r.text}
-                  </option>
-                ))}
-              </select>
-              {checked && (
-                <p className="match-fb">
-                  <strong>{ok ? '✓ Certo.' : `✗ Era: ${p.right}.`}</strong> {p.feedback}
-                </p>
-              )}
-            </div>
-          );
-        })}
-      </div>
-      {!checked ? (
-        <button className="btn primary block" disabled={!complete} onClick={() => setChecked(true)}>
-          Verificar
-        </button>
-      ) : (
-        <Result correct={allCorrect} explanation={q.explanation} onNext={() => onDone(allCorrect)} />
-      )}
-    </>
-  );
-}
-
-function Order({ q, onDone }: { q: OrderQuestion; onDone: Props['onDone'] }) {
+function Order({ q, onDone }: { q: OrderExercise; onDone: Props['onDone'] }) {
   const [items, setItems] = useState(() => {
     let s = shuffle(q.items);
-    // evita começar já na ordem certa
-    while (s.length > 1 && s.every((it, i) => it.id === q.items[i].id)) s = shuffle(q.items);
+    while (s.every((it, i) => it.id === q.items[i].id)) s = shuffle(q.items);
     return s;
   });
   const [checked, setChecked] = useState(false);
-  const allCorrect = items.every((it, i) => it.id === q.items[i].id);
+  const ok = items.every((it, i) => it.id === q.items[i].id);
   const move = (i: number, d: -1 | 1) =>
     setItems((arr) => {
       const j = i + d;
@@ -188,25 +131,20 @@ function Order({ q, onDone }: { q: OrderQuestion; onDone: Props['onDone'] }) {
       <p className="muted small">Use as setas para mover cada etapa.</p>
       <ol className="order">
         {items.map((it, i) => {
-          const ok = it.id === q.items[i].id;
+          const right = it.id === q.items[i].id;
           return (
-            <li key={it.id} className={`order-item ${checked ? (ok ? 'correct' : 'wrong') : ''}`}>
+            <li key={it.id} className={`order-item ${checked ? (right ? 'correct' : 'wrong') : ''}`}>
               <span className="order-num">{i + 1}</span>
               <span className="order-text">
                 {it.text}
-                {checked && <strong className="mark">{ok ? ' ✓' : ' ✗ fora de lugar'}</strong>}
+                {checked && <strong className="mark">{right ? ' ✓' : ' ✗ fora de lugar'}</strong>}
               </span>
               {!checked && (
                 <span className="order-btns">
                   <button className="icon-btn" onClick={() => move(i, -1)} disabled={i === 0} aria-label={`Subir: ${it.text}`}>
                     ↑
                   </button>
-                  <button
-                    className="icon-btn"
-                    onClick={() => move(i, 1)}
-                    disabled={i === items.length - 1}
-                    aria-label={`Descer: ${it.text}`}
-                  >
+                  <button className="icon-btn" onClick={() => move(i, 1)} disabled={i === items.length - 1} aria-label={`Descer: ${it.text}`}>
                     ↓
                   </button>
                 </span>
@@ -221,7 +159,7 @@ function Order({ q, onDone }: { q: OrderQuestion; onDone: Props['onDone'] }) {
         </button>
       ) : (
         <>
-          {!allCorrect && (
+          {!ok && (
             <div className="feedback">
               <p className="small muted">Ordem esperada:</p>
               <ol>
@@ -229,54 +167,10 @@ function Order({ q, onDone }: { q: OrderQuestion; onDone: Props['onDone'] }) {
                   <li key={it.id}>{it.text}</li>
                 ))}
               </ol>
+              <p className="small">Repare na lógica: o canal NMDA só deixa entrar cálcio depois que há glutamato e despolarização suficiente para aliviar o bloqueio por magnésio.</p>
             </div>
           )}
-          <Result correct={allCorrect} explanation={q.explanation} onNext={() => onDone(allCorrect)} />
-        </>
-      )}
-    </>
-  );
-}
-
-function Short({ q, onDone }: { q: ShortQuestion; onDone: Props['onDone'] }) {
-  const [value, setValue] = useState('');
-  const [checked, setChecked] = useState(false);
-  const correct = q.accept.includes(normalize(value));
-  return (
-    <>
-      <h2 className="q-prompt">{q.prompt}</h2>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (value.trim()) setChecked(true);
-        }}
-      >
-        <label className="field">
-          <span className="label">Sua resposta</span>
-          <input
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            placeholder={q.placeholder}
-            disabled={checked}
-            inputMode="text"
-            autoComplete="off"
-          />
-        </label>
-        {!checked && (
-          <button className="btn primary block" disabled={!value.trim()} type="submit">
-            Verificar
-          </button>
-        )}
-      </form>
-      {checked && (
-        <>
-          <div className="feedback">
-            <p>
-              Você escreveu <strong>{value}</strong>. Resposta esperada: <strong>{q.correctAnswer}</strong>.
-            </p>
-            {!correct && <p>Confira se inverteu a sequência inteira, do último para o primeiro.</p>}
-          </div>
-          <Result correct={correct} explanation={q.explanation} onNext={() => onDone(correct)} />
+          <Result ok={ok} q={q} onNext={() => onDone(ok)} />
         </>
       )}
     </>

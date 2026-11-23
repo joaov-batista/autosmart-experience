@@ -1,14 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
-import { followUps, oralQuestions } from '../data/oral';
+import { oralQuestions } from '../data/oral';
 import type { OralQuestion } from '../data/types';
-import { RefButtons } from '../components/References';
-import { SelfCheck, type SelfRating } from '../components/SelfCheck';
-import { TopBar } from '../components/TopBar';
-import { addSession, markOral, useProgress } from '../storage';
+import { RefButtons, useSheets } from '../components/References';
+import { SelfCheck } from '../components/SelfCheck';
+import { addSession, setOralReview, useProgress } from '../storage';
 import { navigate, shuffle } from '../utils';
 
-export function OralCard({ q, onRated }: { q: OralQuestion; onRated: (r: SelfRating) => void }) {
+const THINK_SECONDS = 10;
+
+export function OralCard({ q, onRated }: { q: OralQuestion; onRated: () => void }) {
   const { update } = useProgress();
+  const { openParagraph } = useSheets();
   return (
     <SelfCheck
       key={q.id}
@@ -20,24 +22,23 @@ export function OralCard({ q, onRated }: { q: OralQuestion; onRated: (r: SelfRat
       }
       model={q.model}
       criteria={q.criteria}
-      note={q.note}
       extra={
         <p className="small">
-          Fonte correspondente: <RefButtons refs={q.refs} />
+          Fonte: <RefButtons refs={q.refs} />{' '}
+          <button className="linklike" onClick={() => openParagraph(q.pid)}>
+            Ver o parágrafo no texto
+          </button>
         </p>
       }
       onRate={(r) => {
-        update(markOral(q.id, r));
-        onRated(r);
+        update(setOralReview(q.id, r === 'missing'));
+        onRated();
       }}
     />
   );
 }
 
-const THINK_SECONDS = 10;
-
-function FollowUp({ onNext }: { onNext: () => void }) {
-  const [f] = useState(() => followUps[Math.floor(Math.random() * followUps.length)]);
+function FollowUp({ q, onNext }: { q: OralQuestion; onNext: () => void }) {
   const [elapsed, setElapsed] = useState(0);
   const [shown, setShown] = useState(false);
   useEffect(() => {
@@ -48,11 +49,9 @@ function FollowUp({ onNext }: { onNext: () => void }) {
   return (
     <div className="selfcheck">
       <p className="badge">Réplica da professora</p>
-      <h2 className="q-prompt big">“{f.question}”</h2>
-      <p className="muted">Pense e responda em voz alta. Não há resposta na tela enquanto você fala.</p>
-      <p className="think" aria-live="off">
-        Tempo pensando: {elapsed}s
-      </p>
+      <h2 className="q-prompt big">“{q.followUp.question}”</h2>
+      <p className="muted">Pense e responda em voz alta. Nada aparece na tela enquanto você fala.</p>
+      <p className="think">Tempo pensando: {elapsed}s</p>
       {!shown ? (
         <button className="btn primary block" disabled={!ready} onClick={() => setShown(true)}>
           {ready ? 'Ver orientação' : `Pense mais um pouco… (${THINK_SECONDS - elapsed}s)`}
@@ -60,7 +59,7 @@ function FollowUp({ onNext }: { onNext: () => void }) {
       ) : (
         <div className="reveal" aria-live="polite">
           <h3>Orientação</h3>
-          <p>{f.guidance}</p>
+          <p>{q.followUp.guidance}</p>
           <button className="btn primary block" onClick={onNext}>
             Próxima pergunta
           </button>
@@ -70,62 +69,37 @@ function FollowUp({ onNext }: { onNext: () => void }) {
   );
 }
 
-export function OralScreen({ onlyDifficult }: { onlyDifficult?: boolean }) {
+export function OralScreen({ onlyReview }: { onlyReview?: boolean }) {
   const { progress, update } = useProgress();
-  const [order] = useState(() =>
-    shuffle(onlyDifficult ? oralQuestions.filter((q) => progress.oralDifficult.includes(q.id)) : oralQuestions),
-  );
+  const [order] = useState(() => shuffle(onlyReview ? oralQuestions.filter((q) => progress.reviewOral.includes(q.id)) : oralQuestions));
   const [index, setIndex] = useState(0);
+  const [phase, setPhase] = useState<'ask' | 'reply'>('ask');
   const [answered, setAnswered] = useState(0);
-  const [showFollowUp, setShowFollowUp] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const finished = index >= order.length;
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    headingRef.current?.focus();
-  }, [index, showFollowUp]);
-
+    headingRef.current?.focus({ preventScroll: true });
+  }, [index, phase]);
   useEffect(() => {
     if (finished && answered > 0) update(addSession('oral'));
   }, [finished, answered, update]);
 
-  const title = onlyDifficult ? 'Banca · tópicos difíceis' : 'Treinar com a professora';
-
-  if (order.length === 0) {
+  if (!order.length || finished) {
     return (
       <div className="screen">
-        <TopBar title={title} />
         <section className="card center">
           <h1 ref={headingRef} tabIndex={-1}>
-            Nenhum tópico marcado
+            {order.length ? 'Banca concluída' : 'Nenhuma pergunta guardada'}
           </h1>
-          <p>Quando você marcar “Faltou um ponto” na banca, a pergunta aparece aqui.</p>
-          <button className="btn primary block" onClick={() => navigate('/banca')}>
-            Treinar todas as perguntas
-          </button>
-        </section>
-      </div>
-    );
-  }
-
-  if (finished) {
-    return (
-      <div className="screen">
-        <TopBar title={title} />
-        <section className="card center">
-          <h1 ref={headingRef} tabIndex={-1}>
-            Banca concluída
-          </h1>
-          <p>{progress.oralDifficult.length} tópico(s) marcado(s) para revisar.</p>
+          <p>{progress.reviewOral.length} pergunta(s) guardada(s) para rever.</p>
           <div className="stack">
-            {progress.oralDifficult.length > 0 && (
-              <button className="btn primary block" onClick={() => navigate('/banca/dificeis')}>
-                Treinar tópicos difíceis
-              </button>
-            )}
-            <button className="btn ghost block" onClick={() => navigate('/')}>
-              Voltar ao início
+            <button className="btn primary block" onClick={() => navigate('/praticar/revisar')}>
+              Para revisar
+            </button>
+            <button className="btn secondary block" onClick={() => navigate('/ensaiar')}>
+              Ensaiar apresentação
             </button>
           </div>
         </section>
@@ -133,31 +107,30 @@ export function OralScreen({ onlyDifficult }: { onlyDifficult?: boolean }) {
     );
   }
 
+  const q = order[index];
   return (
     <div className="screen">
-      <TopBar title={title} />
       <p className="muted small step-count">
-        Pergunta {index + 1} de {order.length}
+        Banca oral{onlyReview ? ' · revisão' : ''} · pergunta {index + 1} de {order.length}
       </p>
       <h1 className="sr-only" ref={headingRef} tabIndex={-1}>
-        {showFollowUp ? 'Réplica' : `Pergunta ${index + 1}`}
+        {phase === 'reply' ? 'Réplica' : `Pergunta ${index + 1}`}
       </h1>
-      <section className="card" key={showFollowUp ? 'f' : order[index].id}>
-        {showFollowUp ? (
-          <FollowUp
-            onNext={() => {
-              setShowFollowUp(false);
-              setIndex((i) => i + 1);
+      <section className="card" key={`${q.id}-${phase}`}>
+        {phase === 'ask' ? (
+          <OralCard
+            q={q}
+            onRated={() => {
+              setAnswered((a) => a + 1);
+              setPhase('reply');
             }}
           />
         ) : (
-          <OralCard
-            q={order[index]}
-            onRated={() => {
-              const first = answered === 0;
-              setAnswered((a) => a + 1);
-              if (first) setShowFollowUp(true);
-              else setIndex((i) => i + 1);
+          <FollowUp
+            q={q}
+            onNext={() => {
+              setPhase('ask');
+              setIndex((i) => i + 1);
             }}
           />
         )}

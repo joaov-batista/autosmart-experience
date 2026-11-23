@@ -1,14 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import {
-  PRESENTATION_LIMIT_SECONDS,
-  PRESENTATION_WARN_SECONDS,
-  scriptParagraphs,
-  scriptRefs,
-  supportCards,
-} from '../data/presentation';
+import { PRESENTATION_LIMIT_SECONDS, PRESENTATION_WARN_SECONDS, cueWords, scriptParagraphs, scriptRefs } from '../data/presentation';
 import { oralQuestions } from '../data/oral';
-import { RefButtons, useRefs } from '../components/References';
-import { TopBar } from '../components/TopBar';
+import { RefButtons, useSheets } from '../components/References';
 import { OralCard } from './OralScreen';
 import { addSession, useProgress } from '../storage';
 import { formatTime, navigate } from '../utils';
@@ -45,10 +38,10 @@ function useStopwatch() {
 
 export function PresentationScreen() {
   const { update } = useProgress();
-  const { openAll } = useRefs();
+  const { openAll } = useSheets();
   const sw = useStopwatch();
-  const [view, setView] = useState<'text' | 'cards'>('text');
-  const [card, setCard] = useState(0);
+  const [view, setView] = useState<'text' | 'cues'>('text');
+  const [hint, setHint] = useState<number | null>(null);
   const [finished, setFinished] = useState<null | { seconds: number; qIndex: number }>(null);
   const [rated, setRated] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -59,7 +52,7 @@ export function PresentationScreen() {
   const finish = () => {
     sw.pause();
     const seconds = sw.seconds;
-    update(addSession('presentation', undefined, seconds));
+    update(addSession('presentation', seconds));
     setFinished({ seconds, qIndex: Math.floor(Math.random() * oralQuestions.length) });
     window.scrollTo(0, 0);
     setTimeout(() => headingRef.current?.focus(), 0);
@@ -69,7 +62,6 @@ export function PresentationScreen() {
     const q = oralQuestions[finished.qIndex];
     return (
       <div className="screen">
-        <TopBar title="Ensaiar apresentação" />
         <section className="card">
           <h1 ref={headingRef} tabIndex={-1}>
             Ensaio concluído
@@ -77,7 +69,7 @@ export function PresentationScreen() {
           <p>
             Tempo: <strong>{formatTime(finished.seconds)}</strong>
             {finished.seconds > PRESENTATION_LIMIT_SECONDS
-              ? ' — passou de 5 minutos. Veja quais trechos dá para encurtar nos cartões.'
+              ? ' — passou de 5 minutos. Veja quais trechos dá para dizer de forma mais direta.'
               : ' — dentro dos 5 minutos.'}
           </p>
           <p className="muted small">A duração real depende do seu ritmo e das pausas.</p>
@@ -111,7 +103,7 @@ export function PresentationScreen() {
 
   return (
     <div className="screen">
-      <TopBar title="Ensaiar apresentação" />
+      <h1 className="screen-title">Ensaiar apresentação</h1>
       <div className={`timer ${warn ? 'warn' : ''} ${over ? 'over' : ''}`} role="timer" aria-live="off">
         <div className="timer-row">
           <span className="timer-value" aria-label={`Tempo decorrido ${formatTime(sw.seconds)}`}>
@@ -144,55 +136,39 @@ export function PresentationScreen() {
         <button role="tab" aria-selected={view === 'text'} className={`tab ${view === 'text' ? 'on' : ''}`} onClick={() => setView('text')}>
           Texto completo
         </button>
-        <button role="tab" aria-selected={view === 'cards'} className={`tab ${view === 'cards' ? 'on' : ''}`} onClick={() => setView('cards')}>
-          Cartões de apoio
+        <button role="tab" aria-selected={view === 'cues'} className={`tab ${view === 'cues' ? 'on' : ''}`} onClick={() => setView('cues')}>
+          Só palavras de apoio
         </button>
       </div>
 
       {view === 'text' ? (
         <section className="card script" role="tabpanel">
-          <h1 className="sr-only">Texto completo</h1>
+          <h2 className="sr-only">Texto completo</h2>
           {scriptParagraphs.map((p, i) => (
             <p key={i}>
               {p} <RefButtons refs={scriptRefs[i]} />
             </p>
           ))}
-          <p className="muted small">
-            O caso da aluna é um exemplo didático fictício. Os números entre colchetes abrem as fontes e não precisam ser
-            lidos em voz alta.
-          </p>
+          <p className="muted small">Os números entre colchetes abrem as fontes e não precisam ser lidos em voz alta.</p>
         </section>
       ) : (
-        <section className="card cue-card" role="tabpanel" aria-roledescription="cartão">
-          <p className="muted small">
-            Cartão {card + 1} de {supportCards.length}
-          </p>
-          <h1 className="cue-title">{supportCards[card].title}</h1>
-          <ul className="cue-points">
-            {supportCards[card].points.map((pt) => (
-              <li key={pt}>{pt}</li>
+        <section className="card cues" role="tabpanel">
+          <h2 className="sr-only">Palavras de apoio</h2>
+          <ol className="cue-words">
+            {cueWords.map((c, i) => (
+              <li key={c.word}>
+                <button className="cue-word" aria-expanded={hint === i} onClick={() => setHint(hint === i ? null : i)}>
+                  {c.word}
+                </button>
+                {hint === i && (
+                  <p className="cue-hint">
+                    {c.hint} <RefButtons refs={c.refs} />
+                  </p>
+                )}
+              </li>
             ))}
-          </ul>
-          <p className="small">
-            <RefButtons refs={supportCards[card].refs} />
-          </p>
-          <div className="cue-nav">
-            <button className="btn secondary" disabled={card === 0} onClick={() => setCard((c) => c - 1)}>
-              ← Anterior
-            </button>
-            <div className="dots" aria-hidden="true">
-              {supportCards.map((_, i) => (
-                <span key={i} className={`dot ${i === card ? 'on' : ''}`} />
-              ))}
-            </div>
-            <button
-              className="btn secondary"
-              disabled={card === supportCards.length - 1}
-              onClick={() => setCard((c) => c + 1)}
-            >
-              Próximo →
-            </button>
-          </div>
+          </ol>
+          <p className="muted small">Toque numa palavra só se precisar de uma dica.</p>
         </section>
       )}
 

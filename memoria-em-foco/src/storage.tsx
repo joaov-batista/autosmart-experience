@@ -1,46 +1,50 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 
-const KEY = 'memoria-em-foco:v1';
+const KEY = 'memoria-em-foco:v2';
 
-export type SessionKind = 'lesson' | 'review' | 'mixed' | 'oral' | 'presentation';
+export type SessionKind = 'exercises' | 'review' | 'oral' | 'presentation' | 'case';
 
 export interface Progress {
-  version: 1;
-  /** Lição em andamento e passo atual, para o botão Continuar. */
-  current: { lessonId: string; step: number } | null;
-  /** Último passo visto em cada lição. */
-  lessonSteps: Record<string, number>;
-  completedLessons: string[];
-  /** Questões erradas aguardando revisão: id → quantas vezes errou. */
-  wrong: Record<string, number>;
-  /** Explicações das lições marcadas como “Faltou um ponto”. */
-  explainReview: string[];
-  /** Marcações da banca oral. */
-  oralMarks: Record<string, 'ok' | 'missing'>;
-  oralDifficult: string[];
-  sessions: { kind: SessionKind; ref?: string; at: string; seconds?: number }[];
-  wordListIndex: number;
+  version: 2;
+  /** Ponto exato da leitura: parágrafo no topo da tela e deslocamento dentro dele. */
+  readPos: { pid: string; offset: number } | null;
+  /** Marcadores colocados pela estudante. */
+  bookmarks: string[];
+  /** Índice do tamanho da letra (0–4). */
+  fontStep: number;
+  /** Já chegou ao fim da matéria. */
+  finishedReading: boolean;
+  /** Exercícios para revisar (IDs). */
+  reviewExercises: string[];
+  /** Perguntas da banca para revisar (IDs). */
+  reviewOral: string[];
+  /** Último resultado por exercício. */
+  exerciseResults: Record<string, 'ok' | 'review'>;
+  /** Exercício em que parou na sequência. */
+  exerciseIndex: number;
+  sessions: { kind: SessionKind; at: string; seconds?: number }[];
 }
 
 const empty: Progress = {
-  version: 1,
-  current: null,
-  lessonSteps: {},
-  completedLessons: [],
-  wrong: {},
-  explainReview: [],
-  oralMarks: {},
-  oralDifficult: [],
+  version: 2,
+  readPos: null,
+  bookmarks: [],
+  fontStep: 1,
+  finishedReading: false,
+  reviewExercises: [],
+  reviewOral: [],
+  exerciseResults: {},
+  exerciseIndex: 0,
   sessions: [],
-  wordListIndex: 0,
 };
 
 function load(): Progress {
   try {
     const raw = localStorage.getItem(KEY);
-    if (!raw) return empty;
-    const parsed = JSON.parse(raw);
-    if (parsed && parsed.version === 1) return { ...empty, ...parsed };
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.version === 2) return { ...empty, ...parsed };
+    }
   } catch {
     /* armazenamento indisponível: segue com progresso vazio */
   }
@@ -60,7 +64,6 @@ interface Ctx {
   progress: Progress;
   update: (fn: Updater) => void;
 }
-
 const ProgressContext = createContext<Ctx | null>(null);
 
 export function ProgressProvider({ children }: { children: ReactNode }) {
@@ -83,25 +86,23 @@ export function useProgress() {
   return ctx;
 }
 
-// Helpers de atualização (puros)
-export const markWrong = (id: string): Updater => (p) => ({ ...p, wrong: { ...p.wrong, [id]: (p.wrong[id] ?? 0) + 1 } });
-export const clearWrong = (id: string): Updater => (p) => {
-  const wrong = { ...p.wrong };
-  delete wrong[id];
-  return { ...p, wrong };
-};
-export const addSession = (kind: SessionKind, ref?: string, seconds?: number): Updater => (p) => ({
-  ...p,
-  sessions: [...p.sessions, { kind, ref, at: new Date().toISOString(), seconds }].slice(-200),
-});
 const toggleIn = (list: string[], id: string, on: boolean) =>
   on ? (list.includes(id) ? list : [...list, id]) : list.filter((x) => x !== id);
-export const setExplainReview = (lessonId: string, on: boolean): Updater => (p) => ({
+
+export const setExerciseReview = (id: string, needsReview: boolean): Updater => (p) => ({
   ...p,
-  explainReview: toggleIn(p.explainReview, lessonId, on),
+  reviewExercises: toggleIn(p.reviewExercises, id, needsReview),
+  exerciseResults: { ...p.exerciseResults, [id]: needsReview ? 'review' : 'ok' },
 });
-export const markOral = (id: string, mark: 'ok' | 'missing'): Updater => (p) => ({
+export const setOralReview = (id: string, needsReview: boolean): Updater => (p) => ({
   ...p,
-  oralMarks: { ...p.oralMarks, [id]: mark },
-  oralDifficult: toggleIn(p.oralDifficult, id, mark === 'missing'),
+  reviewOral: toggleIn(p.reviewOral, id, needsReview),
+});
+export const toggleBookmark = (pid: string): Updater => (p) => ({
+  ...p,
+  bookmarks: toggleIn(p.bookmarks, pid, !p.bookmarks.includes(pid)),
+});
+export const addSession = (kind: SessionKind, seconds?: number): Updater => (p) => ({
+  ...p,
+  sessions: [...p.sessions, { kind, at: new Date().toISOString(), seconds }].slice(-200),
 });

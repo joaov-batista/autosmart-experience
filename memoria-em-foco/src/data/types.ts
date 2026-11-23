@@ -1,15 +1,40 @@
-// Tipos do conteúdo editorial. O conteúdo fica em arquivos de dados separados dos componentes.
-// Textos podem conter marcadores de citação como [1] ou [2, 3], que viram botões para as fichas.
+// Tipos do conteúdo editorial. O conteúdo fica em arquivos de dados, separado dos componentes.
+//
+// Marcações aceitas nos textos:
+//   **termo**            → negrito; se existir no glossário, vira termo tocável
+//   {{texto|chave}}      → termo técnico tocável sem negrito (chave do glossário)
+//   [1] · [2, 3] · [4–7] → citações tocáveis que abrem a ficha da fonte
 
-export type RefId = 1 | 2 | 3 | 4 | 5;
+export type RefId = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 
 export interface Reference {
   id: RefId;
   short: string;
-  citation: string;
   originalTitle: string;
+  detail: string;
   url: string;
+  extraUrl?: { label: string; url: string };
   supports: string[];
+}
+
+export type Block =
+  | { kind: 'p'; id: string; text: string }
+  | { kind: 'figure'; id: string; figure: 'synapse' | 'episodic' };
+
+export interface Chapter {
+  id: string;
+  number: number;
+  title: string;
+  blocks: Block[];
+}
+
+export interface GlossaryEntry {
+  key: string;
+  term: string;
+  definition: string;
+  /** Parágrafo onde o termo é apresentado. */
+  pid: string;
+  aliases?: string[];
 }
 
 export interface Choice {
@@ -19,81 +44,45 @@ export interface Choice {
   feedback: string;
 }
 
-interface BaseQuestion {
+interface BaseExercise {
   id: string;
-  lessonId: string;
+  number: number;
   prompt: string;
-  /** Contexto opcional exibido acima do enunciado. */
-  context?: string;
-  /** Marca casos inventados para fins didáticos. */
-  fictional?: boolean;
-  /** Questão gêmea: mesmo conceito, outro exemplo. Usada quando a estudante erra. */
-  retryId?: string;
-  /** Explicação geral mostrada depois da correção. */
+  /** Raciocínio do gabarito, mostrado depois da tentativa. */
   explanation: string;
+  /** Parágrafo do texto que sustenta a resposta. */
+  pid: string;
 }
 
-export interface SingleQuestion extends BaseQuestion {
+export interface SingleExercise extends BaseExercise {
   type: 'single';
   choices: Choice[];
   correctId: string;
 }
 
-export interface MatchQuestion extends BaseQuestion {
-  type: 'match';
-  pairs: { id: string; left: string; right: string; feedback: string }[];
-}
-
-export interface OrderQuestion extends BaseQuestion {
+export interface OrderExercise extends BaseExercise {
   type: 'order';
-  /** Itens já na ordem correta. O app embaralha na exibição. */
+  /** Itens já na ordem correta; o app embaralha na exibição. */
   items: { id: string; text: string }[];
 }
 
-export interface ShortQuestion extends BaseQuestion {
-  type: 'short';
-  placeholder: string;
-  /** Respostas aceitas, comparadas após normalização (minúsculas, sem acento, só letras/números). */
-  accept: string[];
-  correctAnswer: string;
-}
-
-/** Resposta aberta: não há correção automática. A estudante compara com o modelo e marca critérios. */
-export interface OpenQuestion extends BaseQuestion {
+export interface OpenExercise extends BaseExercise {
   type: 'open';
   model: string;
   criteria: [string, string];
 }
 
-export type Question = SingleQuestion | MatchQuestion | OrderQuestion | ShortQuestion | OpenQuestion;
-
-export type LessonStep =
-  | {
-      kind: 'situation';
-      text: string;
-      fictional?: boolean;
-      prompt: string;
-      options: Choice[];
-    }
-  | { kind: 'concept'; paragraphs: string[]; bullets?: { term: string; text: string }[]; keyPhrase?: string }
-  | { kind: 'example'; paragraphs: string[]; fictional?: boolean }
-  | { kind: 'quiz'; questionId: string }
-  | { kind: 'demo'; demo: 'word-lists' }
-  | { kind: 'explain'; prompt: string; model: string; criteria: [string, string] };
-
-export interface Lesson {
-  id: string;
-  number: number;
-  title: string;
-  summary: string;
-  steps: LessonStep[];
-}
+export type Exercise = SingleExercise | OrderExercise | OpenExercise;
 
 export interface OralQuestion {
   id: string;
+  /** Número do exercício correspondente na lista de prática. */
+  number: number;
   question: string;
   model: string;
+  /** Dois critérios visíveis: precisão do conceito e justificativa. */
   criteria: [string, string];
-  note?: string;
+  followUp: { question: string; guidance: string };
+  pid: string;
   refs: RefId[];
 }

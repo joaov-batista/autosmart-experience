@@ -1,145 +1,115 @@
 import type { OralQuestion } from './types';
 
+/** Banca oral: perguntas 4, 6, 7, 9, 10 e 12 da prática, com réplica pertinente. */
 export const oralQuestions: OralQuestion[] = [
   {
-    id: 'o1',
-    question: 'Se alguém esqueceu, em qual etapa a memória falhou?',
-    model:
-      'Só com o “esqueci” não dá para saber. A pessoa pode ter codificado mal a informação, por exemplo por estar distraída, ou pode ter registrado e não conseguido recuperar no momento certo. Para escolher entre as hipóteses, eu precisaria saber como ela aprendeu e como tentou lembrar.',
-    criteria: ['Apresentei pelo menos duas hipóteses.', 'Expliquei por que a observação isolada é insuficiente.'],
-    refs: [1],
-  },
-  {
-    id: 'o2',
-    question: 'Qual a diferença entre memória de trabalho e memória de curto prazo?',
-    model:
-      'As duas envolvem manter informação por pouco tempo. A memória de trabalho acrescenta usar ou manipular essa informação durante uma tarefa, como segurar os valores e calcular o troco. A terminologia varia entre modelos teóricos, então vale dizer qual definição estou usando.',
-    criteria: [
-      'Expliquei a manutenção breve da informação.',
-      'Mostrei que memória de trabalho também envolve usar ou manipular a informação (ex.: calcular o troco).',
-    ],
-    note: 'Vale admitir que a terminologia varia entre modelos.',
-    refs: [1],
-  },
-  {
-    id: 'o3',
-    question: 'Por que perguntar “era manga ou uva?” é diferente de perguntar “qual era a fruta?”',
-    model:
-      '“Qual era a fruta?” é recordação com pista: a categoria ajuda, mas a pessoa precisa produzir a palavra sozinha. “Era manga ou uva?” é reconhecimento: as opções estão apresentadas e ela só precisa identificar qual viu. São apoios diferentes para a mesma lembrança.',
-    criteria: [
-      'Identifiquei reconhecimento e recordação com pista.',
-      'Expliquei o que a pessoa precisa produzir em cada tarefa.',
-    ],
-    refs: [1, 4],
-  },
-  {
     id: 'o4',
-    question: 'Como a memória de pessoas com esquizofrenia difere da de pessoas sem esquizofrenia?',
+    number: 4,
+    question: 'Por que a mudança duradoura na sinapse importa mais para a memória do que o impulso elétrico inicial?',
     model:
-      'Comparando grupos, as pesquisas encontram desempenho médio inferior em várias tarefas de memória, como memória de trabalho e recordação de listas de palavras. Na meta-análise de Aleman, a diferença foi maior na recordação do que no reconhecimento. Mas há variação individual: o diagnóstico sozinho não diz como uma pessoa vai se sair.',
-    criteria: ['Citei uma tarefa em que aparece diferença média.', 'Reconheci a variação individual.'],
-    refs: [2, 3, 4],
-  },
-  {
-    id: 'o5',
-    question: 'Se ela reconheceu a resposta certa, então a memória dela está preservada?',
-    model:
-      'Reconhecer mostra que, naquela tarefa e com aquelas opções, ela identificou o que tinha visto. Não mostra que ela conseguiria recordar sozinha, nem que todas as funções de memória estão preservadas. E, nos estudos com grupos, o reconhecimento também mostrou diferença, só que menor.',
-    criteria: ['Descrevi o que a tarefa demonstrou.', 'Limitei a conclusão àquela condição.'],
-    refs: [1, 4],
+      'O impulso produz atividade naquele momento, e essa atividade passa. A mudança persistente, como na potenciação de longa duração, altera como o circuito vai responder depois que a experiência terminou. É isso que permite a experiência influenciar o que lembramos amanhã.',
+    criteria: [
+      'Precisão do conceito: distingui atividade passageira de mudança persistente na sinapse.',
+      'Justificativa: expliquei que a mudança altera a resposta futura do circuito.',
+    ],
+    followUp: {
+      question: 'Isso vale para uma lembrança inteira?',
+      guidance:
+        'A LTP explica um mecanismo possível de fortalecimento numa sinapse. Uma lembrança autobiográfica inteira envolve muitos circuitos e processos adicionais, e existem outras formas de plasticidade.',
+    },
+    pid: 'c2p7',
+    refs: [2, 3],
   },
   {
     id: 'o6',
-    question: 'Essas dificuldades surgem só por causa dos antipsicóticos?',
+    number: 6,
+    question: 'Uma pessoa reconhece duas fotografias, mas não lembra se apareceram juntas. O que isso permite investigar?',
     model:
-      'Não dá para afirmar isso. Uma meta-análise de 2024 encontrou diferenças cognitivas em pessoas no primeiro episódio psicótico que ainda não tinham usado antipsicóticos. Mas primeiro episódio psicótico é uma categoria mais ampla que esquizofrenia, e o estudo não mede o efeito de cada medicamento em cada pessoa.',
+      'Permite separar memória de itens e memória relacional. Reconhecer cada foto mostra que os itens parecem familiares, mas não garante que a ligação entre eles foi codificada ou recuperada. Essa distinção é central no estudo de Ragland.',
     criteria: [
-      'Citei a evidência de diferenças anteriores ao tratamento.',
-      'Distingui primeiro episódio psicótico de diagnóstico de esquizofrenia.',
+      'Precisão do conceito: nomeei memória de itens e memória relacional.',
+      'Justificativa: expliquei por que reconhecer itens não garante recuperar a relação.',
     ],
+    followUp: {
+      question: 'Isso vale para todo indivíduo? Esse resultado diz se a pessoa tem esquizofrenia?',
+      guidance:
+        'Não. Um resultado individual nessa tarefa não identifica diagnóstico. O estudo comparou grupos e encontrou diferença média; perfis variam entre pessoas.',
+    },
+    pid: 'c5p5',
     refs: [5],
   },
   {
     id: 'o7',
-    question: 'As alucinações são o mesmo fenômeno que esquecer uma conversa?',
+    number: 7,
+    question: 'Um teste de reconhecimento pode exigir memória relacional?',
     model:
-      'Não. Alucinação é uma alteração da percepção, como ouvir uma voz sem uma fonte externa correspondente. Esquecer uma conversa envolve dificuldade de aprendizagem ou de recuperação, como não lembrar no dia seguinte o que foi combinado. Os dois podem aparecer na esquizofrenia, mas são fenômenos diferentes.',
+      'Pode. Se pergunto “qual destes pares foi apresentado junto?”, a pessoa escolhe entre opções, mas só acerta se discriminar as relações anteriores. O formato da resposta e o conteúdo que precisa ser recuperado são coisas diferentes.',
     criteria: [
-      'Distingui alteração da percepção de dificuldade de aprendizagem ou recuperação.',
-      'Dei um exemplo de cada.',
+      'Precisão do conceito: dei um exemplo de reconhecimento que exige relação.',
+      'Justificativa: separei formato da resposta de conteúdo a recuperar.',
     ],
-    refs: [2],
-  },
-  {
-    id: 'o8',
-    question: 'Uma lista de palavras reproduz o funcionamento da memória na vida real?',
-    model:
-      'Não completamente. A tarefa padronizada permite comparar o desempenho de pessoas em condições semelhantes, o que é útil em pesquisa. Mas uma conversa do dia a dia envolve contexto, atenção, emoção e outras demandas que a lista não reproduz.',
-    criteria: [
-      'Expliquei que a tarefa padronizada permite comparar em condições semelhantes.',
-      'Reconheci que a vida cotidiana envolve contexto, atenção e outras demandas.',
-    ],
-    refs: [1, 2, 4],
+    followUp: {
+      question: 'Então como isso se relaciona com o achado de Aleman?',
+      guidance:
+        'Aleman mostrou que, em média, a diferença entre grupos foi maior na recordação e menor (mas presente) no reconhecimento. O formato influencia o tamanho da dificuldade; ainda assim, o reconhecimento pode exigir contexto e não está garantidamente intacto.',
+    },
+    pid: 'c5p5',
+    refs: [5, 7],
   },
   {
     id: 'o9',
-    question: 'Como adaptar uma orientação sem infantilizar a pessoa?',
+    number: 9,
+    question: '“A imagem mostrou que faltou glutamato durante aquela lembrança.” O que há de errado?',
     model:
-      'Posso entregar a orientação também por escrito, o que reduz o quanto ela precisa manter na mente e permite consultar depois. Ou dividir a tarefa em passos. E pergunto à própria pessoa se a estratégia ajuda, em vez de decidir por ela.',
+      'A ressonância funcional examina diferenças de recrutamento de regiões cerebrais durante uma tarefa. Ela não mede diretamente a quantidade de glutamato ou de GABA numa sinapse. A frase conclui algo que o método não mediu.',
     criteria: [
-      'Propus uma adaptação concreta.',
-      'Expliquei que demanda ela reduz e incluí perguntar à pessoa se ajuda.',
+      'Precisão do conceito: disse o que a ressonância funcional mede (recrutamento regional na tarefa).',
+      'Justificativa: expliquei por que não se pode concluir sobre neurotransmissor numa sinapse.',
     ],
-    refs: [1, 2],
+    followUp: {
+      question: 'O que o estudo realmente mediu?',
+      guidance:
+        'Ragland e colaboradores mediram desempenho numa tarefa que separa aprendizagem de itens e de relações e, com ressonância funcional, o recrutamento pré-frontal e hipocampal em condições específicas.',
+    },
+    pid: 'c6p3',
+    refs: [5, 6],
   },
   {
     id: 'o10',
-    question: 'Qual fonte você citaria para sustentar sua principal afirmação?',
+    number: 10,
+    question: '“Na esquizofrenia, qual parte do cérebro para de guardar memórias?” Como você responderia?',
     model:
-      'A meta-análise de Aleman e colaboradores, de 1999, que reuniu 70 estudos. Ela mostrou que, em média, a diferença entre pessoas com esquizofrenia e grupos de comparação foi maior na recordação e menor, mas ainda significativa, no reconhecimento.',
+      'Eu reformularia: quais operações tiveram dificuldade, em qual tarefa e com quais achados nos circuitos? No estudo de Ragland, a dificuldade foi maior na codificação relacional, com diferenças no recrutamento pré-frontal nessa codificação e na contribuição do hipocampo na recuperação, em condições específicas. Não há uma região que simplesmente para de guardar.',
     criteria: [
-      'Identifiquei Aleman et al., 1999, como meta-análise de 70 estudos.',
-      'Descrevi corretamente o achado sobre recordação e reconhecimento.',
+      'Precisão do conceito: citei codificação relacional, pré-frontal e hipocampo em condições específicas.',
+      'Justificativa: expliquei por que não faz sentido atribuir uma falha global a uma região.',
     ],
-    refs: [4],
-  },
-  {
-    id: 'o11',
-    question: 'Qual é a diferença entre atenção e memória?',
-    model:
-      'A atenção seleciona ou prioriza a informação no momento. A memória envolve registrar, reter e recuperar essa informação. Elas se ligam: se eu estava distraída quando o aviso foi dado, posso ter codificado só parte dele, e depois não vou conseguir lembrar do que nem registrei.',
-    criteria: [
-      'Expliquei que a atenção seleciona e a memória registra, retém e recupera.',
-      'Mostrei como pouca atenção no momento do aviso pode afetar a lembrança depois.',
-    ],
-    refs: [1, 2],
+    followUp: {
+      question: 'Isso vale para toda pessoa com esquizofrenia?',
+      guidance:
+        'São diferenças médias entre grupos. A intensidade e o perfil variam entre indivíduos; o diagnóstico sozinho não prevê o que uma pessoa conserva.',
+    },
+    pid: 'c5p4',
+    refs: [5, 6],
   },
   {
     id: 'o12',
-    question: 'Se você tivesse mais tempo para investigar o caso de Marina, o que gostaria de saber?',
+    number: 12,
+    question: 'Se você conhece a sequência da LTP, por que não pode dizer que foi isso que falhou no paciente?',
     model:
-      'Eu perguntaria se ela conseguiu explicar as instruções logo depois de ouvi-las. Se conseguiu, a hipótese de dificuldade na recuperação posterior ganha força; se não, a dificuldade pode ter surgido no registro. Mesmo assim, isso ajusta a hipótese, não fecha diagnóstico.',
+      'Porque conhecer um mecanismo geral não demonstra que ele está alterado numa pessoa. A participação de receptores NMDA numa forma de plasticidade no hipocampo não mostra que alguém esqueceu por falha nesses receptores. Seria preciso evidência específica ligando aquele mecanismo àquele desempenho.',
     criteria: [
-      'Formulei uma pergunta observável (ex.: se recordava as instruções imediatamente).',
-      'Expliquei como a resposta mudaria uma hipótese, sem fechar diagnóstico.',
+      'Precisão do conceito: distingui mecanismo geral de alteração demonstrada no indivíduo.',
+      'Justificativa: disse que tipo de evidência faltaria para fazer a ligação.',
     ],
-    note: 'Marina é um exemplo didático fictício.',
-    refs: [1, 3],
+    followUp: {
+      question: 'Então o que se pode dizer com segurança sobre sinapses na esquizofrenia?',
+      guidance:
+        'Que mudanças na função e na coordenação de circuitos (excitação por glutamato, inibição por GABA, no pré-frontal) são investigadas como mecanismos que podem contribuir para as dificuldades cognitivas. Estudos de tecido, imagem e modelos respondem a perguntas diferentes.',
+    },
+    pid: 'c6p4',
+    refs: [2, 5, 6],
   },
 ];
 
-/** Réplicas feitas depois da primeira resposta da sessão. */
-export const followUps: { id: string; question: string; guidance: string }[] = [
-  {
-    id: 'r1',
-    question: 'Você consegue dar outro exemplo?',
-    guidance:
-      'Um bom segundo exemplo usa uma situação diferente da primeira, mas mantém o mesmo conceito. Confira: o exemplo novo mostra a mesma ideia sem repetir a cena anterior?',
-  },
-  {
-    id: 'r2',
-    question: 'Qual parte dessa conclusão vale para grupos e qual vale para uma pessoa?',
-    guidance:
-      'Pesquisas comparam médias de grupos e descrevem tendências. Para uma pessoa específica, é preciso avaliar essa pessoa: observar quais tarefas são difíceis para ela e em quais condições ela consegue realizá-las.',
-  },
-];
+export const getOral = (id: string) => oralQuestions.find((q) => q.id === id);

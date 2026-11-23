@@ -4,16 +4,15 @@ import { RichText } from './References';
 export type SelfRating = 'ok' | 'missing';
 
 /**
- * Fluxo de autoavaliação: mostra só a pergunta; a estudante responde em voz alta ou digita
- * tópicos; ao tocar em “Comparar minha resposta”, revela o modelo e dois critérios.
- * O app não avalia a fala nem a compreensão automaticamente.
+ * Autoavaliação: mostra só a pergunta. A estudante responde em voz alta ou anota tópicos.
+ * O gabarito e os dois critérios aparecem depois do toque em “Comparar”. O app não avalia
+ * a fala nem a compreensão automaticamente.
  */
 export function SelfCheck({
   prompt,
   model,
   criteria,
   extra,
-  note,
   onRate,
   compareLabel = 'Comparar minha resposta',
 }: {
@@ -21,7 +20,6 @@ export function SelfCheck({
   model: string;
   criteria: [string, string];
   extra?: ReactNode;
-  note?: string;
   onRate: (rating: SelfRating) => void;
   compareLabel?: string;
 }) {
@@ -29,23 +27,13 @@ export function SelfCheck({
   const [notes, setNotes] = useState('');
   const [checks, setChecks] = useState([false, false]);
 
-  const retry = () => {
-    setRevealed(false);
-    setChecks([false, false]);
-  };
-
   return (
     <div className="selfcheck">
       <div className="prompt">{prompt}</div>
       <p className="muted small">Responda em voz alta ou anote tópicos. Nada é gravado.</p>
       <label className="field">
         <span className="label">Meus tópicos (opcional)</span>
-        <textarea
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-          rows={3}
-          placeholder="Ex.: codificação, recuperação, exemplo do aviso…"
-        />
+        <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={3} />
       </label>
       {!revealed ? (
         <button className="btn primary block" onClick={() => setRevealed(true)}>
@@ -53,11 +41,10 @@ export function SelfCheck({
         </button>
       ) : (
         <div className="reveal" aria-live="polite">
-          <h3>Resposta-modelo</h3>
+          <h3>Gabarito</h3>
           <p>
             <RichText text={model} />
           </p>
-          {note && <p className="muted small">{note}</p>}
           {extra}
           <h3>Confira na sua resposta</h3>
           <div className="criteria">
@@ -77,9 +64,15 @@ export function SelfCheck({
               Consegui explicar
             </button>
             <button className="btn secondary" onClick={() => onRate('missing')}>
-              Faltou um ponto
+              Faltou um ponto — quero rever
             </button>
-            <button className="btn ghost" onClick={retry}>
+            <button
+              className="btn ghost"
+              onClick={() => {
+                setRevealed(false);
+                setChecks([false, false]);
+              }}
+            >
               Quero tentar de novo
             </button>
           </div>

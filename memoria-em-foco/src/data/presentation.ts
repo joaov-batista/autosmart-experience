@@ -1,68 +1,24 @@
 import type { RefId } from './types';
 
 export const scriptParagraphs: string[] = [
-  'Imagine que, no fim da aula, a professora avisa: “A apresentação mudou para quinta-feira, na sala 12”. Na quinta, uma aluna vai à sala antiga. Ela diz: “Eu esqueci”. Parece uma explicação completa, mas ainda resta uma pergunta: o que aconteceu entre ouvir o aviso e procurar a sala?',
-  'Em psicologia, memória é o conjunto de processos que nos permite registrar, conservar e recuperar informações e experiências. O registro é a codificação. Se eu estava conversando enquanto ouvi o aviso, talvez tenha registrado o dia, mas perdido o número da sala. O armazenamento é a retenção da informação ao longo do tempo. A recuperação acontece quando tento lembrar o número na quinta-feira. Por isso, duas pessoas podem dizer “esqueci” e ter chegado àquela situação por caminhos diferentes.',
-  'Também usamos a memória para fazer coisas no presente. Quando guardo dois preços na cabeça enquanto calculo a diferença, estou usando a memória de trabalho. Já quando conto a alguém o que aconteceu ontem na cantina, uso a memória episódica: recupero uma experiência e seu contexto.',
-  'O que muda na esquizofrenia? Além de sintomas como delírios e alucinações, podem ocorrer dificuldades cognitivas. Por exemplo, pode ser trabalhoso manter várias instruções na mente enquanto outra pessoa continua falando, ou aprender e depois recordar informações novas. No cotidiano, isso pode afetar uma conversa ou uma tarefa da faculdade. O impacto varia de pessoa para pessoa.',
-  'Um resultado de pesquisa ajuda a tornar essa comparação mais precisa. Aleman e colaboradores reuniram 70 estudos. Em média, a diferença entre os grupos foi maior quando as pessoas precisavam recordar o material por conta própria. Quando podiam reconhecer o material entre opções, a diferença foi menor, embora ainda estivesse presente. Dá para perceber a distinção pensando em duas perguntas: “Quais palavras eu disse?” e “Você ouviu a palavra manga?”. As duas envolvem memória, mas oferecem apoios diferentes.',
-  'Voltando à aluna que foi para a sala antiga: saber o diagnóstico dela não nos diz por que ela esqueceu aquele aviso. Podemos perguntar o que ela conseguiu registrar, se uma pista ajuda e se isso acontece em outras situações. A pesquisa descreve tendências entre grupos. Entender a pessoa exige observar quais tarefas são difíceis para ela e em quais condições ela consegue realizá-las.',
+  'Como uma experiência que dura poucos segundos pode influenciar o que lembramos amanhã? Essa pergunta ajuda a entender o conceito de memória. Em psicologia, memória é a capacidade de registrar, conservar e recuperar informações. No cérebro, isso depende da atividade de redes de neurônios e das mudanças que a experiência produz nessas redes.',
+  'Uma dessas mudanças acontece nas sinapses, regiões em que os neurônios se comunicam. Em certas conexões do hipocampo, a atividade conjunta de células pode fortalecer a resposta da sinapse. Esse fenômeno é chamado de potenciação de longa duração. O que muda concretamente? Depois daquela atividade, um sinal semelhante pode produzir uma resposta maior. Essa é uma das formas pelas quais o cérebro conserva efeitos de uma experiência depois que ela termina.',
+  'Para compreender uma lembrança inteira, precisamos olhar também para os circuitos. O hipocampo participa da formação de relações entre os elementos de um episódio: o que aconteceu, em que contexto e com quem. O córtex pré-frontal ajuda a selecionar e organizar informações e a orientar sua recuperação. Também participa da memória de trabalho, que mantém informação disponível enquanto a utilizamos.',
+  'Na esquizofrenia, estudos identificam, em média, dificuldades tanto na memória de trabalho quanto em certas tarefas de aprendizagem e memória episódica. Um estudo de Ragland e colaboradores ajuda a entender a natureza dessa diferença. Os pesquisadores distinguiram duas demandas: aprender as características dos itens e aprender as relações entre eles. O grupo com esquizofrenia teve dificuldade particularmente importante na aprendizagem das relações, acompanhada de diferenças no recrutamento de regiões cerebrais durante a tarefa.',
+  'Outro achado vem de uma meta-análise de Aleman e colaboradores. Ao reunir 70 estudos, os autores observaram que a diferença entre os grupos era maior quando as pessoas precisavam recordar o material. Quando podiam reconhecê-lo entre opções, a diferença diminuía, embora continuasse presente. Portanto, para dizer que alguém teve dificuldade de memória, precisamos explicar o que essa pessoa precisou aprender e como a lembrança foi avaliada.',
+  'Por fim, os pesquisadores investigam como alterações na comunicação dos circuitos podem contribuir para essas dificuldades. Temos evidências de diferenças no desempenho e no recrutamento cerebral, mas isso não permite apontar uma sinapse como causa do esquecimento de uma pessoa. A comparação científica descreve tendências entre grupos. Compreender uma pessoa exige considerar o perfil dela e as condições em que a memória foi avaliada.',
 ];
 
 /** Fontes de cada parágrafo, para consulta durante o ensaio (não são lidas em voz alta). */
-export const scriptRefs: RefId[][] = [[], [1], [1], [2, 3], [4], [3, 4]];
+export const scriptRefs: RefId[][] = [[1, 3], [2], [1, 5, 6], [4, 5, 6], [7], [5, 6]];
 
-export const supportCards: { title: string; points: string[]; refs: RefId[] }[] = [
-  {
-    title: 'Aviso da sala',
-    points: [
-      '“Mudou para quinta, sala 12.”',
-      'Aluna vai à sala antiga: “Eu esqueci”.',
-      'Pergunta: o que aconteceu entre ouvir e procurar a sala?',
-    ],
-    refs: [],
-  },
-  {
-    title: 'Três processos',
-    points: [
-      'Memória = registrar, conservar, recuperar.',
-      'Codificação: conversando → pegou o dia, perdeu a sala.',
-      'Armazenamento: reter ao longo do tempo.',
-      'Recuperação: tentar lembrar na quinta.',
-      'Mesmo “esqueci”, caminhos diferentes.',
-    ],
-    refs: [1],
-  },
-  {
-    title: 'Troco e cantina',
-    points: [
-      'Dois preços na cabeça → memória de trabalho.',
-      'Contar o que houve na cantina → memória episódica.',
-    ],
-    refs: [1],
-  },
-  {
-    title: 'Estudo das listas',
-    points: [
-      'Esquizofrenia: delírios, alucinações e também dificuldades cognitivas.',
-      'Manter instruções / aprender e recordar coisas novas. Varia entre pessoas.',
-      'Aleman et al.: 70 estudos.',
-      'Recordar sozinho → diferença maior.',
-      'Reconhecer entre opções → menor, mas presente.',
-      '“Quais palavras eu disse?” × “Ouviu manga?”',
-    ],
-    refs: [2, 4],
-  },
-  {
-    title: 'Voltar ao caso',
-    points: [
-      'Diagnóstico não explica aquele esquecimento.',
-      'Perguntar: o que registrou? Pista ajuda? Repete?',
-      'Pesquisa = tendências de grupos.',
-      'Pessoa = quais tarefas são difíceis e em que condições consegue.',
-    ],
-    refs: [3, 4],
-  },
+/** Cinco palavras de apoio, na ordem da fala. */
+export const cueWords: { word: string; hint: string; refs: RefId[] }[] = [
+  { word: 'experiência', hint: 'Poucos segundos → amanhã. Registrar, conservar, recuperar. Redes que mudam.', refs: [1, 3] },
+  { word: 'sinapse', hint: 'Hipocampo · LTP · sinal semelhante, resposta maior.', refs: [2] },
+  { word: 'circuitos', hint: 'Hipocampo: relações do episódio. Pré-frontal: selecionar, organizar, memória de trabalho.', refs: [1, 5, 6] },
+  { word: 'esquizofrenia', hint: 'Memória de trabalho e episódica. Ragland: itens × relações. Aleman: recordar × reconhecer.', refs: [5, 7] },
+  { word: 'evidência', hint: 'Circuitos investigados; não aponta uma sinapse. Grupos × pessoa.', refs: [5, 6] },
 ];
 
 export const PRESENTATION_WARN_SECONDS = 270; // 4min30s
